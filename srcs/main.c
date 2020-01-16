@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 15:13:50 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/16 19:28:05 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_mini		*init_struct(char *const envp[])
 	g_mini->last_exit = 0;
 	g_mini->out = NULL;
 	g_mini->in = NULL;
+	g_mini->signal = 0;
 	return (g_mini);
 }
 

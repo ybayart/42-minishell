@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libinc.h                                           :+:      :+:    :+:   */
+/*   ft_lst_replace_env.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/16 15:10:11 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/16 18:55:41 by ybayart          ###   ########.fr       */
+/*   Created: 2020/01/16 17:53:38 by ybayart           #+#    #+#             */
+/*   Updated: 2020/01/16 18:20:28 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBINC_H
-# define LIBINC_H
+#include "ft_minishell.h"
 
-# include <stdlib.h>
-# include <sys/types.h>
-# include <dirent.h>
-# include <sys/stat.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <sys/mman.h>
-# include <sys/wait.h>
-# include <sys/errno.h>
+void	ft_lst_replace_env(t_list_env **list, char *name, char *value)
+{
+	t_list_env	*tmp;
 
-#endif
+	if (list && (*list))
+	{
+		tmp = *list;
+		while (tmp->next)
+		{
+			if (ft_strncmp(tmp->name, name, ft_strlen(name)) == 0)
+			{
+				free(tmp->value);
+				tmp->value = value;
+			}
+			tmp = tmp->next;
+		}
+	}
+}

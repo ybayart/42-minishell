@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/01/16 15:18:07 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/16 17:55:36 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ SRCS_ENV =	ft_lst_add_env.c \
 			ft_lst_find_env.c \
 			ft_lst_size_env.c \
 			ft_lst_to_tab_env.c \
-			ft_lst_new_env.c
+			ft_lst_new_env.c \
+			ft_lst_replace_env.c
 
 SRCS =  $(addprefix $(SRCS_DIR), $(SRCS_LIST)) \
 		$(addprefix $(SRCS_DIR)env_list/, $(SRCS_ENV))
