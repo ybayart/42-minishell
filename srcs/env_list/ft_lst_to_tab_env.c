@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 09:31:23 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/30 09:49:37 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:47:47 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	**ft_list_to_tab_env(t_list_env *list)
 	while (list)
 	{
 		if ((res[++size] = ft_calloc(
-			(ft_strlen(list->name) + ft_strlen(list->value) + 2), sizeof(char))) == NULL)
+			(ft_strlen(list->name) + ft_strlen(list->value) + 2),
+													sizeof(char))) == NULL)
 			return (NULL);
 		res[size] = ft_strjoin(list->name, "=");
 		tmp = res[size];

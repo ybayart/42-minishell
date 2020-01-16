@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:56:00 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 11:43:08 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:54:01 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	change(char *name, char *value)
 {
 	t_list_env	*tmp;
 
-	tmp = mini->env;
+	tmp = g_mini->env;
 	while (tmp)
 	{
 		if (strcmp(tmp->name, name) == 0)
@@ -28,13 +28,15 @@ void	change(char *name, char *value)
 	}
 }
 
-//if variable already exist don't add new
+/*
+**if variable already exist don't add new
+*/
 
 void	run_export(const char *bin, char **argv, char **env)
 {
 	int		i;
 	char	**tmp;
-	//char	**re;
+//	char	**re;
 
 	(void)bin;
 	(void)argv;
@@ -44,16 +46,16 @@ void	run_export(const char *bin, char **argv, char **env)
 	{
 		if ((tmp = ft_split(argv[i], '=')) == NULL)
 			return ;
-	//	re = replace_quote_path(tmp);
-	//	printf("%s\n", re[1]);
-	//	free(tmp[1]);
-	//	tmp[1] = ft_strdup(re[1]);
+//		re = replace_quote_path(tmp);
+//		printf("%s\n", re[1]);
+//		free(tmp[1]);
+//		tmp[1] = ft_strdup(re[1]);
 //		ft_free_tab((void**)re);
-		if (ft_lst_find_env(&mini->env, tmp[0]))
+		if (ft_lst_find_env(&g_mini->env, tmp[0]))
 			change(tmp[0], tmp[1]);
 		else
-			ft_lst_add_env(&mini->env, ft_lst_new_env(tmp[0], tmp[1]));	
-	//	ft_free_tab((void**)tmp);
+			ft_lst_add_env(&g_mini->env, ft_lst_new_env(tmp[0], tmp[1]));
+//		ft_free_tab((void**)tmp);
 	}
 	return ;
 }

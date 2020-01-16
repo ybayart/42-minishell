@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:27:06 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/30 12:01:26 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:46:12 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 char	*ft_lst_find_env(t_list_env **list, char *name)
 {
-		t_list_env	*tmp;
+	t_list_env	*tmp;
 
-		if (!list || !(*list))
-			return (NULL);
-		tmp = *list;
-		while (tmp->next)
-		{
-			if (ft_strncmp(tmp->name, name, ft_strlen(name)) == 0)
-				return (tmp->value);
-			tmp = tmp->next;
-		}
+	if (!list || !(*list))
 		return (NULL);
+	tmp = *list;
+	while (tmp->next)
+	{
+		if (ft_strncmp(tmp->name, name, ft_strlen(name)) == 0)
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }

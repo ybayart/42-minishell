@@ -6,13 +6,13 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 11:24:29 by racohen           #+#    #+#             */
-/*   Updated: 2019/12/04 17:41:16 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:50:55 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-char		*check_quote(char *input)
+char	*check_quote(char *input)
 {
 	char	first;
 	char	*tmp;
@@ -33,7 +33,7 @@ char		*check_quote(char *input)
 	return (tmp);
 }
 
-char		*get_env(t_list_env **list, char *input)
+char	*get_env(t_list_env **list, char *input)
 {
 	t_list_env	*cur;
 
@@ -64,16 +64,15 @@ char	**replace_quote_path(char **cmd)
 		{
 		/*	if (strncmp(&cmd[i][index], "$?", 2))
 			{
-				cmd[i] = ft_strfjoin(ft_substr(cmd[i], 0, index), ft_itoa(mini->last_exit));
+				cmd[i] = ft_strfjoin(ft_substr(cmd[i], 0, index), ft_itoa(g_mini->last_exit));
 				cmd[i] = ft_strfjoin(cmd[i], ft_substr(cmd[i],
 					index + 1, ft_strlen(cmd[i])));
-				index = -1; 
+				index = -1;
 			}
-			else */if (cmd[i][index] == '$')
-			{
+			else */
+			if (cmd[i][index] == '$')
 				cmd[i] = ft_strfjoin(ft_substr(cmd[i], 0, index),
-					get_env(&mini->env, &cmd[i][index + 1]));
-			}
+					get_env(&g_mini->env, &cmd[i][index + 1]));
 		}
 	}
 	return (cmd);

@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2019/12/04 19:21:29 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:31:00 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void sig_handler(int signo)
 		signal(signo, SIG_IGN);
 		signal(SIGINT, sig_handler);
 		write(1, "\n", 1);
-		print_prompt(mini->env);
+		print_prompt(g_mini->env);
 	}
 }
 
@@ -37,14 +37,14 @@ static void space_cmd(char *line)
 
 	if ((cmd = ft_split(line, ' ')) == NULL)
 		return ;
-	free(line);
+//	free(line);
 	i = ft_get_len(cmd);
 	if (check_builtins(cmd[0]))
 		path = ft_strdup(cmd[0]);
-	else if ((path = search_bin((char*)cmd[0], ft_lst_find_env(&mini->env, PATH))) == NULL)
+	else if ((path = search_bin((char*)cmd[0], ft_lst_find_env(&g_mini->env, PATH))) == NULL)
 	{
 		ft_printf("zsh: command not found: %s\n", cmd[0]);
-		mini->last_exit = 127;
+		g_mini->last_exit = 127;
 		return ;
 	}
 	if (ft_strcmp(cmd[0], "export") != 0)
@@ -55,7 +55,7 @@ static void space_cmd(char *line)
 	i = -1;
 	while (cmd[++i])
 		res[i] = cmd[i];
-	run_cmd(path, res, ft_list_to_tab_env(mini->env));
+	run_cmd(path, res, ft_list_to_tab_env(g_mini->env));
 	ft_free_tab((void**)cmd);
 	free(res);
 }
@@ -73,7 +73,7 @@ static void hold_cmd(char *line)
 	{
 		if (strncmp(cmd[i], "exit", ft_strlen(cmd[0])) == 0)
 		{
-			mini->alive = 0;
+			g_mini->alive = 0;
 			return ;
 		}
 		space_cmd(cmd[i]);
@@ -88,10 +88,10 @@ int			shell()
 	if ((line = ft_strdup("")) == NULL)
 		return (EXIT_FAILURE);
 	signal(SIGINT, sig_handler); 
-	while (mini->alive)
+	while (g_mini->alive)
 	{	
-		print_prompt(mini->env);
-		if ((get_next_line(0, &line)) == -1)
+		print_prompt(g_mini->env);
+		if (get_next_line(0, &line) <= 0)
 			exit(EXIT_FAILURE);
 		hold_cmd(line);
 	}

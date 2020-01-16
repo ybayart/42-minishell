@@ -6,16 +6,16 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:39:17 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/29 17:08:55 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:46:55 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list_env.h"
 
-void    ft_lst_clear_env(t_list_env **lst)
+void	ft_lst_clear_env(t_list_env **lst)
 {
-	t_list_env  *tmp;
-	t_list_env  *list;
+	t_list_env	*tmp;
+	t_list_env	*list;
 
 	list = *lst;
 	tmp = NULL;

@@ -6,15 +6,15 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:43:52 by racohen           #+#    #+#             */
-/*   Updated: 2019/12/04 17:33:21 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:47:15 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIST_ENV_H
 # define LIST_ENV_H
 
-#include "../../libft/includes/libft.h"
-#include <stdlib.h>
+# include "../../libft/includes/libft.h"
+# include <stdlib.h>
 
 typedef struct			s_list_env
 {

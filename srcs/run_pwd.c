@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:56:14 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/30 12:09:47 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 12:52:23 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ void	run_pwd(const char *bin, char **argv, char **env)
 	(void)bin;
 	(void)argv;
 	(void)env;
-	ft_printf("%s\n", ft_lst_find_env(&mini->env, PWD));
+	ft_printf("%s\n", ft_lst_find_env(&g_mini->env, PWD));
 	return ;
 }

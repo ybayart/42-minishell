@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:54:51 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 11:50:15 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 12:52:44 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ void	run_unset(const char *bin, char **argv, char **env)
 	(void)env;
 	i = 0;
 	while (argv[++i])
-		ft_lstdel_at_env(&mini->env, argv[i]);
+		ft_lstdel_at_env(&g_mini->env, argv[i]);
 	return ;
 }

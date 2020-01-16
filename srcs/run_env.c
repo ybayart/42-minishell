@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:54:22 by racohen           #+#    #+#             */
-/*   Updated: 2019/12/04 17:13:42 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:49:00 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	run_env(const char *bin, char **argv, char **env)
 	(void)bin;
 	(void)argv;
 	(void)env;
-	list = mini->env;
+	list = g_mini->env;
 	while (list)
 	{
 		ft_printf("%s=%s\n", list->name, list->value);
 		list = list->next;
-	}	
+	}
 	return ;
 }

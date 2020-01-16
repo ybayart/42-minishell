@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/30 09:51:35 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:00:44 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,24 @@ t_list_env	*init_env(char *const envp[])
 
 t_mini		*init_struct(char *const envp[])
 {
-	if ((mini = (t_mini*)malloc(sizeof(t_mini))) == NULL)
+	if ((g_mini = (t_mini*)malloc(sizeof(t_mini))) == NULL)
 		return (NULL);
-	if ((mini->env = init_env(envp)) == NULL)
+	if ((g_mini->env = init_env(envp)) == NULL)
 		return (NULL);
-	mini->alive = 1;
-	mini->last_exit = 0;
-	mini->out = NULL;
-	mini->in = NULL;
-	return (mini);
+	g_mini->alive = 1;
+	g_mini->last_exit = 0;
+	g_mini->out = NULL;
+	g_mini->in = NULL;
+	return (g_mini);
 }
 
 int			main(int argc, char *const argv[], char *const envp[])
 {
-	if ((mini = init_struct(envp)) == NULL)
-		return (ft_free_all(mini));
+	if ((g_mini = init_struct(envp)) == NULL)
+		return (ft_free_all(g_mini));
 	if (shell() == EXIT_FAILURE)
-		return (ft_free_all(mini));
-	ft_free_all(mini);
+		return (ft_free_all(g_mini));
+	ft_free_all(g_mini);
 	(void)argc;
 	(void)argv;
 	return (EXIT_SUCCESS);
