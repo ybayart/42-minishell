@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:53:44 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 14:01:06 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:14:23 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_minishell.h"
+#include "ft_minishell.h"
 
 int		is_convert_red(char *str)
 {

@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 17:23:01 by racohen           #+#    #+#              #
-#    Updated: 2020/01/16 12:39:15 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/16 15:19:05 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,6 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror
 
 NAME = libft.a
-
-INCLUDES = includes/
 
 SRCS = ft_memset.c\
 	   ft_bzero.c\
@@ -95,16 +93,13 @@ SRCS = ft_memset.c\
        	ft_strsplit.c\
 		ft_strstr.c\
 			 
-HEADERS = includes/
-
-
 OBJECT = $(SRCS:.c=.o)
 
 
 all: $(NAME)
 
 .c.o : 
-	${CC} ${FLAGS} -c -I $(HEADERS) $< -o ${<:.c=.o}
+	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
 $(NAME): $(OBJECT) $(HEADERS)
 	@ar rc $(NAME)  $(OBJECT)

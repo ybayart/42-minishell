@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 17:27:06 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 13:46:12 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:20:27 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list_env.h"
+#include "ft_minishell.h"
 
 char	*ft_lst_find_env(t_list_env **list, char *name)
 {

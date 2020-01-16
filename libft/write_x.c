@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 06:24:07 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/11 05:48:57 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:24:10 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 static char	*ft_concat_char(char *str, char c)
 {

@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:46:55 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 13:45:55 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:20:21 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list_env.h"
+#include "ft_minishell.h"
 
 void	ft_lstdel_at_env(t_list_env **list, char *at)
 {

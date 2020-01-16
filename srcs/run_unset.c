@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:54:51 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 12:52:44 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:15:19 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_minishell.h"
+#include "ft_minishell.h"
 
 void	run_unset(const char *bin, char **argv, char **env)
 {

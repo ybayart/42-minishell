@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:54:07 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 13:48:28 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:14:33 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_minishell.h"
+#include "ft_minishell.h"
 
 void	run_echo(const char *bin, char **argv, char **env)
 {

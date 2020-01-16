@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 13:00:44 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:13:50 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_minishell.h"
+#include "ft_minishell.h"
 
 int			ft_free_all(t_mini *mini)
 {

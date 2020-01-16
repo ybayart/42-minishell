@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/01/16 14:02:44 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/16 15:18:07 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ HEADERS =	$(INCS_DIR)
 all : $(NAME)
 
 .c.o: 
-	${CC} $(FLAGS) -c -I $(INCS_DIR) $< -o ${<:.c=.o}
+	${CC} $(FLAGS) -c -I $(INCS_DIR) -I $(LIBFT_PATH) $< -o ${<:.c=.o}
 
 $(NAME): $(OBJECT) $(INCS_DIR)
 	cd $(LIBFT_PATH) && make

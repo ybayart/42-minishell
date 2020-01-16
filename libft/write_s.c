@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 06:22:34 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/11 06:22:02 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:23:33 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 static char	*ft_min_j(t_format *form, char *res)
 {

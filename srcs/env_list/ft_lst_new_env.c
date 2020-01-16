@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:43:06 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/30 09:51:34 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:20:34 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list_env.h"
+#include "ft_minishell.h"
 
 t_list_env	*ft_lst_new_env(char *name, char *value)
 {

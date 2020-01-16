@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 18:57:59 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/12 21:34:15 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:22:00 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 char	*add_content_res(char *res, t_format *form, va_list *arg, int size)
 {

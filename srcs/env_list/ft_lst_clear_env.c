@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 16:39:17 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 13:46:55 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:20:15 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "list_env.h"
+#include "ft_minishell.h"
 
 void	ft_lst_clear_env(t_list_env **lst)
 {

@@ -6,11 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 06:14:08 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/11 21:32:31 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:22:25 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 char	*ft_write_c(t_format *form, va_list *arg)
 {
