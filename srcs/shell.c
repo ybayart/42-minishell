@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 20:49:17 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/18 00:02:24 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,16 @@ void		sig_handler(int signo)
 	}
 }
 
-static void	space_cmd(char *line)
+void		space_cmd(char **cmd, size_t i)
 {
-	int		i;
 	char	*path;
 	char	**res;
-	char	**cmd;
 
-	if ((cmd = ft_split(line, ' ')) == NULL)
-		return ;
-	i = ft_get_len(cmd);
 	if (check_builtins(cmd[0]))
 		path = ft_strdup(cmd[0]);
-	else if ((path = search_bin((char*)cmd[0], ft_lst_find_env(&g_mini->env, PATH))) == NULL)
-	{
-		ft_printf("zsh: command not found: %s\n", cmd[0]);
-		g_mini->last_exit = 127;
-		return ;
-	}
+	else if ((path = search_bin((char*)cmd[0],
+			ft_lst_find_env(&g_mini->env, PATH))) == NULL)
+		return (print_error(1, cmd[0]));
 	if (ft_strcmp(cmd[0], "export") != 0)
 		cmd = replace_quote_path(cmd);
 	if ((res = (char**)malloc(sizeof(char*) * (i + 1))) == NULL)
@@ -56,7 +48,6 @@ static void	space_cmd(char *line)
 	while (cmd[++i])
 		res[i] = cmd[i];
 	run_cmd(path, res, ft_list_to_tab_env(g_mini->env));
-	ft_free_tab((void**)cmd);
 	free(res);
 }
 
@@ -76,7 +67,7 @@ static void	hold_cmd(char *line)
 			g_mini->alive = 0;
 			return ;
 		}
-		space_cmd(cmd[i]);
+		pipes_cmd(cmd[i]);
 	}
 	ft_free_tab((void**)cmd);
 }

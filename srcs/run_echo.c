@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:54:07 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 15:14:33 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/17 15:10:16 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	run_echo(const char *bin, char **argv, char **env)
 
 	i = 0;
 	j = 0;
-	while (strcmp(argv[j + 1], "-n") == 0)
-		j++;
+	if (argv[j + 1] != 0)
+		while (strcmp(argv[j + 1], "-n") == 0)
+			j++;
 	while (argv[++i + j] != 0)
 	{
 		if (i != 1)

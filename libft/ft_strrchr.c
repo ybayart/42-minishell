@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 12:16:55 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/05 21:36:25 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/16 20:53:54 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int		i;
 	char	*ptr;
 
 	ptr = NULL;
-	i = 0;
 	while (*s != '\0')
 	{
 		if (*s == c)

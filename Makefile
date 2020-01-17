@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/01/16 17:55:36 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/18 00:00:56 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ INCS_DIR = includes/
 
 SRCS_LIST = main.c \
 			shell.c \
+			pipes_cmd.c \
+			redir_cmd.c \
 			search_bin.c \
 			run_builtins.c \
 			run_cmd.c \
@@ -41,6 +43,7 @@ SRCS_LIST = main.c \
 			run_export.c \
 			run_env.c \
 			replace_quote_path.c \
+			print_error.c
 
 SRCS_ENV =	ft_lst_add_env.c \
 			ft_lst_clear_env.c \
@@ -77,5 +80,7 @@ ffclean: fclean
 	@cd $(LIBFT_PATH) && make fclean
 
 re : fclean all
+
+rre: ffclean all
 
 .PHONY: re clean fclean 

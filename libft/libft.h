@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:11:29 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/27 16:20:17 by racohen          ###   ########.fr       */
+/*   Updated: 2020/01/17 14:53:39 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putstr_fd(char *s, int fd);
 char				**ft_split(const char *str, char c);
 char				**ft_strsplit(char const *s, char c);
+char				**ft_splits(char const *s, char *set);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *src);
 char				*ft_strndup(const char *s1, size_t n);
@@ -69,6 +70,7 @@ char				*ft_strncat(char *s1, const char *s2, size_t n);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 size_t				ft_strlcpy(char *dest, const char *src, size_t dstsize);
 size_t				ft_strlen(const char *s);
+size_t				ft_tablen(const char **tab);
 char				*ft_strmapi(const char *s, char (*f)(unsigned int, char));
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_strcmp(const char *s1, const char *s2);

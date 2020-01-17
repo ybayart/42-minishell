@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 17:55:17 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/17 23:57:38 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 t_mini		*g_mini;
 
 int			shell();
+void		pipes_cmd(char *line);
+void		redir_cmd(char *line);
+void		space_cmd(char **cmd, size_t i);
 int			is_convert_red(char *str);
 char		*search_bin(const char *path, const char *env_path);
 int			ft_get_len(char **str);
@@ -46,5 +49,6 @@ void		ft_lst_clear_env(t_list_env **lst);
 int			ft_lst_size_env(t_list_env *lst);
 char		**ft_list_to_tab_env(t_list_env *list);
 void		ft_lst_replace_env(t_list_env **list, char *name, char *value);
+void		print_error(int state, char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 10:23:34 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 15:25:01 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/16 20:56:37 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,19 @@ static int	ft_len(unsigned int nbr)
 
 char		*ft_itoa_u(unsigned int n)
 {
-	unsigned int	nbr;
-	int				sign;
 	int				len;
 	char			*alpha;
 
-	sign = (n < 0 ? 1 : 0);
 	alpha = NULL;
 	len = ft_len(n);
-	nbr = (n < 0 ? -n : n);
 	if ((alpha = malloc(sizeof(char) * len + 1)) == NULL)
 		return (NULL);
 	alpha[len--] = '\0';
 	while (len >= 0)
 	{
-		alpha[len] = nbr % 10 + '0';
-		nbr /= 10;
+		alpha[len] = n % 10 + '0';
+		n /= 10;
 		len--;
 	}
-	if (sign == 1)
-		alpha[0] = '-';
 	return (alpha);
 }
