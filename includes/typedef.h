@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:08:06 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/16 19:27:32 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/18 18:16:42 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_mini
 	int			alive;
 	int			last_exit;
 	int			signal;
+	int			redir;
 }				t_mini;
 
 #endif

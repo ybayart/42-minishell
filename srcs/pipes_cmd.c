@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/17 19:14:12 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/18 18:19:41 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void		pipes_cmd(char *line)
 		return ;
 	len = ft_tablen((const char**)cmd);
 	i = -1;
+	if (len > 1)
+		g_mini->redir = 1;
 	while (cmd[++i])
 	{
 		if (pipe(fd[i % 2]) == -1)
@@ -58,6 +60,8 @@ void		pipes_cmd(char *line)
 		redir_cmd(cmd[i]);
 		make_redir(1, i, len, fd);
 	}
+	if (len > 1)
+		g_mini->redir = 0;
 	ft_free_tab((void**)cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 18:49:13 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/17 23:59:47 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/18 18:38:46 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ void		redir_exec(char **args, char **files)
 	len = ft_tablen((const char**)args);
 	if (args[len - 1][0] == '\0')
 		args[len - 1] = 0;
-	if ((len = ft_tablen((const char**)files)) == 1 && files[0][0] == '\0')
-		return (space_cmd(args, ft_tablen((const char**)args)));
-	if (files[len - 1][0] == '\0')
+	if (((len = ft_tablen((const char**)files)) == 1 && files[0][0] == '\0')
+					|| g_mini->redir == 1)
+		space_cmd(args, ft_tablen((const char**)args));
+	if ((i = -1) == -1 && files[len - 1][0] == '\0')
 		files[len - 1] = 0;
-	i = -1;
 	while (files[++i])
 	{
 		fd[0] = dup(1);
