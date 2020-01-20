@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:53:44 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 17:20:48 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/20 19:05:58 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,10 @@ void	shell_ex(const char *bin, char **argv, char **env)
 	if ((id = fork()) == 0)
 		execve(bin, argv, env);
 	else
-		waitpid(id, &status, 0);
-	if (status == 256)
-		g_mini->last_exit = 1;
-	else
-		g_mini->last_exit = 0;
+	{
+		waitpid(id, &g_mini->last_exit, 0);
+		g_mini->last_exit = WEXITSTATUS(g_mini->last_exit);
+	}
 }
 
 int		check_builtins(char *tmp)

@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:11:29 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/17 14:53:39 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/20 21:27:54 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct		s_list
 void				ft_putchar(char c);
 int					ft_atoi(const char *str);
 void				ft_free_tab(void **tab);
+char				*ft_freeint(int *elem);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
 int					ft_isalnum(int c);
@@ -91,5 +92,6 @@ void				ft_lstdel_at(t_list **list, int at, void
 					(*del)(void *, size_t));
 void				ft_lstadd_back(t_list **alst, t_list *new);
 t_list				*ft_lstget_at(t_list *lst, int at);
+char				*ft_strreplace(char **str, char *search, char *replace);
 
 #endif

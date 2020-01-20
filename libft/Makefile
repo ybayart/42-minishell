@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 17:23:01 by racohen           #+#    #+#              #
-#    Updated: 2020/01/17 13:38:18 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/20 19:18:12 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,8 @@ SRCS = ft_memset.c\
 		ft_strnew.c\
        	ft_strsplit.c\
 		ft_strstr.c\
-			 
+		ft_strreplace.c
+
 OBJECT = $(SRCS:.c=.o)
 
 

@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/18 18:17:44 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/20 21:53:05 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	hold_cmd(char *line)
 	free(line);
 	while (cmd[++i])
 	{
-		if (strncmp(cmd[i], "exit", ft_strlen(cmd[0])) == 0)
+		if (strcmp(cmd[i], "exit") == 0)
 		{
 			g_mini->alive = 0;
 			return ;
@@ -91,6 +91,8 @@ int			shell(void)
 			exit(EXIT_FAILURE);
 		}
 		g_mini->signal = 0;
+		if (ft_strreplace(&line, "$?", ft_itoa(g_mini->last_exit)) == NULL)
+			return (EXIT_FAILURE);
 		hold_cmd(line);
 	}
 	return (EXIT_SUCCESS);

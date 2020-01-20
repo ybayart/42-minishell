@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/01/18 00:00:56 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/20 21:57:44 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,9 +66,12 @@ all : $(NAME)
 .c.o: 
 	${CC} $(FLAGS) -c -I $(INCS_DIR) -I $(LIBFT_PATH) $< -o ${<:.c=.o}
 
-$(NAME): $(OBJECT) $(INCS_DIR)
+$(NAME): $(OBJECT) $(INCS_DIR) libft $(INCS_DIR)
 	cd $(LIBFT_PATH) && make
 	$(CC) $(FLAGS) $(SAN) $(LIBFT_COMPIL) $(OBJECT) -o $(NAME)
+
+libft:
+	cd $(LIBFT_PATH) && make
 
 clean:
 	@rm -rf $(OBJECT)
