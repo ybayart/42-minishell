@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:11:29 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/20 21:27:54 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:57:43 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int					ft_isprint(int c);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 int					ft_isspace(int c);
+int					ft_isstrint(char *str);
 char				*ft_itoa(int n);
 void				*ft_memalloc(size_t size);
 void				ft_putendl(char const *s);

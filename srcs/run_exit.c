@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:55:43 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 15:14:52 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/21 19:28:50 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 
 void	run_exit(const char *bin, char **argv, char **env)
 {
-	shell_ex(bin, argv, env);
-	return ;
+	int		i;
+
+	if (argv[1] != 0 && ft_isstrint(argv[1]) == 0)
+	{
+		print_error(4, argv[1], "exit", "numeric argument required");
+	}
+	printf("bin: %s\n", bin);
+	printf("argv:\n");
+	i = -1;
+	while (argv[++i] != 0)
+		printf("argv[%d]: %s\n", i, argv[i]);
+	printf("env:\n");
+	i = -1;
+	while (env[++i] != 0)
+		printf("env[%d]: %s\n", i, env[i]);
 }

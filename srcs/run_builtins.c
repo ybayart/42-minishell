@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 13:55:56 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/20 21:53:43 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:43:01 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		run_builtins(char *cmd, const char *bin, char **argv, char **env)
 		run_unset(bin, argv, env);
 	else if (ft_strcmp(cmd, "env") == 0)
 		run_env(bin, argv, env);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		run_exit(bin, argv, env);
 	else
 		return (0);
 	return (1);

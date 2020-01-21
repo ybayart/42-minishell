@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 17:23:01 by racohen           #+#    #+#              #
-#    Updated: 2020/01/20 19:18:12 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/21 18:58:03 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS = ft_memset.c\
 	   ft_isalnum.c\
 	   ft_isascii.c\
 	   ft_isprint.c\
+	   ft_isstrint.c\
 	   ft_toupper.c\
 	   ft_tolower.c\
 	   ft_strchr.c\

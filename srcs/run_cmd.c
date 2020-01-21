@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:53:44 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/20 19:05:58 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:43:03 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int		check_builtins(char *tmp)
 {
 	if (!ft_strcmp(tmp, "cd") || !ft_strcmp(tmp, "echo") ||
 		!ft_strcmp(tmp, "pwd") || !ft_strcmp(tmp, "export") ||
-		!ft_strcmp(tmp, "unset") || !ft_strcmp(tmp, "env"))
+		!ft_strcmp(tmp, "unset") || !ft_strcmp(tmp, "env") ||
+		!ft_strcmp(tmp, "exit"))
 		return (1);
 	return (0);
 }

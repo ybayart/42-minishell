@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/20 21:58:33 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/21 19:23:39 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ void		ft_lst_clear_env(t_list_env **lst);
 int			ft_lst_size_env(t_list_env *lst);
 char		**ft_list_to_tab_env(t_list_env *list);
 void		ft_lst_replace_env(t_list_env **list, char *name, char *value);
-void		print_error(int state, char *str);
+void		print_error(int state, char *str, char *bin, char *comp);
 
 #endif

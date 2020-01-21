@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 18:49:13 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/18 18:38:46 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/21 19:27:03 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void		redir_exec(char **args, char **files)
 	{
 		fd[0] = dup(1);
 		if ((fd[1] = open(files[i], O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
-			print_error(2, files[i]);
+			print_error(3, files[i], NULL, NULL);
 		else if (dup2(fd[1], 1) != -1)
 		{
 			space_cmd(args, ft_tablen((const char**)args));
