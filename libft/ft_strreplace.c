@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 19:07:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/20 21:58:35 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/21 16:10:31 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char			*ft_strreplace(char **str, char *search, char *replace)
 
 	index = getindex(*str, search);
 	if ((tmp = malloc(sizeof(char) * (ft_strlen(*str) - ft_tabintlen(index)
-			* ft_strlen(search) + ft_tabintlen(index) * ft_strlen(replace) + 1))) == NULL)
+			* (ft_strlen(replace) - ft_strlen(replace)) + 1))) == NULL)
 		return (ft_freeint(index));
 	i[0] = -1;
 	i[1] = 0;
