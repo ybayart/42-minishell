@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/21 19:23:39 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/22 22:11:04 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 t_mini		*g_mini;
 
 int			shell();
-void		pipes_cmd(char *line);
+void		getargs_cmd(char *line);
 void		redir_cmd(char *line);
 void		space_cmd(char **cmd, size_t i);
 int			is_convert_red(char *str);
