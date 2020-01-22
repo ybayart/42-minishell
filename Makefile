@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/01/22 22:11:32 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/22 23:40:02 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ INCS_DIR = includes/
 SRCS_LIST = main.c \
 			shell.c \
 			getargs_cmd.c \
+			cutargs.c \
 			redir_cmd.c \
 			search_bin.c \
 			run_builtins.c \

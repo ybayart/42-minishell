@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/22 22:21:38 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/23 00:36:09 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,54 +67,64 @@ static char	**addstr(char **tab)
 	return (new);
 }
 
+static char	setnewline(char ***args, int *j, char c)
+{
+	if ((*args)[*j][0] != '\0')
+	{
+		(*j)++;
+		if (((*args) = addstr(*args)) == NULL)
+			return (0);
+	}
+	if (c != ' ')
+	{
+		if (((*args)[*j] = addchar((*args)[*j], c)) == NULL)
+			return (0);
+		(*j)++;
+		if ((*args = addstr(*args)) == NULL)
+			return (0);
+	}
+	return (1);
+}
+
+static char	loop(char ***args, char *l, int (*i)[2], char (*qt)[2])
+{
+	if ((l[(*i)[0]] == ' ' || l[(*i)[0]] == '<' ||
+		l[(*i)[0]] == '>' || l[(*i)[0]] == '|') &&
+		(*qt)[0] == 0 && (*qt)[1] == 0)
+	{
+		if (setnewline(args, &(*i)[1], l[(*i)[0]]) == 0)
+			return (0);
+	}
+	else if (l[(*i)[0]] == '\'' && (*qt)[1] == 0)
+		(*qt)[0] = ((*qt)[0] == 1 ? 0 : 1);
+	else if (l[(*i)[0]] == '"' && (*qt)[0] == 0)
+		(*qt)[1] = ((*qt)[1] == 1 ? 0 : 1);
+	else if (l[(*i)[0]] == '\\' && ((((*qt)[0] == 1 &&
+	l[(*i)[0] + 1] == '\'') || ((*qt)[1] == 1 && l[(*i)[0] + 1] == '"'))
+	|| ((*qt)[0] == 0 && (*qt)[1] == 0)) && (*i)[0]++ == -1)
+		;
+	else if (((*args)[(*i)[1]] = addchar((*args)[(*i)[1]], l[(*i)[0]])) == NULL)
+		return (0);
+	return (1);
+}
+
 void		getargs_cmd(char *line)
 {
-	int		i;
-	int		j;
-	char	quote[2];
+	int		i[2];
+	char	qt[2];
 	char	**args;
 
 	args = NULL;
 	if ((args = addstr(args)) == NULL)
 		return ;
-	i = -1;
-	j = 0;
-	quote[0] = 0;
-	quote[1] = 0;
-	while (line[++i])
-	{
-		if ((line[i] == ' ' || line[i] == '<' || line[i] == '>' ||
-				line[i] == '|') && quote[0] == 0 && quote[1] == 0)
-		{
-			if (args[j][0] != '\0')
-			{
-				j++;
-				if ((args = addstr(args)) == NULL)
-					return ;
-			}
-			if (line[i] != ' ')
-			{
-				if ((args[j] = addchar(args[j], line[i])) == NULL)
-					return ;
-				j++;
-				if ((args = addstr(args)) == NULL)
-					return ;
-			}
-		}
-		else if (line[i] == '\'' && quote[1] == 0)
-			quote[0] = (quote[0] == 1 ? 0 : 1);
-		else if (line[i] == '"' && quote[0] == 0)
-			quote[1] = (quote[1] == 1 ? 0 : 1);
-		else if (line[i] == '\\' && (((quote[0] == 1 && line[i + 1] == '\'') ||
-				(quote[1] == 1 && line[i + 1] == '"')) ||
-				(quote[0] == 0 && quote[1] == 0)) && i++ == -1)
-			;
-		else if ((args[j] = addchar(args[j], line[i])) == NULL)
+	i[0] = -1;
+	i[1] = 0;
+	qt[0] = 0;
+	qt[1] = 0;
+	while (line[++i[0]])
+		if (loop(&args, line, &i, &qt) == 0)
 			return ;
-	}
-	i = -1;
-	while (args[++i] != 0)
-		printf("args[%d]: %s\n", i, args[i]);
+	cutargs(args);
 }
 
 /*
