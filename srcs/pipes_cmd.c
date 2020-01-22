@@ -6,13 +6,13 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/20 18:04:49 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/22 19:30:24 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-static void	make_redir(char state, int i, size_t len, int fd[2][2])
+/*static void	make_redir(char state, int i, size_t len, int fd[2][2])
 {
 	static int	fd_bak[2][2];
 
@@ -63,6 +63,108 @@ void		pipes_cmd(char *line)
 	if (len > 1)
 		g_mini->redir = 0;
 	ft_free_tab((void**)cmd);
+}*/
+
+static char	*addchar(char *str, char c)
+{
+	int		i;
+	size_t	len;
+	char	*new;
+
+	if (str == 0)
+	{
+		if ((new = malloc(sizeof(char) * 2)) == NULL)
+			return (NULL);
+		new[1] = '\0';
+		new[0] = c;
+	}
+	else
+	{
+		len = ft_strlen(str);
+		if ((new = malloc(sizeof(char) * (len + 2))) == NULL)
+			return (NULL);
+		new[len + 1] = '\0';
+		i = -1;
+		while (str[++i])
+			new[i] = str[i];
+		new[i] = c;
+		free(str);
+	}
+	return (new);
+}
+
+static char	**addstr(char **tab)
+{
+	int		i;
+	size_t	len;
+	char	**new;
+
+	if (tab == 0)
+	{
+		if ((new = malloc(sizeof(char*) * 2)) == NULL)
+			return (NULL);
+		new[1] = 0;
+		len = 0;
+	}
+	else
+	{
+		len = ft_tablen((const char**)tab);
+		if ((new = malloc(sizeof(char*) * (len + 2))) == NULL)
+			return (NULL);
+		new[len + 1] = 0;
+		i = -1;
+		while (tab[++i] != 0)
+			new[i] = tab[i];
+	}
+	if ((new[len] = malloc(sizeof(char))) == NULL)
+		return (NULL);
+	new[len][0] = '\0';
+	return (new);
+}
+
+void		pipes_cmd(char *line)
+{
+	int		i;
+	int		j;
+	char	quote[2];
+	char	**args;
+
+	args = NULL;
+	if ((args = addstr(args)) == NULL)
+		return ;
+	i = -1;
+	j = 0;
+	quote[0] = 0;
+	quote[1] = 0;
+	while (line[++i])
+	{
+		if ((line[i] == ' ' || line[i] == '<' || line[i] == '>' || line[i] == '|') && quote[0] == 0 && quote[1] == 0)
+		{
+			if (args[j][0] != '\0')
+			{
+				j++;
+				if ((args = addstr(args)) == NULL)
+					return ;
+			}
+			if (line[i] != ' ')
+			{
+				if ((args[j] = addchar(args[j], line[i])) == NULL)
+					return ;
+				j++;
+				if ((args = addstr(args)) == NULL)
+					return ;
+			}
+		}
+		else if (line[i] == '\'' && quote[1] == 0)
+			quote[0] = (quote[0] == 1 ? 0 : 1);
+		else if (line[i] == '"' && quote[0] == 0)
+			quote[1] = (quote[1] == 1 ? 0 : 1);
+		else if ((args[j] = addchar(args[j], line[i])) == NULL)
+			return ;
+	}
+	i = -1;
+	while (args[++i] != 0)
+		printf("args[%d]: %s\n", i, args[i]);
 }
 
 /*

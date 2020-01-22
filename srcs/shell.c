@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/22 17:10:52 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/22 18:20:11 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,7 @@ static void	hold_cmd(char *line)
 		return ;
 	free(line);
 	while (cmd[++i])
-	{
-/*		if (strcmp(cmd[i], "exit") == 0)
-		{
-			if (run_exit(
-			g_mini->alive = 0;
-			return ;
-		}*/
 		pipes_cmd(cmd[i]);
-	}
 	ft_free_tab((void**)cmd);
 }
 

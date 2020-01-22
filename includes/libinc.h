@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:10:11 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/16 18:55:41 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/22 19:12:30 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@
 # include <sys/mman.h>
 # include <sys/wait.h>
 # include <sys/errno.h>
+# include <stdbool.h>
 
 #endif
