@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/22 23:02:50 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/23 17:54:17 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,44 @@ void		sig_handler(int signo)
 	}
 }
 
-void		space_cmd(char **cmd, size_t i)
+static void	setfd(int f_in, int f_out, char state)
+{
+	static int	fd[2];
+
+	if (state == 0)
+	{
+		if (f_out != 1)
+		{
+			fd[0] = dup(1);
+			dup2(f_out, 1);
+		}
+		if (f_in != 0)
+		{
+			fd[1] = dup(0);
+			dup2(f_in, 0);
+		}
+	}
+	else if (state == 1)
+	{
+		if (f_out != 1)
+		{
+			dup2(fd[0], 1);
+			close(f_out);
+		}
+		if (f_in != 0)
+		{
+			dup2(fd[1], 0);
+			close(f_in);
+		}
+	}
+}
+
+void		space_cmd(char **cmd, size_t i, int f_in, int f_out)
 {
 	char	*path;
 	char	**res;
 
+	setfd(f_in, f_out, 0);
 	if (check_builtins(cmd[0]))
 		path = ft_strdup(cmd[0]);
 	else if ((path = search_bin((char*)cmd[0],
@@ -49,20 +82,7 @@ void		space_cmd(char **cmd, size_t i)
 		res[i] = cmd[i];
 	run_cmd(path, res, ft_list_to_tab_env(g_mini->env));
 	free(res);
-}
-
-static void	hold_cmd(char *line)
-{
-	int		i;
-	char	**cmd;
-
-	i = -1;
-	if ((cmd = ft_split(line, ';')) == NULL)
-		return ;
-	free(line);
-	while (cmd[++i])
-		getargs_cmd(cmd[i]);
-	ft_free_tab((void**)cmd);
+	setfd(f_in, f_out, 1);
 }
 
 int			shell(void)
@@ -86,7 +106,7 @@ int			shell(void)
 		g_mini->signal = 0;
 		if (ft_strreplace(&line, "$?", ft_itoa(g_mini->last_exit)) == NULL)
 			return (EXIT_FAILURE);
-		hold_cmd(line);
+		getargs_cmd(line);
 	}
 	return (EXIT_SUCCESS);
 }

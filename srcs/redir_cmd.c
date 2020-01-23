@@ -6,68 +6,11 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 18:49:13 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/22 22:15:58 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/23 16:59:05 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
-
-static char	*addchar(char *str, char c)
-{
-	int		i;
-	size_t	len;
-	char	*new;
-
-	if (str == 0)
-	{
-		if ((new = malloc(sizeof(char) * 2)) == NULL)
-			return (NULL);
-		new[1] = '\0';
-		new[0] = c;
-	}
-	else
-	{
-		len = ft_strlen(str);
-		if ((new = malloc(sizeof(char) * (len + 2))) == NULL)
-			return (NULL);
-		new[len + 1] = '\0';
-		i = -1;
-		while (str[++i])
-			new[i] = str[i];
-		new[i] = c;
-		free(str);
-	}
-	return (new);
-}
-
-static char	**addstr(char **tab)
-{
-	int		i;
-	size_t	len;
-	char	**new;
-
-	if (tab == 0)
-	{
-		if ((new = malloc(sizeof(char*) * 2)) == NULL)
-			return (NULL);
-		new[1] = 0;
-		len = 0;
-	}
-	else
-	{
-		len = ft_tablen((const char**)tab);
-		if ((new = malloc(sizeof(char*) * (len + 2))) == NULL)
-			return (NULL);
-		new[len + 1] = 0;
-		i = -1;
-		while (tab[++i] != 0)
-			new[i] = tab[i];
-	}
-	if ((new[len] = malloc(sizeof(char))) == NULL)
-		return (NULL);
-	new[len][0] = '\0';
-	return (new);
-}
 
 static int	init_cmd(char **(*args)[2], int (*j)[2], int *state)
 {
@@ -96,7 +39,7 @@ void		redir_exec(char **args, char **files)
 		args[len - 1] = 0;
 	if (((len = ft_tablen((const char**)files)) == 1 && files[0][0] == '\0')
 					|| g_mini->redir == 1)
-		space_cmd(args, ft_tablen((const char**)args));
+		space_cmd(args, ft_tablen((const char**)args), 0, 1);
 	if ((i = -1) == -1 && files[len - 1][0] == '\0')
 		files[len - 1] = 0;
 	while (files[++i])
@@ -106,7 +49,7 @@ void		redir_exec(char **args, char **files)
 			print_error(3, files[i], NULL, NULL);
 		else if (dup2(fd[1], 1) != -1)
 		{
-			space_cmd(args, ft_tablen((const char**)args));
+			space_cmd(args, ft_tablen((const char**)args), 0, 1);
 			dup2(fd[0], 1);
 		}
 	}

@@ -6,13 +6,13 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/23 00:36:09 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/23 15:39:21 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-static char	*addchar(char *str, char c)
+char		*addchar(char *str, char c)
 {
 	int		i;
 	size_t	len;
@@ -40,7 +40,7 @@ static char	*addchar(char *str, char c)
 	return (new);
 }
 
-static char	**addstr(char **tab)
+char		**addstr(char **tab)
 {
 	int		i;
 	size_t	len;
@@ -89,7 +89,7 @@ static char	setnewline(char ***args, int *j, char c)
 static char	loop(char ***args, char *l, int (*i)[2], char (*qt)[2])
 {
 	if ((l[(*i)[0]] == ' ' || l[(*i)[0]] == '<' ||
-		l[(*i)[0]] == '>' || l[(*i)[0]] == '|') &&
+		l[(*i)[0]] == '>' || l[(*i)[0]] == '|' || l[(*i)[0]] == ';') &&
 		(*qt)[0] == 0 && (*qt)[1] == 0)
 	{
 		if (setnewline(args, &(*i)[1], l[(*i)[0]]) == 0)

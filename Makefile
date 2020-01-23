@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/01/22 23:40:02 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/23 17:39:10 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS_LIST = main.c \
 			run_unset.c \
 			run_export.c \
 			run_env.c \
+			run_touch.c \
 			replace_quote_path.c \
 			print_error.c
 
