@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/01/23 17:39:10 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/23 18:37:17 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRCS_LIST = main.c \
 			shell.c \
 			getargs_cmd.c \
 			cutargs.c \
-			redir_cmd.c \
+			utils_redir.c \
 			search_bin.c \
 			run_builtins.c \
 			run_cmd.c \

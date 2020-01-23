@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/23 17:39:31 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/23 19:48:06 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@
 
 t_mini		*g_mini;
 
-int			shell();
+int			shell(void);
 void		getargs_cmd(char *line);
 char		*addchar(char *str, char c);
 char		**addstr(char **tab);
 void		cutargs(char **args);
-void		redir_cmd(char *line);
-void		space_cmd(char **cmd, size_t i, int f_in, int f_out);
+char		istoken(char *token);
+int			openfile(int *fd, char *file, int init, int mode);
+void		make_redir(char state, int i, size_t len, int fd[2][2]);
+void		space_cmd(char **cmd, int f_in, int f_out);
 int			is_convert_red(char *str);
 char		*search_bin(const char *path, const char *env_path);
 int			ft_get_len(char **str);

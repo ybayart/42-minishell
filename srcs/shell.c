@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/23 17:54:17 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/23 20:45:40 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,36 +36,34 @@ static void	setfd(int f_in, int f_out, char state)
 	if (state == 0)
 	{
 		if (f_out != 1)
-		{
 			fd[0] = dup(1);
+		if (f_out != 1)
 			dup2(f_out, 1);
-		}
 		if (f_in != 0)
-		{
 			fd[1] = dup(0);
+		if (f_in != 0)
 			dup2(f_in, 0);
-		}
 	}
 	else if (state == 1)
 	{
 		if (f_out != 1)
-		{
 			dup2(fd[0], 1);
+		if (f_out != 1)
 			close(f_out);
-		}
 		if (f_in != 0)
-		{
 			dup2(fd[1], 0);
+		if (f_in != 0)
 			close(f_in);
-		}
 	}
 }
 
-void		space_cmd(char **cmd, size_t i, int f_in, int f_out)
+void		space_cmd(char **cmd, int f_in, int f_out)
 {
 	char	*path;
 	char	**res;
+	size_t	i;
 
+	i = ft_tablen((const char**)cmd);
 	setfd(f_in, f_out, 0);
 	if (check_builtins(cmd[0]))
 		path = ft_strdup(cmd[0]);
@@ -106,7 +104,8 @@ int			shell(void)
 		g_mini->signal = 0;
 		if (ft_strreplace(&line, "$?", ft_itoa(g_mini->last_exit)) == NULL)
 			return (EXIT_FAILURE);
-		getargs_cmd(line);
+		getargs_cmd(ft_strtrim(line, " "));
+		free(line);
 	}
 	return (EXIT_SUCCESS);
 }

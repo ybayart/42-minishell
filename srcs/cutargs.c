@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 23:02:56 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/23 17:54:20 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/23 20:45:41 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,149 +22,121 @@
 
 #define MSGERROR "syntax error near unexpected token"
 
-static char	istoken(char *token)
+static char	init(t_cutargs *data, char **ar, char state)
 {
-	if (token[0] == '\0' ||
-		ft_strcmp(token, "<") == 0 || ft_strcmp(token, ">") == 0 ||
-		ft_strcmp(token, "|") == 0 || ft_strcmp(token, ";") == 0)
-		return (1);
-	return (0);
-}
-
-static int	openfile(int fd, char *file, int init, int mode)
-{
-	if (fd != init)
-		close(fd);
-	if ((fd = open(file, mode, 0600)) == -1)
-		return (-1);
-	return (fd);
-}
-
-static void	make_redir(char state, int i, size_t len, int fd[2][2])
-{
-	static int	fd_bak[2][2];
-
-	i++;
-	if (state == 0 && len > 1)
+	if (state == 0)
 	{
-		if ((size_t)i < len && (fd_bak[1 - (i % 2)][1] = dup(1)) != -1)
-			dup2(fd[1 - (i % 2)][1], 1);
-		if ((size_t)i <= len && i >= 2 && (fd_bak[i % 2][0] = dup(0)) != -1)
-			dup2(fd[i % 2][0], 0);
+		(*data).i = -1;
+		(*data).len = 1;
+		while (ar[++(*data).i] != 0)
+			if (ft_strcmp(ar[(*data).i], "|") == 0)
+				(*data).len++;
+		(*data).i = -1;
+		(*data).j = -1;
+		(*data).isredir = 0;
 	}
-	else if (len > 1)
-	{
-		if ((size_t)i < len)
-		{
-			close(fd[1 - (i % 2)][1]);
-			dup2(fd_bak[1 - (i % 2)][1], 1);
-		}
-		if ((size_t)i <= len && i >= 2)
-		{
-			close(fd[i % 2][0]);
-			dup2(fd_bak[i % 2][0], 0);
-		}
-	}
-}
-
-static char	init(char ***cmd, int *f_in, int *f_out)
-{
-	*cmd = NULL;
-	if ((*cmd = addstr(*cmd)) == NULL)
+	(*data).cmd = NULL;
+	if (((*data).cmd = addstr((*data).cmd)) == NULL)
 		return (0);
-	*f_in = 0;
-	*f_out = 1;
+	(*data).f_in = 0;
+	(*data).f_out = 1;
+	return (1);
+}
+
+static char	launch_cmd(t_cutargs *data, char **ar, char state)
+{
+	if ((*data).cmd[ft_tablen((const char**)(*data).cmd) - 1][0] == '\0')
+		(*data).cmd[ft_tablen((const char**)(*data).cmd) - 1] = 0;
+	if (state == 0)
+	{
+		(*data).j++;
+		pipe((*data).fd[(*data).j % 2]);
+		make_redir(0, (*data).j, (*data).len, (*data).fd);
+		if ((*data).f_out != 1)
+			run_touch();
+		else
+			space_cmd((*data).cmd, (*data).f_in, (*data).f_out);
+		make_redir(1, (*data).j, (*data).len, (*data).fd);
+		if ((*data).f_out != 1)
+			space_cmd((*data).cmd, (*data).f_in, (*data).f_out);
+		(*data).isredir = 1;
+	}
+	else
+		space_cmd((*data).cmd, (*data).f_in, (*data).f_out);
+	if (init(data, ar, 1) == 0)
+		return (0);
+	return (1);
+}
+
+static void	endcuts(t_cutargs data)
+{
+	if (data.cmd[ft_tablen((const char**)data.cmd) - 1][0] == '\0')
+		data.cmd[ft_tablen((const char**)data.cmd) - 1] = 0;
+	if (data.isredir == 1)
+	{
+		data.j++;
+		pipe(data.fd[data.j % 2]);
+		make_redir(0, data.j, data.len, data.fd);
+	}
+	space_cmd(data.cmd, data.f_in, data.f_out);
+	if (data.isredir == 1)
+	{
+		make_redir(1, data.j, data.len, data.fd);
+		data.isredir = 0;
+	}
+}
+
+static int	do_if(t_cutargs *data, char **ar, char state)
+{
+	if (state == 0 && istoken(ar[(*data).i]) && istoken(ar[(*data).i + 1]) &&
+			(ar[(*data).i][0] != '>' || ar[(*data).i + 1][0] != '>' ||
+			(istoken(ar[(*data).i + 2]) && (*data).i++)))
+		return (0);
+	else if (state == 1 && ((*data).state = 0) == 0 &&
+			ft_strcmp(ar[(*data).i], "<") == 0 && (*data).state++ == 0 &&
+			openfile(&(*data).f_in, ar[++(*data).i], 0, 0) == 0)
+		return (0);
+	else if (state == 2 && ft_strcmp(ar[(*data).i], ">") == 0 &&
+		ar[(*data).i + 1] != 0 && ft_strcmp(ar[(*data).i + 1], ">") == 0 &&
+		(*data).state++ == 0 && ++(*data).i != 0 &&
+		openfile(&(*data).f_out, ar[++(*data).i], 1, 970) == 0)
+		return (0);
+	else if (state == 3 && ft_strcmp(ar[(*data).i], ">") == 0 &&
+(*data).state++ == 0 && openfile(&(*data).f_out, ar[++(*data).i], 1, 962) == 0)
+		return (0);
+	else if (state == 4 && ft_strcmp(ar[(*data).i], "|") == 0 &&
+		(*data).state++ == 0 && launch_cmd(data, ar, 0) == 0)
+		return (0);
+	else if (state == 5 && ft_strcmp(ar[(*data).i], ";") == 0 &&
+		(*data).state++ == 0 && launch_cmd(data, ar, 1) == 0)
+		return (0);
 	return (1);
 }
 
 void		cutargs(char **ar)
 {
-	int		i;
-	int		j;
-	int		f_in;
-	int		f_out;
-	int		fd[2][2];
-	char	isredir;
-	size_t	len;
-	char	**cmd;
+	t_cutargs	data;
 
-	i = -1;
-	len = 1;
-	while (ar[++i] != 0)
-		if (ft_strcmp(ar[i], "|") == 0)
-			len++;
-	i = -1;
-	j = -1;
-	isredir = 0;
-	if (init(&cmd, &f_in, &f_out) == 0)
+	if (init(&data, ar, 0) == 0)
 		return ;
-	while (ar[++i] != 0)
+	while (ar[++data.i] != 0)
 	{
-		if (istoken(ar[i]) && istoken(ar[i + 1]) &&
-		(ar[i][0] != '>' || ar[i + 1][0] != '>' || (istoken(ar[i + 2]) && i++)))
-			return (print_error(5, MSGERROR, NULL, ar[i + 1]));
-		if (ft_strcmp(ar[i], "<") == 0)
-		{
-			if ((f_in = openfile(f_in, ar[++i], 0, 0)) == -1)
-				return (print_error(3, ar[i], NULL, NULL));
-		}
-		else if (ft_strcmp(ar[i], ">") == 0 && ar[i + 1] != 0 &&
-				ft_strcmp(ar[i + 1], ">") == 0)
-		{
-			i++;
-			if ((f_out = openfile(f_out, ar[++i], 1, 970)) == -1)
-				return (print_error(3, ar[i], NULL, NULL));
-		}
-		else if (ft_strcmp(ar[i], ">") == 0)
-		{
-			if ((f_out = openfile(f_out, ar[++i], 1, 962)) == 0)
-				return (print_error(3, ar[i], NULL, NULL));
-		}
-		else if (ft_strcmp(ar[i], "|") == 0)
-		{
-			if (cmd[ft_tablen((const char**)cmd) - 1][0] == '\0')
-				cmd[ft_tablen((const char**)cmd) - 1] = 0;
-			j++;
-			pipe(fd[j % 2]);
-			make_redir(0, j, len, fd);
-			if (f_out != 1)
-				run_touch();
-			else
-				space_cmd(cmd, ft_tablen((const char**)cmd), f_in, f_out);
-			make_redir(1, j, len, fd);
-			if (f_out != 1)
-				space_cmd(cmd, ft_tablen((const char**)cmd), f_in, f_out);
-			isredir = 1;
-			if (init(&cmd, &f_in, &f_out) == 0)
+		if (do_if(&data, ar, 0) == 0)
+			return (print_error(5, MSGERROR, NULL, ar[data.i + 1]));
+		if (do_if(&data, ar, 1) == 0)
+			return (print_error(3, ar[data.i], NULL, NULL));
+		else if (do_if(&data, ar, 2) == 0)
+			return (print_error(3, ar[data.i], NULL, NULL));
+		else if (do_if(&data, ar, 3) == 0)
+			return (print_error(3, ar[data.i], NULL, NULL));
+		else if (do_if(&data, ar, 4) == 0)
+			return ;
+		else if (do_if(&data, ar, 5) == 0)
+			return ;
+		else if (data.state++ == 0 &&
+(data.cmd[ft_tablen((const char**)data.cmd) - 1] = ar[data.i]) == ar[data.i])
+			if ((data.cmd = addstr(data.cmd)) == NULL)
 				return ;
-		}
-		else if (ft_strcmp(ar[i], ";") == 0)
-		{
-			if (cmd[ft_tablen((const char**)cmd) - 1][0] == '\0')
-				cmd[ft_tablen((const char**)cmd) - 1] = 0;
-			space_cmd(cmd, ft_tablen((const char**)cmd), f_in, f_out);
-			if (init(&cmd, &f_in, &f_out) == 0)
-				return ;
-		}
-		else
-		{
-			cmd[ft_tablen((const char**)cmd) - 1] = ar[i];
-			if ((cmd = addstr(cmd)) == NULL)
-				return ;
-		}
 	}
-	if (cmd[ft_tablen((const char**)cmd) - 1][0] == '\0')
-		cmd[ft_tablen((const char**)cmd) - 1] = 0;
-	if (isredir == 1)
-	{
-		j++;
-		pipe(fd[j % 2]);
-		make_redir(0, j, len, fd);
-	}
-	space_cmd(cmd, ft_tablen((const char**)cmd), f_in, f_out);
-	if (isredir == 1)
-	{
-		make_redir(1, j, len, fd);
-		isredir = 0;
-	}
+	endcuts(data);
 }

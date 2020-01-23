@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:55:43 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/22 17:16:28 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/23 20:49:18 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	run_exit(const char *bin, char **argv, char **env)
 			exit(255);
 		}
 		else if (argv[2] != 0)
-		{
 			print_error(1, "too many argument", "exit", NULL);
-		}
+		else
+			exit(ft_atoi(argv[1]));
 	}
 	else
 		exit(0);
