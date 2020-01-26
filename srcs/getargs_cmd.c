@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/23 18:08:18 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/26 19:01:58 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,15 @@ static char	setnewline(char ***args, int *j, char c)
 	return (1);
 }
 
-static char	loop(char ***args, char *l, int (*i)[2], char (*qt)[2])
+static char	loop(char ***args, char *l, int (*i)[2], char (*qt)[3])
 {
 	if ((l[(*i)[0]] == ' ' || l[(*i)[0]] == '<' ||
 		l[(*i)[0]] == '>' || l[(*i)[0]] == '|' || l[(*i)[0]] == ';') &&
 		(*qt)[0] == 0 && (*qt)[1] == 0)
 	{
+		if ((*qt)[2] == 1 && wildcard(args, &(*i)[1]) == 0)
+			return (0);
+		(*qt)[2] = 0;
 		if (setnewline(args, &(*i)[1], l[(*i)[0]]) == 0)
 			return (0);
 	}
@@ -99,9 +102,12 @@ static char	loop(char ***args, char *l, int (*i)[2], char (*qt)[2])
 		(*qt)[0] = ((*qt)[0] == 1 ? 0 : 1);
 	else if (l[(*i)[0]] == '"' && (*qt)[0] == 0)
 		(*qt)[1] = ((*qt)[1] == 1 ? 0 : 1);
-	else if (l[(*i)[0]] == '\\' && ((((*qt)[0] == 1 &&
-	l[(*i)[0] + 1] == '\'') || ((*qt)[1] == 1 && l[(*i)[0] + 1] == '"'))
+	else if ((l[(*i)[0]] == '\\' && ((*qt)[2] = -1) == -1) && ((((*qt)[0] == 1
+	&& l[(*i)[0] + 1] == '\'')	|| ((*qt)[1] == 1 && l[(*i)[0] + 1] == '"'))
 	|| ((*qt)[0] == 0 && (*qt)[1] == 0)) && (*i)[0]++ == -1)
+		;
+	else if ((*qt)[2] != -1 && (*qt)[0] == 0 && (*qt)[1] == 0 && ((*i)[0] == 0 ||
+	l[(*i)[0] - 1] != '\\') && l[(*i)[0]] == '*' && ((*qt)[2] = 1) == 2)
 		;
 	else if (((*args)[(*i)[1]] = addchar((*args)[(*i)[1]], l[(*i)[0]])) == NULL)
 		return (0);
@@ -111,7 +117,7 @@ static char	loop(char ***args, char *l, int (*i)[2], char (*qt)[2])
 void		getargs_cmd(char *line)
 {
 	int		i[2];
-	char	qt[2];
+	char	qt[3];
 	char	**args;
 
 	args = NULL;
@@ -121,9 +127,12 @@ void		getargs_cmd(char *line)
 	i[1] = 0;
 	qt[0] = 0;
 	qt[1] = 0;
+	qt[2] = 0;
 	while (line[++i[0]])
 		if (loop(&args, line, &i, &qt) == 0)
 			return ;
+	if (qt[2] == 1 && wildcard(&args, &i[1]) == 0)
+		return ;
 	cutargs(args);
 }
 
