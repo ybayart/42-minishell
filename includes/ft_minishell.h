@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/26 16:27:28 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/27 19:17:56 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		run_echo(const char *bin, char **argv, char **env);
 void		run_cd(const char *bin, char **argv, char **env);
 void		run_touch(void);
 void		shell_ex(const char *bin, char **argv, char **env);
-char		wildcard(char ***args, int *pos);
+char		wildcard(char ***args, int *pos, int initpos);
 
 t_list_env	*ft_lst_new_env(char *name, char *value);
 void		ft_lstdel_at_env(t_list_env **list, char *at);

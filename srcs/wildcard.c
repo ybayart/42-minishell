@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/26 19:01:57 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/27 19:35:08 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,43 +73,75 @@ static char	list_dir(char ***args, int *pos, char *curr_dir, char *pattern)
 	return (1);
 }
 
-char		wildcard(char ***args, int *pos)
+static char	*getrootdir(char *str)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (str[i] != '/' && str[i] != '\0')
+		i++;
+	j = 0;
+	while (str[j] != '*' && str[j] != '\0')
+		j++;
+	if (i > j)
+		return (ft_strdup("./"));
+	else
+	{
+		if (ft_strncmp(str, "/", 1) != 0 && ft_strncmp(str, "./", 2) != 0 && ft_strncmp(str, "../", 3) != 0)
+			return (ft_strjoin("./", ft_strndup(str, ft_strnlastpos(str, '/', j) + 1)));
+		return (ft_strndup(str, ft_strnlastpos(str, '/', j) + 1));
+	}
+}
+
+static char	*getafterroot(char *str)
+{
+// A SUIVRE
+}
+
+char		wildcard(char ***args, int *pos, int initpos)
 {
 	int				i;
-	size_t			j;
-	char			*strdir;
-	DIR				*dir_fd;
-	struct dirent	*dir;
+//	size_t			j;
+//	char			*strdir;
+//	DIR				*dir_fd;
+//	struct dirent	*dir;
 
-	i = -1;
+	i = initpos - 1;
 	while ((*args)[++i] != 0)
 	{
 		if (ft_strchr((*args)[i], '*') == NULL)
-			printf("+ %s\n", (*args)[i]);
+			printf("|%s| good\n", (*args)[i]);
 		else
 		{
-			j = 0;
-			while ((*args)[(*pos)][j] != '/' && (*args)[(*pos)][j] != '\0')
-				j++;
-			char	*after = ft_strchr((*args)[(*pos)] + j + 1, '/');
-			strdir = ((*args)[(*pos)][j] != '/' ? ft_strdup("./") : ft_strndup((*args)[(*pos)], j + 1));
-			if ((dir_fd = opendir(strdir)) == NULL)
-				return (0);
-			while ((dir = readdir(dir_fd)) != NULL)
-			{
-				if (dir->d_name[0] != '.')
-				{
-					char	*tmp = ft_strjoin(strdir, dir->d_name);
-					if (after != 0)
-						tmp = ft_strjoin(tmp, after);
-					printf("add %s at %d\n", tmp, (*pos));
-					(*args)[(*pos)++] = tmp;
-					(*args) = addstr((*args));
-					if (wildcard(args, pos) == 0)
-						return (0);
-				}
-			}
+			printf("|%s| root: |%s|\n", (*args)[i], getrootdir((*args)[i]));
 		}
+//		if (ft_strchr((*args)[i], '*') == NULL)
+//			printf("+ %s\n", (*args)[i]);
+//		else
+//		{
+//			j = 0;
+//			while ((*args)[(*pos)][j] != '/' && (*args)[(*pos)][j] != '\0')
+//				j++;
+//			char	*after = ft_strchr((*args)[(*pos)] + j + 1, '/');
+//			strdir = ((*args)[(*pos)][j] != '/' ? ft_strdup("./") : ft_strndup((*args)[(*pos)], j + 1));
+//			if ((dir_fd = opendir(strdir)) == NULL)
+//				return (0);
+//			while ((dir = readdir(dir_fd)) != NULL)
+//			{
+//				if (dir->d_name[0] != '.')
+//				{
+//					char	*tmp = ft_strjoin(strdir, dir->d_name);
+//					if (after != 0)
+//						tmp = ft_strjoin(tmp, after);
+//					printf("add %s at %d\n", tmp, (*pos));
+//					(*args)[(*pos)++] = tmp;
+//					(*args) = addstr((*args));
+//					if (wildcard(args, pos) == 0)
+//						return (0);
+//				}
+//			}
+//		}
 	}
 	printf("wildcard: %s (%d)\n", (*args)[(*pos)], (*pos));
 	(void)list_dir;

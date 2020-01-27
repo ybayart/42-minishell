@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/26 19:01:58 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/27 19:20:10 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static char	loop(char ***args, char *l, int (*i)[2], char (*qt)[3])
 		l[(*i)[0]] == '>' || l[(*i)[0]] == '|' || l[(*i)[0]] == ';') &&
 		(*qt)[0] == 0 && (*qt)[1] == 0)
 	{
-		if ((*qt)[2] == 1 && wildcard(args, &(*i)[1]) == 0)
+		if ((*qt)[2] == 1 && wildcard(args, &(*i)[1], (*i)[1]) == 0)
 			return (0);
 		(*qt)[2] = 0;
 		if (setnewline(args, &(*i)[1], l[(*i)[0]]) == 0)
@@ -131,7 +131,7 @@ void		getargs_cmd(char *line)
 	while (line[++i[0]])
 		if (loop(&args, line, &i, &qt) == 0)
 			return ;
-	if (qt[2] == 1 && wildcard(&args, &i[1]) == 0)
+	if (qt[2] == 1 && wildcard(&args, &i[1], i[1]) == 0)
 		return ;
 	cutargs(args);
 }

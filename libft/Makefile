@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 17:23:01 by racohen           #+#    #+#              #
-#    Updated: 2020/01/21 18:58:03 by ybayart          ###   ########.fr        #
+#    Updated: 2020/01/27 19:12:58 by yanyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS = ft_memset.c\
 	   ft_strncpy.c\
 	   ft_strlcat.c\
 	   ft_strnstr.c\
+	   ft_strnlastpos.c\
 	   ft_atoi.c\
 	   ft_calloc.c\
 	   ft_strdup.c\

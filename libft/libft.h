@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:11:29 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/21 18:57:43 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/27 19:13:40 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char				*ft_strnstr(const char *big, const char *little,
 					size_t len);
 char				*ft_strstr(const char *s1, const char *s2);
 char				*ft_strrchr(const char *s, int c);
+size_t				ft_strnlastpos(const char *str, char c, int n);
 char				*ft_strnew(size_t size);
 int					ft_is_in(char *str, char c);
 char				*ft_strtrim(const char *s1, const char *set);
