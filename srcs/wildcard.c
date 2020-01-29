@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/27 19:35:08 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/01/29 16:59:33 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,35 @@ static char	*getrootdir(char *str)
 
 static char	*getafterroot(char *str)
 {
-// A SUIVRE
+	int		i;
+	int		j;
+	char	*newstr;
+
+	i = -1;
+	while (str[++i] != '\0')
+	{
+		if (str[i] == '*')
+			break ;
+	}
+	if (str[i] == '\0')
+		return (ft_strdup(""));
+	while (str[++i] != '\0')
+	{
+		if (str[i] == '/')
+			break ;
+	}
+	if (str[i] == '\0')
+		return (ft_strdup(""));
+	if ((newstr = malloc(sizeof(char) * (ft_strlen(str) - i + 1))) == NULL)
+		return (NULL);
+	j = i;
+	while (str[i] != '\0')
+	{
+		newstr[i - j] = str[i];
+		i++;
+	}
+	newstr[i - j] = '\0';
+	return (newstr);
 }
 
 char		wildcard(char ***args, int *pos, int initpos)
@@ -114,7 +142,7 @@ char		wildcard(char ***args, int *pos, int initpos)
 			printf("|%s| good\n", (*args)[i]);
 		else
 		{
-			printf("|%s| root: |%s|\n", (*args)[i], getrootdir((*args)[i]));
+			printf("|%s|\n - root: |%s|\n - after: |%s|\n", (*args)[i], getrootdir((*args)[i]), getafterroot((*args)[i]));
 		}
 //		if (ft_strchr((*args)[i], '*') == NULL)
 //			printf("+ %s\n", (*args)[i]);
