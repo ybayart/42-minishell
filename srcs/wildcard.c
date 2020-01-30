@@ -6,11 +6,13 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/29 16:59:33 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/01/30 23:55:34 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
+
+int		nb_added;
 
 static char	test_wildcard(char str[], char pattern[], int n, int m)
 {
@@ -41,35 +43,44 @@ static char	test_wildcard(char str[], char pattern[], int n, int m)
 	return (res[n][m]);
 }
 
-static char	list_dir(char ***args, int *pos, char *curr_dir, char *pattern)
+static char	list_dir(char ***search, int pos, char *path[3])
 {
 	DIR				*dir_fd;
 	struct dirent	*dir;
- 
-	if ((dir_fd = opendir(curr_dir)) == NULL)
+	char			state;
+	struct stat 	buf;
+	char			*file;
+
+	if ((dir_fd = opendir(path[0])) == NULL)
 	{
-		printf("error 1 |%s|\n", curr_dir);
+		printf("error 1 |%s||%s|: %s\n", path[0], path[1], strerror(errno));
 		return (0);
 	}
+	state = 0;
 	while ((dir = readdir(dir_fd)) != NULL)
 	{
-		if (ft_strcmp(dir->d_name, ".") != 0 && ft_strcmp(dir->d_name, "..") != 0)
+		if (ft_strncmp(dir->d_name, ".", 1) != 0)
 		{
-			if (test_wildcard(dir->d_name, pattern, ft_strlen(dir->d_name), ft_strlen(pattern)) == 1)
+			if (test_wildcard(dir->d_name, path[2], ft_strlen(dir->d_name),
+							ft_strlen(path[2])) == 1)
 			{
-//		    	stat(dir->d_name, &buf);
-//				if (S_ISDIR(buf.st_mode))
-//				{
-//					if (list_dir(args, pos, ft_strjoin(curr_dir, dir->d_name), pattern) == 0)
-//						return (0);
-//				}
-//				else
-					printf("+ %s\n", ft_strjoin(curr_dir, dir->d_name));
+				stat((file = ft_strjoin(path[0], dir->d_name)), &buf);
+				if (path[1][0] == '\0' || S_ISDIR(buf.st_mode))
+				{
+					file = ft_strjoin(file, path[1]);
+					if (state == 0 && ((*search)[pos] = file) == NULL)
+						return (0);
+					if (state == 1 && ((*search) = ft_strinsert((*search), file, pos++)) == NULL)
+						return (0);
+					state = 1;
+					nb_added++;
+				}
 			}
 		}
 	}
-	(void)args;
-	(void)pos;
+	closedir(dir_fd);
+	if (nb_added == 0)
+		return (0);
 	return (1);
 }
 
@@ -94,7 +105,7 @@ static char	*getrootdir(char *str)
 	}
 }
 
-static char	*getafterroot(char *str)
+static char	*getchilddir(char *str)
 {
 	int		i;
 	int		j;
@@ -102,17 +113,13 @@ static char	*getafterroot(char *str)
 
 	i = -1;
 	while (str[++i] != '\0')
-	{
 		if (str[i] == '*')
 			break ;
-	}
 	if (str[i] == '\0')
 		return (ft_strdup(""));
 	while (str[++i] != '\0')
-	{
 		if (str[i] == '/')
 			break ;
-	}
 	if (str[i] == '\0')
 		return (ft_strdup(""));
 	if ((newstr = malloc(sizeof(char) * (ft_strlen(str) - i + 1))) == NULL)
@@ -127,51 +134,64 @@ static char	*getafterroot(char *str)
 	return (newstr);
 }
 
+static char	*getpattern(char *str)
+{
+	int		i;
+	int		j;
+	char	*newstr;
+
+	i = -1;
+	while (str[++i] != '\0')
+		if (str[i] == '*')
+			break ;
+	i++;
+	while (--i >= 0)
+		if (str[i] == '/')
+			break ;
+	j = i++;
+	while (str[++j] != '\0')
+		if (str[j] == '/')
+			break ;
+	newstr = ft_strndup(str + i, (size_t)j - i);
+	return (newstr);
+}
+
 char		wildcard(char ***args, int *pos, int initpos)
 {
-	int				i;
-//	size_t			j;
-//	char			*strdir;
-//	DIR				*dir_fd;
-//	struct dirent	*dir;
+	int		i;
+	char	**search;
+	char	*path[3];
 
-	i = initpos - 1;
-	while ((*args)[++i] != 0)
+	search = NULL;
+	if ((search = addstr(search)) == NULL)
+		return (0);
+	search[0] = (*args)[initpos];
+	i = 0;
+	nb_added = 0;
+	while (search[i] != 0)
 	{
-		if (ft_strchr((*args)[i], '*') == NULL)
-			printf("|%s| good\n", (*args)[i]);
+		if (ft_strchr(search[i], '*') == NULL)
+			i++;
 		else
 		{
-			printf("|%s|\n - root: |%s|\n - after: |%s|\n", (*args)[i], getrootdir((*args)[i]), getafterroot((*args)[i]));
+			path[0] = getrootdir(search[i]);
+			path[1] = getchilddir(search[i]);
+			path[2] = getpattern(search[i]);
+			if (list_dir(&search, i, path) == 0)
+				break ;
 		}
-//		if (ft_strchr((*args)[i], '*') == NULL)
-//			printf("+ %s\n", (*args)[i]);
-//		else
-//		{
-//			j = 0;
-//			while ((*args)[(*pos)][j] != '/' && (*args)[(*pos)][j] != '\0')
-//				j++;
-//			char	*after = ft_strchr((*args)[(*pos)] + j + 1, '/');
-//			strdir = ((*args)[(*pos)][j] != '/' ? ft_strdup("./") : ft_strndup((*args)[(*pos)], j + 1));
-//			if ((dir_fd = opendir(strdir)) == NULL)
-//				return (0);
-//			while ((dir = readdir(dir_fd)) != NULL)
-//			{
-//				if (dir->d_name[0] != '.')
-//				{
-//					char	*tmp = ft_strjoin(strdir, dir->d_name);
-//					if (after != 0)
-//						tmp = ft_strjoin(tmp, after);
-//					printf("add %s at %d\n", tmp, (*pos));
-//					(*args)[(*pos)++] = tmp;
-//					(*args) = addstr((*args));
-//					if (wildcard(args, pos) == 0)
-//						return (0);
-//				}
-//			}
-//		}
 	}
-	printf("wildcard: %s (%d)\n", (*args)[(*pos)], (*pos));
-	(void)list_dir;
+	if (nb_added != 0)
+	{
+		ft_sort_string_tab(search);
+		initpos = i;
+		i = -1;
+		while (++i < (*pos))
+			if ((search = ft_strinsert(search, (*args)[i], i)) == NULL)
+				return (0);
+		free((*args));
+		(*args) = search;
+		(*pos) += initpos;
+	}
 	return (1);
 }

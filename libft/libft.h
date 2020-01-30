@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:11:29 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/27 19:13:40 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/01/30 21:23:05 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *src);
 char				*ft_strndup(const char *s1, size_t n);
 char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoin_third(char const *s1, char const *s2, const char *s3);
 char				*ft_strfjoin(char *s1, char *s2);
 char				*ft_strncat(char *s1, const char *s2, size_t n);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
@@ -95,5 +96,7 @@ void				ft_lstdel_at(t_list **list, int at, void
 void				ft_lstadd_back(t_list **alst, t_list *new);
 t_list				*ft_lstget_at(t_list *lst, int at);
 char				*ft_strreplace(char **str, char *search, char *replace);
+void				ft_sort_string_tab(char **tab);
+char				**ft_strinsert(char **list, char *str, size_t pos);
 
 #endif
