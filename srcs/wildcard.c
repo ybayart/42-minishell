@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/30 23:55:34 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/01/31 08:25:07 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,9 @@ char		wildcard(char ***args, int *pos, int initpos)
 		free((*args));
 		(*args) = search;
 		(*pos) += initpos;
+//		while ((*args)[++i] != 0)
+//			if ((search = ft_strinsert(search, (*args)[i], (*pos)++)) == NULL)
+//				return (0);
 	}
 	return (1);
 }
