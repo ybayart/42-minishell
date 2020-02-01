@@ -75,7 +75,7 @@ static char	setnewline(char ***args, int *j, char c)
 		if (((*args) = addstr(*args)) == NULL)
 			return (0);
 	}
-	if (c != ' ')
+	if (!ft_isspace(c))
 	{
 		if (((*args)[*j] = addchar((*args)[*j], c)) == NULL)
 			return (0);
@@ -88,7 +88,7 @@ static char	setnewline(char ***args, int *j, char c)
 
 static char	loop(char ***args, char *l, int (*i)[2], char (*qt)[3])
 {
-	if ((l[(*i)[0]] == ' ' || l[(*i)[0]] == '<' ||
+	if ((ft_isspace(l[(*i)[0]]) || l[(*i)[0]] == '<' ||
 		l[(*i)[0]] == '>' || l[(*i)[0]] == '|' || l[(*i)[0]] == ';') &&
 		(*qt)[0] == 0 && (*qt)[1] == 0)
 	{
