@@ -104,8 +104,10 @@ int			shell(void)
 		g_mini->signal = 0;
 		if (ft_strreplace(&line, "$?", ft_itoa(g_mini->last_exit)) == NULL)
 			return (EXIT_FAILURE);
-		getargs_cmd(ft_strtrim(line, " "));
+		if (ft_strlen((line = ft_strtrim(line, " \t\n\v\f\r"))) != 0)
+			getargs_cmd(line);
 		free(line);
 	}
 	return (EXIT_SUCCESS);
 }
+

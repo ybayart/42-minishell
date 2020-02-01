@@ -21,7 +21,7 @@ size_t	ft_strnlastpos(const char *str, char c, int n)
 	i = ft_strlen(str);
 	if (i > (size_t)n)
 		i = n;
-	while (i >= 0)
+	while (i != 0)
 	{
 		if (str[i] == c)
 			break ;
