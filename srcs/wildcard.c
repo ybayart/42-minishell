@@ -6,13 +6,13 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/31 08:25:07 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/03 18:03:57 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-int		nb_added;
+int		g_nb;
 
 static char	test_wildcard(char str[], char pattern[], int n, int m)
 {
@@ -48,19 +48,14 @@ static char	list_dir(char ***search, int pos, char *path[3])
 	DIR				*dir_fd;
 	struct dirent	*dir;
 	char			state;
-	struct stat 	buf;
+	struct stat		buf;
 	char			*file;
 
 	if ((dir_fd = opendir(path[0])) == NULL)
-	{
-		printf("error 1 |%s||%s|: %s\n", path[0], path[1], strerror(errno));
 		return (0);
-	}
 	state = 0;
 	while ((dir = readdir(dir_fd)) != NULL)
-	{
 		if (ft_strncmp(dir->d_name, ".", 1) != 0)
-		{
 			if (test_wildcard(dir->d_name, path[2], ft_strlen(dir->d_name),
 							ft_strlen(path[2])) == 1)
 			{
@@ -70,16 +65,15 @@ static char	list_dir(char ***search, int pos, char *path[3])
 					file = ft_strjoin(file, path[1]);
 					if (state == 0 && ((*search)[pos] = file) == NULL)
 						return (0);
-					if (state == 1 && ((*search) = ft_strinsert((*search), file, pos++)) == NULL)
+					if (state == 1 && ((*search) =
+						ft_strinsert((*search), file, pos++)) == NULL)
 						return (0);
 					state = 1;
-					nb_added++;
+					g_nb++;
 				}
 			}
-		}
-	}
 	closedir(dir_fd);
-	if (nb_added == 0)
+	if (g_nb == 0)
 		return (0);
 	return (1);
 }
@@ -99,8 +93,12 @@ static char	*getrootdir(char *str)
 		return (ft_strdup("./"));
 	else
 	{
-		if (ft_strncmp(str, "/", 1) != 0 && ft_strncmp(str, "./", 2) != 0 && ft_strncmp(str, "../", 3) != 0)
-			return (ft_strjoin("./", ft_strndup(str, ft_strnlastpos(str, '/', j) + 1)));
+		if (ft_strncmp(str, "/", 1) != 0 && ft_strncmp(str, "./", 2) != 0
+										&& ft_strncmp(str, "../", 3) != 0)
+		{
+			return (ft_strjoin("./", ft_strndup(str,
+				ft_strnlastpos(str, '/', j) + 1)));
+		}
 		return (ft_strndup(str, ft_strnlastpos(str, '/', j) + 1));
 	}
 }
@@ -167,7 +165,7 @@ char		wildcard(char ***args, int *pos, int initpos)
 		return (0);
 	search[0] = (*args)[initpos];
 	i = 0;
-	nb_added = 0;
+	g_nb = 0;
 	while (search[i] != 0)
 	{
 		if (ft_strchr(search[i], '*') == NULL)
@@ -181,7 +179,7 @@ char		wildcard(char ***args, int *pos, int initpos)
 				break ;
 		}
 	}
-	if (nb_added != 0)
+	if (g_nb != 0)
 	{
 		ft_sort_string_tab(search);
 		initpos = i;
@@ -192,9 +190,7 @@ char		wildcard(char ***args, int *pos, int initpos)
 		free((*args));
 		(*args) = search;
 		(*pos) += initpos;
-//		while ((*args)[++i] != 0)
-//			if ((search = ft_strinsert(search, (*args)[i], (*pos)++)) == NULL)
-//				return (0);
+		(*args) = addstr((*args));
 	}
 	return (1);
 }
