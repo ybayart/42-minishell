@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/01/26 15:24:45 by ybayart          ###   ########.fr        #
+#    Updated: 2020/02/08 23:19:18 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ SRCS_LIST = main.c \
 			run_touch.c \
 			replace_quote_path.c \
 			print_error.c \
-			wildcard.c
+			wildcard.c \
+			utils_wildcard.c
 
 SRCS_ENV =	ft_lst_add_env.c \
 			ft_lst_clear_env.c \

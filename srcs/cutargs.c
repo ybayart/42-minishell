@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 23:02:56 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/30 19:51:23 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/05 17:35:16 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void		cutargs(char **ar)
 
 	if (init(&data, ar, 0) == 0)
 		return ;
-	while (ar[++data.i] != 0)
+	while (ar[++data.i] != 0 && ar[data.i][0] != '\0')
 	{
 		if (do_if(&data, ar, 0) == 0)
 			return (print_error(5, MSGERROR, NULL, ar[data.i + 1]));

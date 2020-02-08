@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/03 18:03:57 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/08 23:21:32 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,87 +78,12 @@ static char	list_dir(char ***search, int pos, char *path[3])
 	return (1);
 }
 
-static char	*getrootdir(char *str)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (str[i] != '/' && str[i] != '\0')
-		i++;
-	j = 0;
-	while (str[j] != '*' && str[j] != '\0')
-		j++;
-	if (i > j)
-		return (ft_strdup("./"));
-	else
-	{
-		if (ft_strncmp(str, "/", 1) != 0 && ft_strncmp(str, "./", 2) != 0
-										&& ft_strncmp(str, "../", 3) != 0)
-		{
-			return (ft_strjoin("./", ft_strndup(str,
-				ft_strnlastpos(str, '/', j) + 1)));
-		}
-		return (ft_strndup(str, ft_strnlastpos(str, '/', j) + 1));
-	}
-}
-
-static char	*getchilddir(char *str)
-{
-	int		i;
-	int		j;
-	char	*newstr;
-
-	i = -1;
-	while (str[++i] != '\0')
-		if (str[i] == '*')
-			break ;
-	if (str[i] == '\0')
-		return (ft_strdup(""));
-	while (str[++i] != '\0')
-		if (str[i] == '/')
-			break ;
-	if (str[i] == '\0')
-		return (ft_strdup(""));
-	if ((newstr = malloc(sizeof(char) * (ft_strlen(str) - i + 1))) == NULL)
-		return (NULL);
-	j = i;
-	while (str[i] != '\0')
-	{
-		newstr[i - j] = str[i];
-		i++;
-	}
-	newstr[i - j] = '\0';
-	return (newstr);
-}
-
-static char	*getpattern(char *str)
-{
-	int		i;
-	int		j;
-	char	*newstr;
-
-	i = -1;
-	while (str[++i] != '\0')
-		if (str[i] == '*')
-			break ;
-	i++;
-	while (--i >= 0)
-		if (str[i] == '/')
-			break ;
-	j = i++;
-	while (str[++j] != '\0')
-		if (str[j] == '/')
-			break ;
-	newstr = ft_strndup(str + i, (size_t)j - i);
-	return (newstr);
-}
-
 char		wildcard(char ***args, int *pos, int initpos)
 {
 	int		i;
 	char	**search;
 	char	*path[3];
+	char	*last;
 
 	search = NULL;
 	if ((search = addstr(search)) == NULL)
@@ -166,17 +91,19 @@ char		wildcard(char ***args, int *pos, int initpos)
 	search[0] = (*args)[initpos];
 	i = 0;
 	g_nb = 0;
+	last = NULL;
 	while (search[i] != 0)
 	{
-		if (ft_strchr(search[i], '*') == NULL)
+		if (ft_strchr(search[i], '*') == NULL || (last != NULL && ft_strcmp(search[i], last) == 0))
 			i++;
 		else
 		{
-			path[0] = getrootdir(search[i]);
-			path[1] = getchilddir(search[i]);
-			path[2] = getpattern(search[i]);
+			path[0] = w_getrootdir(search[i]);
+			path[1] = w_getchilddir(search[i]);
+			path[2] = w_getpattern(search[i]);
 			if (list_dir(&search, i, path) == 0)
 				break ;
+			last = search[i];
 		}
 	}
 	if (g_nb != 0)
