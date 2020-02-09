@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/09 20:49:47 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/09 23:06:22 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,96 +14,40 @@
 
 int		g_nb;
 
-static char	test_wildcard(char str[], char pattern[], int n, int m)
+static void	test_dir(struct dirent *dir, char *path[3], t_list **newlst, int *i)
 {
-	int		i;
-	int		j;
-	char	res[n + 1][m + 1];
+	char		*file;
+	struct stat	buf;
 
-	if (m == 0)
-		return (n == 0);
-	ft_memset(res, 0, sizeof(res));
-	res[0][0] = 1;
-	j = 0;
-	while (++j <= m)
-		if (pattern[j - 1] == '*')
-			res[0][j] = res[0][j - 1];
-	i = 0;
-	while (++i <= n)
-	{
-		j = 0;
-		while (++j <= m)
-			if (pattern[j - 1] == '*')
-				res[i][j] = res[i][j - 1] || res[i - 1][j];
-			else if (str[i - 1] == pattern[j - 1])
-				res[i][j] = res[i - 1][j - 1];
-			else
-				res[i][j] = 0;
-	}
-	return (res[n][m]);
-}
-
-static char	list_dir(t_list **search, char *path[3])
-{
-	DIR				*dir_fd;
-	struct dirent	*dir;
-	struct stat		buf;
-	char			*file;
-	t_list			*newlst;
-	int				i;
-
-	if ((dir_fd = opendir(path[0])) == NULL)
-		return (0);
-	newlst = NULL;
-	i = 0;
-	while ((dir = readdir(dir_fd)) != NULL)
-		if (ft_strncmp(dir->d_name, ".", 1) != 0)
-			if (test_wildcard(dir->d_name, path[2], ft_strlen(dir->d_name),
-							ft_strlen(path[2])) == 1)
+	if (ft_strncmp(dir->d_name, ".", 1) != 0)
+		if (test_wildcard(dir->d_name, path[2], ft_strlen(dir->d_name),
+						ft_strlen(path[2])) == 1)
+		{
+			stat((file = ft_strjoin(path[0], dir->d_name)), &buf);
+			if (path[1][0] == '\0' || S_ISDIR(buf.st_mode))
 			{
-				stat((file = ft_strjoin(path[0], dir->d_name)), &buf);
-				if (path[1][0] == '\0' || S_ISDIR(buf.st_mode))
-				{
-					file = ft_strjoin(file, path[1]);
-					ft_lstadd_back(&newlst, ft_lstnew(file));
-					g_nb++;
-					i++;
-				}
+				file = ft_strjoin(file, path[1]);
+				ft_lstadd_back(newlst, ft_lstnew(file));
+				g_nb++;
+				(*i)++;
 			}
-	closedir(dir_fd);
-	if (i == 0)
-		return (0);
-	ft_lstlast(newlst)->next = (*search)->next;
-	(*search)->content = newlst->content;
-	(*search)->next = newlst->next;
-	return (1);
+		}
 }
 
-char		wildcard(char ***args, int *pos, int initpos)
+void		wildcard_do_getdir(t_list **search)
 {
-	int		i;
-	char	replace;
-	t_list	*search;
 	t_list	*tmp;
 	char	*path[3];
 	char	breaking;
-	char	**newstr;
-	size_t	len;
 
-	if ((search = ft_lstnew((*args)[initpos])) == NULL)
-		return (0);
-	replace = 0;
-	if (ft_strncmp(search->content, "/", 1) != 0 && ft_strncmp(search->content,
-					"./", 2) != 0 && ft_strncmp(search->content, "../", 3) != 0)
-		replace = 1;
 	g_nb = 0;
 	while (1)
 	{
 		breaking = 1;
-		tmp = search;
+		tmp = (*search);
 		while (tmp != NULL)
 		{
-			if (strchr(tmp->content, '*') != NULL)
+			if (ft_strchr(tmp->content, '*') != NULL)
 			{
 				path[0] = w_getrootdir(tmp->content);
 				path[1] = w_getchilddir(tmp->content);
@@ -116,48 +60,86 @@ char		wildcard(char ***args, int *pos, int initpos)
 		if (breaking == 1)
 			break ;
 	}
+}
+
+void		wildcard_do_format(t_list **search, char replace)
+{
+	t_list	*tmp;
+	int		i;
+	char	*str;
+
+	ft_lst_sort(search, ft_strcmp);
+	tmp = (*search);
+	i = 0;
+	while (tmp != NULL)
+	{
+		if (replace == 1)
+		{
+			str = tmp->content;
+			tmp->content = ft_strdup(tmp->content + 2);
+			free(str);
+		}
+		if (ft_strchr(tmp->content, '*') != NULL)
+		{
+			ft_lstdel_at(search, i);
+			tmp = ft_lstget_at((*search), i);
+		}
+		else if (++i != 0)
+			tmp = tmp->next;
+	}
+}
+
+int			wildcard_do_concat(t_list **search, int *pos, char ***args)
+{
+	size_t	len;
+	char	*str;
+	t_list	*tmp;
+	char	**newstr;
+	int		i;
+
+	len = ft_lstsize((*search));
+	if ((newstr = malloc(sizeof(char*) *
+		(ft_tablen((const char**)(*args)) + len + 1))) == NULL)
+		return (-1);
+	i = -1;
+	(*pos) = (len == 0 ? (*pos) + 1 : (*pos));
+	while (++i < (*pos))
+		newstr[i] = (*args)[i];
+	tmp = (*search);
+	while (tmp != NULL)
+	{
+		newstr[i++] = tmp->content;
+		tmp = tmp->next;
+	}
+	while ((*args)[(size_t)++i - len] != 0)
+		newstr[i] = (*args)[(size_t)i - len];
+	free(*args);
+	(*args) = newstr;
+	return (1);
+}
+
+char		wildcard(char ***args, int *pos, int initpos)
+{
+	char	replace;
+	t_list	*search;
+	int		i;
+
+	if ((search = ft_lstnew((*args)[initpos])) == NULL)
+		return (0);
+	if ((*args)[initpos][0] == '~' && !(search->content = ft_strfrjoin(
+ft_lst_find_env(&g_mini->env, "HOME"), search->content + 1, search->content)))
+		return (0);
+	replace = 0;
+	if (ft_strncmp(search->content, "/", 1) != 0 && ft_strncmp(search->content,
+					"./", 2) != 0 && ft_strncmp(search->content, "../", 3) != 0)
+		replace = 1;
+	wildcard_do_getdir(&search);
 	if (g_nb != 0)
 	{
-		ft_lst_sort(&search, ft_strcmp);
-		tmp = search;
-		i = 0;
-		while (tmp != NULL)
-		{
-			if (replace == 1)
-			{
-				path[0] = tmp->content;
-				tmp->content = ft_strdup(tmp->content + 2);
-				free(path[0]);
-			}
-			if (ft_strchr(tmp->content, '*') != NULL)
-			{
-				ft_lstdel_at(&search, i);
-				tmp = ft_lstget_at(search ,i);
-			}
-			else
-			{
-				tmp = tmp->next;
-				i++;
-			}
-		}
-		len = ft_lstsize(search);
-		if ((newstr = malloc(sizeof(char*) * (ft_tablen((const char**)(*args)) + len + 1))) == NULL)
+		wildcard_do_format(&search, replace);
+		if ((i = wildcard_do_concat(&search, pos, args)) == -1)
 			return (0);
-		i = -1;
-		(*pos) = (len == 0 ? (*pos) + 1 : (*pos));
-		while (++i < (*pos))
-			newstr[i] = (*args)[i];
-		tmp = search;
-		while (tmp != NULL)
-		{
-			newstr[i++] = tmp->content;
-			tmp = tmp->next;
-		}
-		while ((*args)[(size_t)++i - len] != 0)
-			newstr[i] = (*args)[(size_t)i - len];
-		newstr[i - 1] = 0;
-		free(*args);
-		(*args) = newstr;
+		(*args)[i - 1] = 0;
 		(*pos) = i - 2;
 	}
 	return (1);

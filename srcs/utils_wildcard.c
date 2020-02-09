@@ -6,11 +6,62 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 23:17:12 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/08 23:18:22 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/09 23:06:23 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
+
+char	list_dir(t_list **search, char *path[3])
+{
+	DIR				*dir_fd;
+	struct dirent	*dir;
+	t_list			*newlst;
+	int				i;
+
+	if ((dir_fd = opendir(path[0])) == NULL)
+		return (0);
+	newlst = NULL;
+	i = 0;
+	while ((dir = readdir(dir_fd)) != NULL)
+		test_dir(dir, path, &newlst, &i);
+	closedir(dir_fd);
+	if (i == 0)
+		return (0);
+	ft_lstlast(newlst)->next = (*search)->next;
+	(*search)->content = newlst->content;
+	(*search)->next = newlst->next;
+	return (1);
+}
+
+char	test_wildcard(char str[], char pattern[], int n, int m)
+{
+	int		i;
+	int		j;
+	char	res[n + 1][m + 1];
+
+	if (m == 0)
+		return (n == 0);
+	ft_memset(res, 0, sizeof(res));
+	res[0][0] = 1;
+	j = 0;
+	while (++j <= m)
+		if (pattern[j - 1] == '*')
+			res[0][j] = res[0][j - 1];
+	i = 0;
+	while (++i <= n)
+	{
+		j = 0;
+		while (++j <= m)
+			if (pattern[j - 1] == '*')
+				res[i][j] = res[i][j - 1] || res[i - 1][j];
+			else if (str[i - 1] == pattern[j - 1])
+				res[i][j] = res[i - 1][j - 1];
+			else
+				res[i][j] = 0;
+	}
+	return (res[n][m]);
+}
 
 char	*w_getrootdir(char *str)
 {
