@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/05 17:20:25 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/09 12:48:45 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,11 @@ void		getargs_cmd(char *line)
 		return ;
 	if (args[i[1]] != 0 && args[i[1]][0] == '\0')
 		args[i[1]] = 0;
+	i[0] = -1;
+	while (args[++i[0]] != 0)
+		if (args[i[0]][0] == '~' && (args[i[0]] = ft_strfrjoin(
+	ft_lst_find_env(&g_mini->env, "HOME"), args[i[0]] + 1, args[i[0]])) == NULL)
+			return ;
 	cutargs(args);
 }
 

@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 17:23:01 by racohen           #+#    #+#              #
-#    Updated: 2020/01/30 21:27:07 by ybayart          ###   ########.fr        #
+#    Updated: 2020/02/09 13:14:24 by yanyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,21 @@ SRCS = ft_memset.c\
 	   ft_putnbr_fd.c\
 	   ft_sort_string_tab.c\
 	   ft_strinsert.c\
+		ft_lstadd.c \
+		ft_lstadd_at.c \
+		ft_lstadd_back.c \
+		ft_lstadd_front.c \
+		ft_lstclear.c \
+		ft_lstcount.c \
+		ft_lstdel.c \
+		ft_lstdel_at.c \
+		ft_lstdelone.c \
+		ft_lstget_at.c \
+		ft_lstiter.c \
+		ft_lstlast.c \
+		ft_lstmap.c \
+		ft_lstnew.c \
+		ft_lstsize.c \
 		ft_printf.c\
 		ft_format_parser.c\
 		write_c.c\

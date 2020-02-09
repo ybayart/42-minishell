@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/08 23:21:32 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/09 13:54:06 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static char	list_dir(char ***search, int pos, char *path[3])
 char		wildcard(char ***args, int *pos, int initpos)
 {
 	int		i;
+	char	replace;
 	char	**search;
 	char	*path[3];
 	char	*last;
@@ -89,6 +90,10 @@ char		wildcard(char ***args, int *pos, int initpos)
 	if ((search = addstr(search)) == NULL)
 		return (0);
 	search[0] = (*args)[initpos];
+	replace = 0;
+	if (ft_strncmp(search[0], "/", 1) != 0 &&
+	ft_strncmp(search[0], "./", 2) != 0 && ft_strncmp(search[0], "../", 3) != 0)
+		replace = 1;
 	i = 0;
 	g_nb = 0;
 	last = NULL;
@@ -110,6 +115,14 @@ char		wildcard(char ***args, int *pos, int initpos)
 	{
 		ft_sort_string_tab(search);
 		initpos = i;
+		i = -1;
+		while (search[++i] != 0)
+			if (replace == 1)
+			{
+				last = search[i];
+				search[i] = ft_strdup(search[i] + 2);
+				free(last);
+			}
 		i = -1;
 		while (++i < (*pos))
 			if ((search = ft_strinsert(search, (*args)[i], i)) == NULL)

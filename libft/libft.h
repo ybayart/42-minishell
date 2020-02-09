@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:11:29 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/08 23:16:32 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/09 13:44:27 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strjoin_third(char const *s1, char const *s2,
 															const char *s3);
 char				*ft_strfjoin(char *s1, char *s2);
+char				*ft_strfrjoin(char *s1, char *s2, char *del);
 char				*ft_strncat(char *s1, const char *s2, size_t n);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 size_t				ft_strlcpy(char *dest, const char *src, size_t dstsize);
@@ -88,14 +89,22 @@ int					ft_is_in(char *str, char c);
 char				*ft_strtrim(const char *s1, const char *set);
 char				*ft_substr(const char *s, unsigned int start, size_t len);
 void				ft_lstadd(t_list **alst, t_list *new);
-t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstadd_at(t_list **lst, t_list *new, int at);
+void				ft_lstadd_back(t_list **alst, t_list *new);
+void				ft_lstadd_front(t_list **alst, t_list *new);
+void				ft_lstclear(t_list **lst, void (*del)(void*));
 int					ft_lstcount(t_list *list);
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstdel_at(t_list **list, int at, void
-					(*del)(void *, size_t));
-void				ft_lstadd_back(t_list **alst, t_list *new);
+void				ft_lstdel_at(t_list **list, int at,
+											void (*del)(void *, size_t));
+void				ft_lstdelone(t_list *lst, void (*del)(void*));
 t_list				*ft_lstget_at(t_list *lst, int at);
+void				ft_lstiter(t_list *lst, void (*f)(void *));
+t_list				*ft_lstlast(t_list *lst);
+t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
+											void (*del)(void *));
+t_list				*ft_lstnew(void *content);
+int					ft_lstsize(t_list *lst);
 char				*ft_strreplace(char **str, char *search, char *replace);
 void				ft_sort_string_tab(char **tab);
 char				**ft_strinsert(char **list, char *str, size_t pos);
