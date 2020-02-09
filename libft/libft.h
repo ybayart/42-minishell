@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:11:29 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/09 13:44:27 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/09 17:22:08 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 											void (*del)(void *));
 t_list				*ft_lstnew(void *content);
 int					ft_lstsize(t_list *lst);
+void				ft_lst_sort(t_list **begin_list, int (*cmp)());
+void				ft_lst_print(t_list *lst);
 char				*ft_strreplace(char **str, char *search, char *replace);
 void				ft_sort_string_tab(char **tab);
 char				**ft_strinsert(char **list, char *str, size_t pos);

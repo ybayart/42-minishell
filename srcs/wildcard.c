@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/09 13:54:06 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/09 19:18:01 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,18 @@ static char	test_wildcard(char str[], char pattern[], int n, int m)
 	return (res[n][m]);
 }
 
-static char	list_dir(char ***search, int pos, char *path[3])
+static char	list_dir(t_list **search, char *path[3])
 {
 	DIR				*dir_fd;
 	struct dirent	*dir;
-	char			state;
 	struct stat		buf;
 	char			*file;
+	t_list			*newlst;
 
 	if ((dir_fd = opendir(path[0])) == NULL)
 		return (0);
-	state = 0;
+	g_nb = 0;
+	newlst = NULL;
 	while ((dir = readdir(dir_fd)) != NULL)
 		if (ft_strncmp(dir->d_name, ".", 1) != 0)
 			if (test_wildcard(dir->d_name, path[2], ft_strlen(dir->d_name),
@@ -63,18 +64,16 @@ static char	list_dir(char ***search, int pos, char *path[3])
 				if (path[1][0] == '\0' || S_ISDIR(buf.st_mode))
 				{
 					file = ft_strjoin(file, path[1]);
-					if (state == 0 && ((*search)[pos] = file) == NULL)
-						return (0);
-					if (state == 1 && ((*search) =
-						ft_strinsert((*search), file, pos++)) == NULL)
-						return (0);
-					state = 1;
+					ft_lstadd_back(&newlst, ft_lstnew(file));
 					g_nb++;
 				}
 			}
 	closedir(dir_fd);
 	if (g_nb == 0)
 		return (0);
+	ft_lstlast(newlst)->next = (*search)->next;
+	(*search)->content = newlst->content;
+	(*search)->next = newlst->next;
 	return (1);
 }
 
@@ -82,55 +81,72 @@ char		wildcard(char ***args, int *pos, int initpos)
 {
 	int		i;
 	char	replace;
-	char	**search;
+	t_list	*search;
+	t_list	*tmp;
 	char	*path[3];
-	char	*last;
+	char	breaking;
+	char	**newstr;
+	size_t	len;
 
-	search = NULL;
-	if ((search = addstr(search)) == NULL)
+	if ((search = ft_lstnew((*args)[initpos])) == NULL)
 		return (0);
-	search[0] = (*args)[initpos];
 	replace = 0;
-	if (ft_strncmp(search[0], "/", 1) != 0 &&
-	ft_strncmp(search[0], "./", 2) != 0 && ft_strncmp(search[0], "../", 3) != 0)
+	if (ft_strncmp(search->content, "/", 1) != 0 && ft_strncmp(search->content,
+					"./", 2) != 0 && ft_strncmp(search->content, "../", 3) != 0)
 		replace = 1;
-	i = 0;
 	g_nb = 0;
-	last = NULL;
-	while (search[i] != 0)
+	while (1)
 	{
-		if (ft_strchr(search[i], '*') == NULL || (last != NULL && ft_strcmp(search[i], last) == 0))
-			i++;
-		else
+		breaking = 1;
+		tmp = search;
+		while (tmp != NULL)
 		{
-			path[0] = w_getrootdir(search[i]);
-			path[1] = w_getchilddir(search[i]);
-			path[2] = w_getpattern(search[i]);
-			if (list_dir(&search, i, path) == 0)
-				break ;
-			last = search[i];
+			if (strchr(tmp->content, '*') != NULL)
+			{
+				path[0] = w_getrootdir(tmp->content);
+				path[1] = w_getchilddir(tmp->content);
+				path[2] = w_getpattern(tmp->content);
+				if (list_dir(&tmp, path) == 0)
+					break ;
+				breaking = 0;
+			}
+			tmp = tmp->next;
 		}
+		if (breaking == 1)
+			break ;
 	}
 	if (g_nb != 0)
 	{
-		ft_sort_string_tab(search);
-		initpos = i;
-		i = -1;
-		while (search[++i] != 0)
+		ft_lst_sort(&search, ft_strcmp);
+		tmp = search;
+		while (tmp != NULL)
+		{
 			if (replace == 1)
 			{
-				last = search[i];
-				search[i] = ft_strdup(search[i] + 2);
-				free(last);
+				path[0] = tmp->content;
+				tmp->content = ft_strdup(tmp->content + 2);
+				free(path[0]);
 			}
+			tmp = tmp->next;
+		}
+		len = ft_lstsize(search);
+		if ((newstr = malloc(sizeof(char*) * (ft_tablen((const char**)(*args)) + len + 1))) == NULL)
+			return (0);
 		i = -1;
 		while (++i < (*pos))
-			if ((search = ft_strinsert(search, (*args)[i], i)) == NULL)
-				return (0);
-		free((*args));
-		(*args) = search;
-		(*pos) += initpos;
-		(*args) = addstr((*args));
+			newstr[i] = (*args)[i];
+		tmp = search;
+		while (tmp != NULL)
+		{
+			newstr[i++] = tmp->content;
+			tmp = tmp->next;
+		}
+		while ((*args)[(size_t)++i - len] != 0)
+			newstr[i] = (*args)[(size_t)i - len];
+		newstr[i - 1] = 0;
+		free(*args);
+		(*args) = newstr;
+		(*pos) = i - 2;
 	}
 	return (1);
 }

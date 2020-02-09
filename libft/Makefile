@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 17:23:01 by racohen           #+#    #+#              #
-#    Updated: 2020/02/09 13:14:24 by yanyan           ###   ########.fr        #
+#    Updated: 2020/02/09 17:22:24 by yanyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,8 @@ SRCS = ft_memset.c\
 		ft_lstmap.c \
 		ft_lstnew.c \
 		ft_lstsize.c \
+		ft_lst_sort.c \
+		ft_lst_print.c \
 		ft_printf.c\
 		ft_format_parser.c\
 		write_c.c\

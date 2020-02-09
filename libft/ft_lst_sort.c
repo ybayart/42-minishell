@@ -1,38 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sort_string_tab.c                               :+:      :+:    :+:   */
+/*   ft_lst_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/16 10:41:57 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/09 16:56:03 by yanyan           ###   ########.fr       */
+/*   Created: 2019/08/18 20:08:29 by ybayart           #+#    #+#             */
+/*   Updated: 2020/02/09 16:57:37 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_sort_string_tab(char **tab)
+void	ft_lst_swap(t_list *list)
 {
-	size_t	i1;
-	size_t	i2;
-	char	*tmp;
-	size_t	len;
+	void	*content;
 
-	i1 = 0;
-	len = ft_tablen((const char **)tab);
-	while (i1 < len)
+	content = list->content;
+	list->content = list->next->content;
+	list->next->content = content;
+}
+
+void	ft_lst_sort(t_list **begin_list, int (*cmp)())
+{
+	t_list	*a;
+	t_list	*b;
+
+	a = *begin_list;
+	while (a != NULL)
 	{
-		i2 = 0;
-		while (++i2 < len - 1)
+		b = *begin_list;
+		while (b->next != NULL)
 		{
-			if (ft_strcmp(tab[i2], tab[i2 - 1]) < 0)
-			{
-				tmp = tab[i2];
-				tab[i2] = tab[i2 - 1];
-				tab[i2 - 1] = tmp;
-			}
+			if ((*cmp)(b->content, b->next->content) > 0)
+				ft_lst_swap(b);
+			b = b->next;
 		}
-		i1++;
+		a = a->next;
 	}
 }
