@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/09 23:06:22 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/10 00:35:08 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		g_nb;
 
-static void	test_dir(struct dirent *dir, char *path[3], t_list **newlst, int *i)
+void		test_dir(struct dirent *dir, char *path[3], t_list **newlst, int *i)
 {
 	char		*file;
 	struct stat	buf;
@@ -92,7 +92,6 @@ void		wildcard_do_format(t_list **search, char replace)
 int			wildcard_do_concat(t_list **search, int *pos, char ***args)
 {
 	size_t	len;
-	char	*str;
 	t_list	*tmp;
 	char	**newstr;
 	int		i;
@@ -115,7 +114,7 @@ int			wildcard_do_concat(t_list **search, int *pos, char ***args)
 		newstr[i] = (*args)[(size_t)i - len];
 	free(*args);
 	(*args) = newstr;
-	return (1);
+	return (i);
 }
 
 char		wildcard(char ***args, int *pos, int initpos)

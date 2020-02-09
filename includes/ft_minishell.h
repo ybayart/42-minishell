@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/09 23:06:08 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/10 00:23:04 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char		*w_getchilddir(char *str);
 char		*w_getpattern(char *str);
 char		test_wildcard(char str[], char pattern[], int n, int m);
 char		list_dir(t_list **search, char *path[3]);
+void		test_dir(struct dirent *dir, char *path[3], t_list **newlst,
+																	int *i);
 
 t_list_env	*ft_lst_new_env(char *name, char *value);
 void		ft_lstdel_at_env(t_list_env **list, char *at);
