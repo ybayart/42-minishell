@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/09 19:18:01 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/09 20:49:47 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ static char	list_dir(t_list **search, char *path[3])
 	struct stat		buf;
 	char			*file;
 	t_list			*newlst;
+	int				i;
 
 	if ((dir_fd = opendir(path[0])) == NULL)
 		return (0);
-	g_nb = 0;
 	newlst = NULL;
+	i = 0;
 	while ((dir = readdir(dir_fd)) != NULL)
 		if (ft_strncmp(dir->d_name, ".", 1) != 0)
 			if (test_wildcard(dir->d_name, path[2], ft_strlen(dir->d_name),
@@ -66,10 +67,11 @@ static char	list_dir(t_list **search, char *path[3])
 					file = ft_strjoin(file, path[1]);
 					ft_lstadd_back(&newlst, ft_lstnew(file));
 					g_nb++;
+					i++;
 				}
 			}
 	closedir(dir_fd);
-	if (g_nb == 0)
+	if (i == 0)
 		return (0);
 	ft_lstlast(newlst)->next = (*search)->next;
 	(*search)->content = newlst->content;
@@ -106,9 +108,8 @@ char		wildcard(char ***args, int *pos, int initpos)
 				path[0] = w_getrootdir(tmp->content);
 				path[1] = w_getchilddir(tmp->content);
 				path[2] = w_getpattern(tmp->content);
-				if (list_dir(&tmp, path) == 0)
-					break ;
-				breaking = 0;
+				if (list_dir(&tmp, path) == 1)
+					breaking = 0;
 			}
 			tmp = tmp->next;
 		}
@@ -119,6 +120,7 @@ char		wildcard(char ***args, int *pos, int initpos)
 	{
 		ft_lst_sort(&search, ft_strcmp);
 		tmp = search;
+		i = 0;
 		while (tmp != NULL)
 		{
 			if (replace == 1)
@@ -127,12 +129,22 @@ char		wildcard(char ***args, int *pos, int initpos)
 				tmp->content = ft_strdup(tmp->content + 2);
 				free(path[0]);
 			}
-			tmp = tmp->next;
+			if (ft_strchr(tmp->content, '*') != NULL)
+			{
+				ft_lstdel_at(&search, i);
+				tmp = ft_lstget_at(search ,i);
+			}
+			else
+			{
+				tmp = tmp->next;
+				i++;
+			}
 		}
 		len = ft_lstsize(search);
 		if ((newstr = malloc(sizeof(char*) * (ft_tablen((const char**)(*args)) + len + 1))) == NULL)
 			return (0);
 		i = -1;
+		(*pos) = (len == 0 ? (*pos) + 1 : (*pos));
 		while (++i < (*pos))
 			newstr[i] = (*args)[i];
 		tmp = search;
