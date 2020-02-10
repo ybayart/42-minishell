@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/10 00:35:08 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/10 09:30:38 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ void		wildcard_do_getdir(t_list **search)
 
 void		wildcard_do_format(t_list **search, char replace)
 {
-	t_list	*tmp;
-	int		i;
-	char	*str;
+	t_list		*tmp;
+	int			i;
+	char		*str;
+	struct stat	buf;
 
 	ft_lst_sort(search, ft_strcmp);
 	tmp = (*search);
@@ -79,7 +80,8 @@ void		wildcard_do_format(t_list **search, char replace)
 			tmp->content = ft_strdup(tmp->content + 2);
 			free(str);
 		}
-		if (ft_strchr(tmp->content, '*') != NULL)
+		if (ft_strchr(tmp->content, '*') != NULL ||
+			stat(tmp->content, &buf) != 0)
 		{
 			ft_lstdel_at(search, i);
 			tmp = ft_lstget_at((*search), i);
