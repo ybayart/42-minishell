@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/03 18:03:16 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/10 09:58:00 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ void		sig_handler(int signo)
 		signal(SIGINT, sig_handler);
 		write(1, "\n", 1);
 		print_prompt(g_mini->env);
+	}
+	else if (signo == SIGQUIT)
+	{
+		g_mini->signal = 1;
+		signal(signo, SIG_IGN);
+		signal(SIGQUIT, sig_handler);
+		write(1, "Quit: 3\n", 8);
+		print_prompt(g_mini->env);
+
 	}
 }
 
@@ -90,6 +99,7 @@ int			shell(void)
 	if ((line = ft_strdup("")) == NULL)
 		return (EXIT_FAILURE);
 	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	while (g_mini->alive)
 	{
 		if (g_mini->signal == 0)
