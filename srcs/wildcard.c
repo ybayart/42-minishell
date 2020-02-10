@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/10 09:55:54 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/10 21:51:19 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		test_dir(struct dirent *dir, char *path[3], t_list **newlst, int *i)
 	char		*file;
 	struct stat	buf;
 
-	if (ft_strncmp(dir->d_name, ".", 1) != 0)
+	if (ft_strncmp(dir->d_name, ".", 1) != 0 || path[2][0] == '.')
 		if (test_wildcard(dir->d_name, path[2], ft_strlen(dir->d_name),
 						ft_strlen(path[2])) == 1)
 		{
