@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/10 09:30:38 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/10 09:50:04 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ int			wildcard_do_concat(t_list **search, int *pos, char ***args)
 		newstr[i++] = tmp->content;
 		tmp = tmp->next;
 	}
-	while ((*args)[(size_t)++i - len] != 0)
+	while ((*args)[(size_t)++i - (len + 1)] != 0 &&
+			(*args)[(size_t)i - len] != 0)
 		newstr[i] = (*args)[(size_t)i - len];
 	free(*args);
 	(*args) = newstr;
