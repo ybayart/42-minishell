@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/10 09:58:00 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/10 14:11:43 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void		sig_handler(int signo)
 		signal(SIGQUIT, sig_handler);
 		write(1, "Quit: 3\n", 8);
 		print_prompt(g_mini->env);
-
 	}
 }
 
@@ -79,14 +78,13 @@ void		space_cmd(char **cmd, int f_in, int f_out)
 	else if ((path = search_bin((char*)cmd[0],
 			ft_lst_find_env(&g_mini->env, PATH))) == NULL)
 		return (print_error(1, "command not found", cmd[0], NULL));
-	if (ft_strcmp(cmd[0], "export") != 0)
-		cmd = replace_quote_path(cmd);
 	if ((res = (char**)malloc(sizeof(char*) * (i + 1))) == NULL)
 		return ;
 	res[i] = 0;
 	i = -1;
 	while (cmd[++i])
 		res[i] = cmd[i];
+	res = replace_quote_path(res);
 	run_cmd(path, res, ft_list_to_tab_env(g_mini->env));
 	free(res);
 	setfd(f_in, f_out, 1);
