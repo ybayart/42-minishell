@@ -34,9 +34,7 @@ int		ft_get_len(char **str)
 void	shell_ex(const char *bin, char **argv, char **env)
 {
 	pid_t	id;
-	int		status;
 
-	status = 0;
 	if ((id = fork()) == 0)
 		execve(bin, argv, env);
 	else
