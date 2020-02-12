@@ -59,7 +59,7 @@ SRCS_ENV =	ft_lst_add_env.c \
 			ft_lst_replace_env.c
 
 SRCS =  $(addprefix $(SRCS_DIR), $(SRCS_LIST)) \
-		$(addprefix $(SRCS_DIR)env_list/, $(SRCS_ENV))
+		$(addprefix $(SRCS_DIR)env_list/, $(SRCS_ENV)) \
 
 OBJECT = $(patsubst %.c, %.o, $(SRCS))
 

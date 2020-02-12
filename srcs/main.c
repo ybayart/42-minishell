@@ -27,6 +27,7 @@ t_list_env	*init_env(char *const envp[])
 	t_list_env	*elem;
 
 	i = -1;
+	env = NULL;
 	while (envp[++i])
 	{
 		if ((elem = (t_list_env*)malloc(sizeof(t_list_env))) == NULL)
