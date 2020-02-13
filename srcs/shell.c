@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/14 00:20:37 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/14 00:56:23 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 void		print_prompt(t_list_env *list)
 {
-	g_mini->prompt_size = ft_printf("%s> ", ft_lst_find_env(&list, PWD));
+	g_mini->prompt_size = 0;
+	if (g_mini->ispipe == 0)
+		g_mini->prompt_size = ft_printf("%s", ft_lst_find_env(&list, PWD));
+	write(1, "> ", 2);
+	g_mini->prompt_size += 2;
 }
 
 void		sig_handler(int signo)
@@ -103,18 +107,31 @@ int			shell(void)
 	print_prompt(g_mini->env);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
+	line = ft_strdup("");
 	while (read(0, &c, 1) == 1)
 		if ((ret = ft_termcaps(c)) == -1)
 			return (EXIT_FAILURE);
 		else if (ret == 1)
 		{
-			if ((line = ft_lstconcat_typed(g_mini->typed)) == NULL)
+			if ((line = ft_strfdjoin(line, ft_lstconcat_typed(g_mini->typed))) == NULL)
 				return (EXIT_FAILURE);
 			if (ft_strreplace(&line, "$?", ft_itoa(g_mini->last_exit)) == NULL)
 				return (EXIT_FAILURE);
 			write(1, "\n", 1);
 			if (ft_strlen((line = ft_strtrim(line, " \t\n\v\f\r"))) != 0)
-				getargs_cmd(line);
+			{
+				if (line[ft_strlen(line) - 1] == '|' && (g_mini->ispipe = 1) == 1)
+				{
+					ft_lst_clear_typed(&(g_mini->typed));
+					g_mini->typed_pos = 0;
+					print_prompt(g_mini->env);
+					continue ;
+				}
+				else if ((g_mini->ispipe = 0) == 0)
+					getargs_cmd(line);
+			}
+			free(line);
+			line = ft_strdup("");
 			ft_lst_clear_typed(&(g_mini->typed));
 			g_mini->typed_pos = 0;
 			print_prompt(g_mini->env);

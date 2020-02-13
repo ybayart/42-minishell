@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/14 00:20:38 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/14 00:57:07 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,25 @@ char	ft_termcaps(char c)
 		state++;
 	else if (state == 2)
 	{
-		if (c == 68)
+		if (c == 65)
+		{
+            write(1, "\r", 1);
+            cap = tgetstr("ce", NULL);
+            tputs(cap, 1, putchar);
+            fflush(stdout);
+			print_prompt(g_mini->env);
+			write(1, "up", 2);
+		}
+		else if (c == 66)
+		{
+            write(1, "\r", 1);
+            cap = tgetstr("ce", NULL);
+            tputs(cap, 1, putchar);
+            fflush(stdout);
+			print_prompt(g_mini->env);
+			write(1, "down", 4);
+		}
+		else if (c == 68)
 		{
 			if (g_mini->typed_pos > 0)
 			{

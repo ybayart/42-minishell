@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 20:15:30 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 15:25:57 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/14 00:36:33 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ static char	*ft_cpy(char *dest, const char *src, int lens1)
 	return (dest);
 }
 
-char		*ft_strjoinfreeboth(char *s1, char *s2, int lens1, int lens2)
+char		*ft_strjoinfreeboth(char *s1, char *s2, int l1, int l2)
 {
 	char	*str;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	if ((str = malloc(lens1 + lens2 + 1)) == NULL)
+	if ((str = malloc(l1 + l2 + 1)) == NULL)
 		return (NULL);
-	ft_cpy(str, s1, lens1);
-	ft_cat(str, s2, lens1, lens2);
+	ft_cpy(str, s1, l1);
+	ft_cat(str, s2, l1, l2);
 	free(s1);
 	free(s2);
 	return (str);

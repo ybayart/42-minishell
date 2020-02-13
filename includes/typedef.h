@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:08:06 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/13 22:14:25 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/14 00:39:05 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_mini
 	t_typed		*typed;
 	int			typed_pos;
 	int			prompt_size;
+	char		ispipe;
 }				t_mini;
 
 typedef struct	s_cutargs
