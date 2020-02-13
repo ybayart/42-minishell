@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/13 23:01:23 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/13 23:04:28 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int			shell(void)
 			if (c == 126)
 			{
 				write(1, "\r", 1);
-				cap = tgetstr("cl", NULL);
+				cap = tgetstr("ce", NULL);
 				tputs(cap, 1, putchar);
 				fflush(stdout);
 				ft_lstdel_at_typed(&(g_mini->typed), g_mini->typed_pos);
