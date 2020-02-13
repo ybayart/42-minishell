@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:08:06 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/23 19:46:40 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/13 22:14:25 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ typedef struct	s_list_env
 	struct s_list_env	*next;
 }				t_list_env;
 
+typedef struct	s_typed
+{
+	char			c;
+	struct s_typed	*next;
+}				t_typed;
+
 typedef struct	s_mini
 {
 	t_list_env	*env;
@@ -29,6 +35,9 @@ typedef struct	s_mini
 	int			last_exit;
 	int			signal;
 	int			redir;
+	t_typed		*typed;
+	int			typed_pos;
+	int			prompt_size;
 }				t_mini;
 
 typedef struct	s_cutargs

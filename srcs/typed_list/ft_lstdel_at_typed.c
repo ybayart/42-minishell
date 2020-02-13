@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab.c                                      :+:      :+:    :+:   */
+/*   ft_lstdel_at_typed.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 16:25:23 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/13 18:39:59 by ybayart          ###   ########.fr       */
+/*   Created: 2019/11/25 14:06:51 by racohen           #+#    #+#             */
+/*   Updated: 2020/02/13 18:29:36 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_minishell.h"
 
-void	ft_free_tab(void **ft_tab)
+void	ft_lstdel_at_typed(t_typed **list, int at)
 {
-	int	i;
+	t_typed	*tmp;
+	t_typed	*prev;
+	int		count;
 
-	i = 0;
-	while (ft_tab && ft_tab[i++])
-		free(ft_tab[i]);
-	free(ft_tab);
+	if (!list || !(*list))
+		return ;
+	tmp = *list;
+	prev = NULL;
+	count = 0;
+	while (count != at && tmp->next != NULL)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+		count++;
+	}
+	if (count == at)
+	{
+		if (prev)
+			prev->next = tmp->next;
+		else
+			*list = tmp->next;
+		free(tmp);
+	}
 }

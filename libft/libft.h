@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:11:29 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/09 20:17:11 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/13 18:42:22 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct		s_list
 
 void				ft_putchar(char c);
 int					ft_atoi(const char *str);
-void				ft_free_tab(void **tab);
+void				ft_free_tab(void **ft_tab);
 char				*ft_freeint(int *elem);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
@@ -75,7 +75,7 @@ char				*ft_strncat(char *s1, const char *s2, size_t n);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 size_t				ft_strlcpy(char *dest, const char *src, size_t dstsize);
 size_t				ft_strlen(const char *s);
-size_t				ft_tablen(const char **tab);
+size_t				ft_tablen(const char **ft_tab);
 char				*ft_strmapi(const char *s, char (*f)(unsigned int, char));
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_strcmp(const char *s1, const char *s2);
@@ -107,7 +107,7 @@ int					ft_lstsize(t_list *lst);
 void				ft_lst_sort(t_list **begin_list, int (*cmp)());
 void				ft_lst_print(t_list *lst);
 char				*ft_strreplace(char **str, char *search, char *replace);
-void				ft_sort_string_tab(char **tab);
+void				ft_sort_string_tab(char **ft_tab);
 char				**ft_strinsert(char **list, char *str, size_t pos);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 06:22:46 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 15:23:00 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/13 18:42:43 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,21 @@ char		*ft_convert_addr(void *ptr)
 	uintmax_t			ads;
 	char				*res;
 	char				*hex;
-	char				*tab;
+	char				*ft_tab;
 
 	hex = "0123456789abcdef";
 	ads = (uintmax_t)ptr;
 	if ((res = ft_strdup("0x")) == NULL)
 		return (NULL);
-	if ((tab = ft_strdup("")) == NULL)
+	if ((ft_tab = ft_strdup("")) == NULL)
 		return (NULL);
 	while (ads > 0)
 	{
-		if ((tab = ft_concat_char(tab, hex[ads % 16])) == NULL)
+		if ((ft_tab = ft_concat_char(ft_tab, hex[ads % 16])) == NULL)
 			return (NULL);
 		ads /= 16;
 	}
-	return (ft_strjoinfree(res, (char*)tab));
+	return (ft_strjoinfree(res, (char*)ft_tab));
 }
 
 char		*ft_p_precision(va_list *arg)
