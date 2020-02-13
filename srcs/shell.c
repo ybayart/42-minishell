@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/13 23:04:28 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/13 23:33:14 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		sig_handler(int signo)
 		write(1, "\n", 1);
 		print_prompt(g_mini->env);
 	}
-	else if (signo == SIGQUIT)
+	else if (signo == SIGQUIT && ft_lstsize_typed(g_mini->typed) == 0)
 	{
 		g_mini->signal = 1;
 		signal(signo, SIG_IGN);
@@ -99,6 +99,8 @@ int			shell(void)
 
 	print_prompt(g_mini->env);
 	state = 0;
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	while (read(0, &c, 1) == 1)
 	{
 		if ((c == 27 && state == 0) || (c == 91 && state == 1))
@@ -139,6 +141,11 @@ int			shell(void)
 			}
 			state = 0;
 		}
+		else if (c == 4 && ft_lstsize_typed(g_mini->typed) == 0)
+		{
+			write(1, "exit\n", 5);
+			return (EXIT_FAILURE);
+		}
 		else if (c == 10)
 		{
 			if ((line = ft_lstconcat_typed(g_mini->typed)) == NULL)
@@ -168,7 +175,7 @@ int			shell(void)
 				ft_lstdel_at_typed(&(g_mini->typed), --(g_mini->typed_pos));
 			}
 		}
-		else
+		else if (c != 4)
 			ft_lstadd_at_typed(&(g_mini->typed), ft_lstnew_typed(c), (g_mini->typed_pos)++);
 		if (state == 0)
 		{

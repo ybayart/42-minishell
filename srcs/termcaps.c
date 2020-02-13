@@ -6,14 +6,10 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/13 18:50:34 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/13 23:30:24 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-int		ft_putchar_typed(int c)
-{
-	write(1, &c, 1);
-	return (c);
-}
+
