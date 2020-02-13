@@ -6,18 +6,18 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 19:07:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/01/21 16:10:31 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/13 18:41:36 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	ft_tabintlen(int *tab)
+static size_t	ft_tabintlen(int *ft_tab)
 {
 	size_t		i;
 
 	i = 0;
-	while (tab[i] != -1)
+	while (ft_tab[i] != -1)
 		i++;
 	return (i);
 }

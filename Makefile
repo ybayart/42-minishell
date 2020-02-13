@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/02/09 18:29:25 by yanyan           ###   ########.fr        #
+#    Updated: 2020/02/13 22:59:24 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT_PATH = ./libft/
 
 LIBFT_NAME = ft
 
-LIBFT_COMPIL = -L$(LIBFT_PATH) -l$(LIBFT_NAME)
+COMPIL_LIB = -L$(LIBFT_PATH) -l$(LIBFT_NAME) -lncurses
 
 SRCS_DIR = srcs/
 
@@ -47,7 +47,8 @@ SRCS_LIST = main.c \
 			replace_quote_path.c \
 			print_error.c \
 			wildcard.c \
-			utils_wildcard.c
+			utils_wildcard.c \
+			termcaps.c
 
 SRCS_ENV =	ft_lst_add_env.c \
 			ft_lst_clear_env.c \
@@ -58,8 +59,18 @@ SRCS_ENV =	ft_lst_add_env.c \
 			ft_lst_new_env.c \
 			ft_lst_replace_env.c
 
+SRCS_TYPED=	ft_lstadd_typed.c \
+			ft_lstadd_at_typed.c \
+			ft_lstnew_typed.c \
+			ft_lst_print_typed.c \
+			ft_lstdel_at_typed.c \
+			ft_lstsize_typed.c \
+			ft_lstconcat_typed.c \
+			ft_lst_clear_typed.c
+
 SRCS =  $(addprefix $(SRCS_DIR), $(SRCS_LIST)) \
 		$(addprefix $(SRCS_DIR)env_list/, $(SRCS_ENV)) \
+		$(addprefix $(SRCS_DIR)typed_list/, $(SRCS_TYPED))
 
 OBJECT = $(patsubst %.c, %.o, $(SRCS))
 
@@ -72,7 +83,7 @@ all : $(NAME)
 
 $(NAME): $(OBJECT) $(INCS_DIR) libft $(INCS_DIR)
 	cd $(LIBFT_PATH) && make
-	$(CC) $(FLAGS) $(SAN) $(LIBFT_COMPIL) $(OBJECT) -o $(NAME)
+	$(CC) $(FLAGS) $(SAN) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
 
 libft:
 	cd $(LIBFT_PATH) && make

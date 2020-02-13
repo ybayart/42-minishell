@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab.c                                      :+:      :+:    :+:   */
+/*   termcaps.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 16:25:23 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/13 18:39:59 by ybayart          ###   ########.fr       */
+/*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
+/*   Updated: 2020/02/13 18:50:34 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_minishell.h"
 
-void	ft_free_tab(void **ft_tab)
+int		ft_putchar_typed(int c)
 {
-	int	i;
-
-	i = 0;
-	while (ft_tab && ft_tab[i++])
-		free(ft_tab[i]);
-	free(ft_tab);
+	write(1, &c, 1);
+	return (c);
 }

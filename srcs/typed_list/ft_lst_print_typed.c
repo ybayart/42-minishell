@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab.c                                      :+:      :+:    :+:   */
+/*   ft_lst_print_typed.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: yanyan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 16:25:23 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/13 18:39:59 by ybayart          ###   ########.fr       */
+/*   Created: 2020/02/09 17:10:45 by yanyan            #+#    #+#             */
+/*   Updated: 2020/02/13 18:07:31 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_minishell.h"
 
-void	ft_free_tab(void **ft_tab)
+void	ft_lst_print_typed(t_typed *lst)
 {
-	int	i;
-
-	i = 0;
-	while (ft_tab && ft_tab[i++])
-		free(ft_tab[i]);
-	free(ft_tab);
+	while (lst != NULL)
+	{
+		write(1, &(lst->c), 1);
+		lst = lst->next;
+	}
 }

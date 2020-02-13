@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libinc.h                                           :+:      :+:    :+:   */
+/*   ft_lstconcat_typed.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/16 15:10:11 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/13 18:35:50 by ybayart          ###   ########.fr       */
+/*   Created: 2020/02/13 22:48:16 by ybayart           #+#    #+#             */
+/*   Updated: 2020/02/13 22:56:54 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBINC_H
-# define LIBINC_H
+#include "ft_minishell.h"
 
-# include <stdlib.h>
-# include <sys/types.h>
-# include <dirent.h>
-# include <sys/stat.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <sys/mman.h>
-# include <sys/wait.h>
-# include <sys/errno.h>
-# include <stdbool.h>
-# include <unistd.h>
-# include <termios.h>
-# include <curses.h>
-# include <term.h>
+char	*ft_lstconcat_typed(t_typed *lst)
+{
+	char	*str;
+	int		i;
 
-#endif
+	if ((str = malloc(sizeof(char) * (ft_lstsize_typed(lst) + 1))) == NULL)
+		return (NULL);
+	i = 0;
+	while (lst != NULL)
+	{
+		str[i++] = lst->c;
+		lst = lst->next;
+	}
+	str[i] = '\0';
+	return (str);
+}

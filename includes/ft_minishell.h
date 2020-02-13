@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/10 00:23:04 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/13 22:59:50 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_mini		*g_mini;
 
 int			shell(void);
 void		getargs_cmd(char *line);
-char		*addchar(char *str, char c);
-char		**addstr(char **tab);
+char		*ft_addc(char *str, char c);
+char		**ft_addstr(char **ft_tab);
 void		cutargs(char **args);
 char		istoken(char *token);
 int			openfile(int *fd, char *file, int init, int mode);
@@ -54,6 +54,7 @@ char		test_wildcard(char str[], char pattern[], int n, int m);
 char		list_dir(t_list **search, char *path[3]);
 void		test_dir(struct dirent *dir, char *path[3], t_list **newlst,
 																	int *i);
+int			ft_putchar_typed(int c);
 
 t_list_env	*ft_lst_new_env(char *name, char *value);
 void		ft_lstdel_at_env(t_list_env **list, char *at);
@@ -64,5 +65,14 @@ int			ft_lst_size_env(t_list_env *lst);
 char		**ft_list_to_tab_env(t_list_env *list);
 void		ft_lst_replace_env(t_list_env **list, char *name, char *value);
 void		print_error(int state, char *str, char *bin, char *comp);
+
+t_typed		*ft_lstnew_typed(char c);
+void		ft_lstadd_typed(t_typed **alst, t_typed *new);
+void		ft_lstadd_at_typed(t_typed **lst, t_typed *new, int at);
+void		ft_lst_print_typed(t_typed *lst);
+void		ft_lstdel_at_typed(t_typed **list, int at);
+int			ft_lstsize_typed(t_typed *lst);
+char		*ft_lstconcat_typed(t_typed *lst);
+void		ft_lst_clear_typed(t_typed **lst);
 
 #endif

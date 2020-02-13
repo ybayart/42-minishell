@@ -6,13 +6,13 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/10 22:12:53 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/13 18:43:48 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-char		*addchar(char *str, char c)
+char		*ft_addc(char *str, char c)
 {
 	int		i;
 	size_t	len;
@@ -40,13 +40,13 @@ char		*addchar(char *str, char c)
 	return (new);
 }
 
-char		**addstr(char **tab)
+char		**ft_addstr(char **ft_tab)
 {
 	int		i;
 	size_t	len;
 	char	**new;
 
-	if (tab == 0)
+	if (ft_tab == 0)
 	{
 		if ((new = malloc(sizeof(char*) * 2)) == NULL)
 			return (NULL);
@@ -55,13 +55,13 @@ char		**addstr(char **tab)
 	}
 	else
 	{
-		len = ft_tablen((const char**)tab);
+		len = ft_tablen((const char**)ft_tab);
 		if ((new = malloc(sizeof(char*) * (len + 2))) == NULL)
 			return (NULL);
 		new[len + 1] = 0;
 		i = -1;
-		while (tab[++i] != 0)
-			new[i] = tab[i];
+		while (ft_tab[++i] != 0)
+			new[i] = ft_tab[i];
 	}
 	new[len] = ft_strdup("\0");
 	return (new);
@@ -72,15 +72,15 @@ static char	setnewline(char ***args, int *j, char c)
 	if ((*args)[*j][0] != '\0')
 	{
 		(*j)++;
-		if (((*args) = addstr(*args)) == NULL)
+		if (((*args) = ft_addstr(*args)) == NULL)
 			return (0);
 	}
 	if (!ft_isspace(c))
 	{
-		if (((*args)[*j] = addchar((*args)[*j], c)) == NULL)
+		if (((*args)[*j] = ft_addc((*args)[*j], c)) == NULL)
 			return (0);
 		(*j)++;
-		if ((*args = addstr(*args)) == NULL)
+		if ((*args = ft_addstr(*args)) == NULL)
 			return (0);
 	}
 	return (1);
@@ -109,7 +109,7 @@ static char	loop(char ***args, char *l, int (*i)[2], char (*qt)[3])
 	else if ((*qt)[2] != -1 && (*qt)[0] == 0 && (*qt)[1] == 0 && ((*i)[0] == 0
 	|| l[(*i)[0] - 1] != '\\') && l[(*i)[0]] == '*' && ((*qt)[2] = 1) == 2)
 		;
-	else if (((*args)[(*i)[1]] = addchar((*args)[(*i)[1]], l[(*i)[0]])) == NULL)
+	else if (((*args)[(*i)[1]] = ft_addc((*args)[(*i)[1]], l[(*i)[0]])) == NULL)
 		return (0);
 	return (1);
 }
@@ -121,7 +121,7 @@ void		getargs_cmd(char *line)
 	char	**args;
 
 	args = NULL;
-	if ((args = addstr(args)) == NULL)
+	if ((args = ft_addstr(args)) == NULL)
 		return ;
 	i[0] = -1;
 	i[1] = 0;

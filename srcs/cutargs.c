@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 23:02:56 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/10 22:12:52 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/13 18:36:58 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	init(t_cutargs *data, char **ar, char state)
 		(*data).isredir = 0;
 	}
 	(*data).cmd = NULL;
-	if (((*data).cmd = addstr((*data).cmd)) == NULL)
+	if (((*data).cmd = ft_addstr((*data).cmd)) == NULL)
 		return (0);
 	(*data).f_in = 0;
 	(*data).f_out = 1;
@@ -117,7 +117,7 @@ void		cutargs(char **ar)
 {
 	t_cutargs	data;
 
-	if ((ar = addstr(ar)) == NULL || init(&data, ar, 0) == 0)
+	if ((ar = ft_addstr(ar)) == NULL || init(&data, ar, 0) == 0)
 		return ;
 	while (ar[++data.i] != 0 && ar[data.i][0] != '\0')
 	{
@@ -135,7 +135,7 @@ void		cutargs(char **ar)
 			return ;
 		else if (data.state++ == 0 &&
 (data.cmd[ft_tablen((const char**)data.cmd) - 1] = ar[data.i]) == ar[data.i])
-			if ((data.cmd = addstr(data.cmd)) == NULL)
+			if ((data.cmd = ft_addstr(data.cmd)) == NULL)
 				return ;
 	}
 	endcuts(data);

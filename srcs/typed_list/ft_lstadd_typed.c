@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab.c                                      :+:      :+:    :+:   */
+/*   ft_lstadd_typed.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 16:25:23 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/13 18:39:59 by ybayart          ###   ########.fr       */
+/*   Created: 2019/11/25 13:26:50 by racohen           #+#    #+#             */
+/*   Updated: 2020/02/13 18:00:05 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_minishell.h"
 
-void	ft_free_tab(void **ft_tab)
+void	ft_lstadd_typed(t_typed **alst, t_typed *new)
 {
-	int	i;
+	t_typed *tmp;
 
-	i = 0;
-	while (ft_tab && ft_tab[i++])
-		free(ft_tab[i]);
-	free(ft_tab);
+	tmp = *alst;
+	*alst = new;
+	new->next = tmp;
 }

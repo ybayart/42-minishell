@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/23 14:14:58 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/13 19:47:51 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,24 @@ t_mini		*init_struct(char *const envp[])
 	return (g_mini);
 }
 
+void		enableRawMode(void)
+{
+	struct termios	raw;
+
+	tgetent(NULL, getenv("TERM"));
+	tcgetattr(STDIN_FILENO, &raw);
+	raw.c_lflag &= ~(ICANON);
+	raw.c_lflag &= ~(ECHO);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+	g_mini->typed_pos = 0;
+	g_mini->typed = NULL;
+}
+
 int			main(int argc, char *const argv[], char *const envp[])
 {
 	if ((g_mini = init_struct(envp)) == NULL)
 		return (ft_free_all(g_mini));
+	enableRawMode();
 	if (shell() == EXIT_FAILURE)
 		return (ft_free_all(g_mini));
 	ft_free_all(g_mini);

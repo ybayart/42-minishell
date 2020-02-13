@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab.c                                      :+:      :+:    :+:   */
+/*   ft_lst_clear_typed.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 16:25:23 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/13 18:39:59 by ybayart          ###   ########.fr       */
+/*   Created: 2019/11/29 16:39:17 by racohen           #+#    #+#             */
+/*   Updated: 2020/02/13 22:59:07 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_minishell.h"
 
-void	ft_free_tab(void **ft_tab)
+void	ft_lst_clear_typed(t_typed **lst)
 {
-	int	i;
+	t_typed	*tmp;
+	t_typed	*list;
 
-	i = 0;
-	while (ft_tab && ft_tab[i++])
-		free(ft_tab[i]);
-	free(ft_tab);
+	list = *lst;
+	tmp = NULL;
+	while (list != NULL)
+	{
+		if (list->next)
+			tmp = list->next;
+		else
+			tmp = NULL;
+		free(list);
+		list = tmp;
+	}
+	*lst = NULL;
 }
