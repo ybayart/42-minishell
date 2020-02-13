@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/13 22:59:50 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/14 00:16:01 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 t_mini		*g_mini;
 
 int			shell(void);
+void		print_prompt(t_list_env *list);
+char		ft_termcaps(char c);
 void		getargs_cmd(char *line);
 char		*ft_addc(char *str, char c);
 char		**ft_addstr(char **ft_tab);
