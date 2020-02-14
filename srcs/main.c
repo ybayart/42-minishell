@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/14 00:48:21 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/14 12:39:51 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_mini		*init_struct(char *const envp[])
 	return (g_mini);
 }
 
-void		enableRawMode(void)
+void		raw_mode(void)
 {
 	struct termios	raw;
 
@@ -73,7 +73,7 @@ int			main(int argc, char *const argv[], char *const envp[])
 {
 	if ((g_mini = init_struct(envp)) == NULL)
 		return (ft_free_all(g_mini));
-	enableRawMode();
+	raw_mode();
 	if (shell() == EXIT_FAILURE)
 		return (ft_free_all(g_mini));
 	ft_free_all(g_mini);

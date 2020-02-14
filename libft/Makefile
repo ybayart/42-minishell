@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 17:23:01 by racohen           #+#    #+#              #
-#    Updated: 2020/02/09 17:22:24 by yanyan           ###   ########.fr        #
+#    Updated: 2020/02/14 13:58:01 by yanyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRCS = ft_memset.c\
 	   ft_itoa.c\
 	   ft_strmapi.c\
 	   ft_putchar_fd.c\
+	   ft_termputs.c\
 	   ft_putstr_fd.c\
 	   ft_putendl_fd.c\
 	   ft_putnbr_fd.c\
