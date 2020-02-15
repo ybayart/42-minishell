@@ -12,14 +12,6 @@
 
 #include "ft_minishell.h"
 
-void	print_term(char *cap, char prompt)
-{
-	cap = tgetstr(cap, NULL);
-	tputs(cap, 1, ft_termputs);
-	if (prompt == 1)
-		print_prompt(0);
-}
-
 void	ft_termcaps_arrow(char c, int *state)
 {
 	if (c == 65)
@@ -43,6 +35,16 @@ void	ft_termcaps_arrow(char c, int *state)
 	{
 		print_term("nd", 0);
 		g_mini->typed_pos++;
+	}
+	else if (c == 70)
+	{
+		g_mini->typed_pos = ft_lstsize_typed(g_mini->typed);
+		print_term_goto("ch", 0, 0, g_mini->prompt_size + g_mini->typed_pos);
+	}
+	else if (c == 72)
+	{
+		g_mini->typed_pos = 0;
+		print_term_goto("ch", 0, 0, g_mini->prompt_size + g_mini->typed_pos);
 	}
 	(*state)++;
 }
@@ -74,16 +76,12 @@ char	ft_termcaps_keys(char c, char key)
 
 void	ft_termcaps_printend(char c, int *state)
 {
-	char	*cap;
-
 	if ((*state) == 0)
 	{
 		write(1, "\r", 1);
 		print_prompt(0);
 		ft_lst_print_typed(g_mini->typed);
-		cap = tgetstr("ch", NULL);
-		tputs(tgoto(cap, 0, g_mini->prompt_size + g_mini->typed_pos),
-														1, ft_termputs);
+		print_term_goto("ch", 0, 0, g_mini->prompt_size + g_mini->typed_pos);
 	}
 	else if ((*state) == 3 && c != 51)
 		(*state) = 0;

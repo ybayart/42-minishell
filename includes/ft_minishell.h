@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/14 14:11:14 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/15 20:00:02 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_mini		*g_mini;
 
 int			shell(void);
 void		print_prompt(char clear);
+void		print_term(char *cap, char prompt);
+void		print_term_goto(char *cap, char prompt, int x, int y);
 char		ft_termcaps(char c);
 void		getargs_cmd(char *line);
 char		*ft_addc(char *str, char c);
