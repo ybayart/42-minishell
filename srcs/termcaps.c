@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/14 14:12:46 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/15 20:11:28 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,11 @@
 
 void	ft_termcaps_arrow(char c, int *state)
 {
-	if (c == 65)
+	if (c == 65 || c == 66)
 	{
 		write(1, "\r", 1);
 		print_term("ce", 1);
-		write(1, "up", 2);
-	}
-	else if (c == 66)
-	{
-		write(1, "\r", 1);
-		print_term("ce", 1);
-		write(1, "down", 4);
+		write(1, (c == 65 ? "up" : "down"), (c == 65 ? 2 : 4));
 	}
 	else if (c == 68 && g_mini->typed_pos > 0)
 	{
@@ -36,14 +30,9 @@ void	ft_termcaps_arrow(char c, int *state)
 		print_term("nd", 0);
 		g_mini->typed_pos++;
 	}
-	else if (c == 70)
+	else if (c == 70 || c == 72)
 	{
-		g_mini->typed_pos = ft_lstsize_typed(g_mini->typed);
-		print_term_goto("ch", 0, 0, g_mini->prompt_size + g_mini->typed_pos);
-	}
-	else if (c == 72)
-	{
-		g_mini->typed_pos = 0;
+		g_mini->typed_pos = (c == 70 ? ft_lstsize_typed(g_mini->typed) : 0);
 		print_term_goto("ch", 0, 0, g_mini->prompt_size + g_mini->typed_pos);
 	}
 	(*state)++;

@@ -6,13 +6,13 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 19:54:12 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/15 20:08:02 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/15 20:08:54 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void    print_term(char *cap, char prompt)
+void	print_term(char *cap, char prompt)
 {
 	cap = tgetstr(cap, NULL);
 	tputs(cap, 1, ft_termputs);
