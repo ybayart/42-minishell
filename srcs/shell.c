@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/14 14:08:51 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/15 21:25:47 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,10 @@ int			shell(void)
 					continue ;
 				}
 				else if ((g_mini->ispipe = 0) == 0)
+				{
+					add_history(line);
 					getargs_cmd(line);
+				}
 			}
 			free(line);
 			line = ft_strdup("");

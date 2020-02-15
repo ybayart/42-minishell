@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_termcaps.c                                   :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/15 19:54:12 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/15 20:41:55 by ybayart          ###   ########.fr       */
+/*   Created: 2020/02/15 21:43:18 by ybayart           #+#    #+#             */
+/*   Updated: 2020/02/15 21:43:32 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_minishell.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <curses.h>
+#include <term.h>
+#include <termios.h>
+#include <stdlib.h>
 
-void	print_term(char *cap, char prompt)
+int		main(void)
 {
-	cap = tgetstr(cap, NULL);
-	tputs(cap, 1, ft_termputs);
-	if (prompt == 1)
-		print_prompt(0);
-}
+	struct termios	raw;
+	char			c;
 
-void	print_term_goto(char *cap, char prompt, int x, int y)
-{
-	cap = tgetstr(cap, NULL);
-	tputs(tgoto(cap, x, y), 1, ft_termputs);
-	if (prompt == 1)
-		print_prompt(0);
+	tgetent(NULL, getenv("TERM"));
+	tcgetattr(STDIN_FILENO, &raw);
+	raw.c_lflag &= ~(ICANON);
+	raw.c_lflag &= ~(ECHO);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+	while (read(0, &c, 1) == 1)
+	{
+		printf("%d\n", c);
+	}
 }
