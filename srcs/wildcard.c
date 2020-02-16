@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/13 18:44:31 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/16 19:00:16 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void		wildcard_do_getdir(t_list **search)
 				path[2] = w_getpattern(tmp->content);
 				if (list_dir(&tmp, path) == 1)
 					breaking = 0;
+				free(path[0]);
+				free(path[1]);
+				free(path[2]);
 			}
 			tmp = tmp->next;
 		}
@@ -76,9 +79,9 @@ void		wildcard_do_format(t_list **search, char replace)
 	{
 		if (replace == 1)
 		{
-			str = tmp->content;
-			tmp->content = ft_strdup(tmp->content + 2);
-			free(str);
+			str = ft_strdup(tmp->content + 2);
+			free(tmp->content);
+			tmp->content = str;
 		}
 		if (ft_strchr(tmp->content, '*') != NULL ||
 			stat(tmp->content, &buf) != 0)
@@ -109,7 +112,7 @@ int			wildcard_do_concat(t_list **search, int *pos, char ***args)
 	tmp = (*search);
 	while (tmp != NULL)
 	{
-		newstr[i++] = tmp->content;
+		newstr[i++] = ft_strdup(tmp->content);
 		tmp = tmp->next;
 	}
 	while ((*args)[(size_t)++i - (len + 1)] != 0 &&
@@ -144,5 +147,6 @@ ft_lst_find_env(&g_mini->env, "HOME"), search->content + 1, search->content)))
 		(*args)[i - 1] = 0;
 		(*pos) = i - 2;
 	}
+	ft_lstclear(&search);
 	return (1);
 }
