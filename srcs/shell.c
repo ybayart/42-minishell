@@ -6,46 +6,11 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 03:14:53 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/16 05:24:27 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
-
-void		print_prompt(char clear)
-{
-	if (clear == 1)
-	{
-		ft_lst_clear_typed(&(g_mini->typed));
-		g_mini->typed_pos = 0;
-	}
-	g_mini->prompt_size = 0;
-	if (g_mini->ispipe == 0)
-		g_mini->prompt_size = ft_printf("%s",
-				ft_lst_find_env(&(g_mini->env), PWD));
-	write(1, "> ", 2);
-	g_mini->prompt_size += 2;
-}
-
-void		sig_handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		g_mini->signal = 1;
-		signal(signo, SIG_IGN);
-		signal(SIGINT, sig_handler);
-		write(1, "\n", 1);
-		print_prompt(1);
-	}
-	else if (signo == SIGQUIT && ft_lstsize_typed(g_mini->typed) == 0)
-	{
-		g_mini->signal = 1;
-		signal(signo, SIG_IGN);
-		signal(SIGQUIT, sig_handler);
-		write(1, "Quit: 3\n", 8);
-		print_prompt(1);
-	}
-}
 
 static void	setfd(int f_in, int f_out, char state)
 {
@@ -100,42 +65,48 @@ void		space_cmd(char **cmd, int f_in, int f_out)
 	setfd(f_in, f_out, 1);
 }
 
+static char	shell_do(char **line)
+{
+	write(1, "\n", 1);
+	if (ft_strlen(((*line) = ft_strtrim((*line), " \t\n\v\f\r"))) != 0)
+	{
+		if ((*line)[ft_strlen((*line)) - 1] == '|' && (g_mini->ispipe = 1))
+		{
+			print_prompt(1);
+			return (0);
+		}
+		else if ((g_mini->ispipe = 0) == 0)
+		{
+			add_history((*line));
+			g_mini->exec = 1;
+			getargs_cmd((*line));
+		}
+	}
+	return (1);
+}
+
 int			shell(void)
 {
 	char	ret;
 	char	c;
 	char	*line;
 
-	print_prompt(0);
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
 	line = ft_strdup("");
 	while (read(0, &c, 1) == 1)
 		if ((ret = ft_termcaps(c)) == -1)
 			return (EXIT_FAILURE);
 		else if (ret == 1)
 		{
-			if (!(line = ft_strfdjoin(line, ft_lstconcat_typed(g_mini->typed))))
+			if (!(line = ft_strfdjoin(line, ft_lstconcat_typed(g_mini->typed)))
+			|| ft_strreplace(&line, "$?", ft_itoa(g_mini->last_exit)) == NULL)
 				return (EXIT_FAILURE);
-			if (ft_strreplace(&line, "$?", ft_itoa(g_mini->last_exit)) == NULL)
-				return (EXIT_FAILURE);
-			write(1, "\n", 1);
-			if (ft_strlen((line = ft_strtrim(line, " \t\n\v\f\r"))) != 0)
-			{
-				if (line[ft_strlen(line) - 1] == '|' && (g_mini->ispipe = 1))
-				{
-					print_prompt(1);
-					continue ;
-				}
-				else if ((g_mini->ispipe = 0) == 0)
-				{
-					add_history(line);
-					getargs_cmd(line);
-				}
-			}
+			if (shell_do(&line) == 0)
+				continue ;
 			free(line);
 			line = ft_strdup("");
-			print_prompt(1);
+			if (g_mini->signal == 0)
+				print_prompt(1);
+			g_mini->signal = 0;
 		}
 	return (EXIT_SUCCESS);
 }

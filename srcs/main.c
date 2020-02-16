@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 04:07:20 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/16 04:38:12 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ t_mini		*init_struct(char *const envp[])
 	g_mini->typed = NULL;
 	g_mini->history_pos = -1;
 	g_mini->history = NULL;
+	print_prompt(0);
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	return (g_mini);
 }
 

@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/02/16 00:54:09 by ybayart          ###   ########.fr        #
+#    Updated: 2020/02/16 04:44:17 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS_DIR = srcs/
 INCS_DIR = includes/
 
 SRCS_LIST = main.c \
+			utils.c \
 			shell.c \
 			getargs_cmd.c \
 			cutargs.c \
