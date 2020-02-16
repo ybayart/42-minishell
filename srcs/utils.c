@@ -14,6 +14,8 @@
 
 void		print_prompt(char clear)
 {
+	char	*pwd;
+
 	if (clear == 1)
 	{
 		ft_lst_clear_typed(&(g_mini->typed));
@@ -21,10 +23,11 @@ void		print_prompt(char clear)
 	}
 	g_mini->prompt_size = 0;
 	if (g_mini->ispipe == 0)
-		g_mini->prompt_size = ft_printf("%s",
-				ft_lst_find_env(&(g_mini->env), PWD));
-	write(1, "> ", 2);
-	g_mini->prompt_size += 2;
+	{
+		pwd = ft_lst_find_env(&(g_mini->env), PWD);
+		g_mini->prompt_size = write(1, pwd, ft_strlen(pwd));
+	}
+	g_mini->prompt_size += write(1, "> ", 2);
 	g_mini->exec = 0;
 }
 

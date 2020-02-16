@@ -22,7 +22,10 @@ void	run_env(const char *bin, char **argv, char **env)
 	list = g_mini->env;
 	while (list)
 	{
-		ft_printf("%s=%s\n", list->name, list->value);
+		write(1, list->name, ft_strlen(list->name));
+		write(1, "=", 1);
+		write(1, list->value, ft_strlen(list->value));
+		write(1, "\n", 1);
 		list = list->next;
 	}
 	return ;

@@ -14,9 +14,12 @@
 
 void	run_pwd(const char *bin, char **argv, char **env)
 {
+	char	*pwd;
+
 	(void)bin;
 	(void)argv;
 	(void)env;
-	ft_printf("%s\n", ft_lst_find_env(&g_mini->env, PWD));
-	return ;
+	pwd = ft_lst_find_env(&g_mini->env, PWD);
+	write(1, pwd, ft_strlen(pwd));
+	write(1, "\n", 1);
 }

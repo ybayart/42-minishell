@@ -26,10 +26,10 @@ void	run_echo(const char *bin, char **argv, char **env)
 	{
 		if (i != 1)
 			write(1, " ", 1);
-		ft_printf("%s", argv[i + j]);
+		write(1, argv[i + j], ft_strlen(argv[i + 1]));
 	}
 	if (j == 0)
-		ft_printf("\n");
+		write(1, "\n", 1);
 	(void)bin;
 	(void)env;
 }
