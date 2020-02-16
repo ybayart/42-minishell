@@ -6,12 +6,14 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:08:06 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/14 00:39:05 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/16 03:29:21 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPEDEF_H
 # define TYPEDEF_H
+
+#include "libft.h"
 
 typedef struct	s_list_env
 {
@@ -39,6 +41,8 @@ typedef struct	s_mini
 	int			typed_pos;
 	int			prompt_size;
 	char		ispipe;
+	t_list		*history;
+	int			history_pos;
 }				t_mini;
 
 typedef struct	s_cutargs

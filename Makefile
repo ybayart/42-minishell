@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/02/15 21:37:50 by ybayart          ###   ########.fr        #
+#    Updated: 2020/02/16 00:54:09 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,9 @@ SRCS_TYPED=	ft_lstadd_typed.c \
 			ft_lstdel_at_typed.c \
 			ft_lstsize_typed.c \
 			ft_lstconcat_typed.c \
-			ft_lst_clear_typed.c
+			ft_lst_clear_typed.c \
+			ft_lst_push_str_typed.c \
+			ft_lst_push_back_typed.c
 
 SRCS =  $(addprefix $(SRCS_DIR), $(SRCS_LIST)) \
 		$(addprefix $(SRCS_DIR)env_list/, $(SRCS_ENV)) \

@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/14 12:39:51 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/16 04:07:20 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ t_mini		*init_struct(char *const envp[])
 	g_mini->signal = 0;
 	g_mini->redir = 0;
 	g_mini->ispipe = 0;
+	g_mini->typed_pos = 0;
+	g_mini->typed = NULL;
+	g_mini->history_pos = -1;
+	g_mini->history = NULL;
 	return (g_mini);
 }
 
@@ -65,13 +69,11 @@ void		raw_mode(void)
 	raw.c_lflag &= ~(ICANON);
 	raw.c_lflag &= ~(ECHO);
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
-	g_mini->typed_pos = 0;
-	g_mini->typed = NULL;
 }
 
 int			main(int argc, char *const argv[], char *const envp[])
 {
-	if ((g_mini = init_struct(envp)) == NULL)
+	if ((g_mini = init_struct(envp)) == NULL || get_history() == 0)
 		return (ft_free_all(g_mini));
 	raw_mode();
 	if (shell() == EXIT_FAILURE)

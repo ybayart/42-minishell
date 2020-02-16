@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/15 21:37:13 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/16 03:35:00 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char		list_dir(t_list **search, char *path[3]);
 void		test_dir(struct dirent *dir, char *path[3], t_list **newlst,
 																	int *i);
 void		add_history(char *line);
+char		get_history(void);
+void		set_history(char c);
 
 t_list_env	*ft_lst_new_env(char *name, char *value);
 void		ft_lstdel_at_env(t_list_env **list, char *at);
@@ -78,5 +80,7 @@ void		ft_lstdel_at_typed(t_typed **list, int at);
 int			ft_lstsize_typed(t_typed *lst);
 char		*ft_lstconcat_typed(t_typed *lst);
 void		ft_lst_clear_typed(t_typed **lst);
+void		ft_lst_push_str_typed(t_typed **lst, char *str);
+void		ft_lst_push_back_typed(t_typed **lst, char c);
 
 #endif
