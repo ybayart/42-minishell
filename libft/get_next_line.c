@@ -3,126 +3,101 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 00:04:20 by racohen           #+#    #+#             */
-/*   Updated: 2019/11/18 17:19:12 by racohen          ###   ########.fr       */
+/*   Created: 2019/11/17 21:39:35 by ybayart           #+#    #+#             */
+/*   Updated: 2019/11/18 19:12:11 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-char	*ft_substrfr(char *s, unsigned int start, size_t len)
+void		init_free_gnl(t_gnl *gnl, char **line)
 {
-	char	*temp;
-	int		i;
+	gnl->l_line = 0;
+	*line = malloc(sizeof(char));
+	*line[0] = 0;
+}
 
+int			gnl_is_readed(const char *s, int len)
+{
+	int	i;
+
+	if (!s)
+		return (-2);
 	i = 0;
-	if (s == NULL)
-		return (NULL);
-	if ((temp = (char*)malloc((len + 1) * sizeof(char))) == NULL)
-		return (NULL);
-	temp[len] = '\0';
-	while (len--)
+	while (i < len)
 	{
-		temp[i] = s[start];
+		if (s[i] == '\n')
+			return (i);
 		i++;
-		start++;
 	}
-	free(s);
-	return (temp);
+	return (-1);
 }
 
-int		check_line(char **str, char **line)
+int			gnl_lecture(int fd, t_gnl *gnl, char **line)
 {
-	int i;
+	gnl->len = read(fd, gnl->str, BUFFER_SIZE);
+	if (gnl->len > 0)
+		gnl->str[gnl->len] = '\0';
+	if (gnl->len == 0)
+		return (0);
+	if (gnl->len == -1)
+	{
+		free(*line);
+		return (-1);
+	}
+	return (1);
+}
 
+static char	*join(char *s1, char *s2, int *s_s1, int s_s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	if (!s1 || !s2)
+		return (NULL);
+	if (!(str = malloc((*s_s1 + s_s2 + 1) * sizeof(char))))
+		return (NULL);
 	i = -1;
-	while ((*str)[++i] && i < (int)ft_strlen(*str))
+	while (++i < *s_s1)
+		str[i] = s1[i];
+	j = i;
+	i = -1;
+	while (++i < s_s2)
+		str[j + i] = s2[i];
+	*s_s1 += s_s2;
+	str[j + i] = '\0';
+	free(s1);
+	return (str);
+}
+
+int			get_next_line(int fd, char **line)
+{
+	static t_gnl	gnl;
+	char			*tmp;
+
+	if (fd < 0 || !line || BUFFER_SIZE <= 0 || read(fd, gnl.str, 0) == -1)
+		return (-1);
+	init_free_gnl(&gnl, line);
+	if (gnl.i == 0 && (gnl.tmp = gnl_lecture(fd, &gnl, line)) <= 0)
+		return (gnl.tmp);
+	while (1)
 	{
-		if ((*str)[i] == '\n')
+		if ((gnl.tmp = gnl_is_readed(gnl.str + gnl.i, gnl.len - gnl.i)) < 0)
+			*line = join(*line, gnl.str + gnl.i, &gnl.l_line, gnl.len - gnl.i);
+		else
 		{
-			if (i == 0)
-			{
-				if (((*line) = ft_strdup("")) == NULL)
-					return (-1);
-				*str = ft_substrfr(*str, i + 1, ft_strlen(*str));
-			}
-			else
-			{
-				if (((*line) = ft_substr(*str, 0, i)) == NULL)
-					return (-1);
-				*str = ft_substrfr(*str, i + 1, ft_strlen(*str));
-			}
-			return (1);
+			tmp = ft_substr(gnl.str + gnl.i, 0, gnl.tmp);
+			*line = join(*line, tmp, &gnl.l_line, gnl.tmp);
+			free(tmp);
 		}
+		gnl.i = ((gnl.tmp < 0) ? 0 : gnl.i + gnl.tmp + 1);
+		if (gnl.tmp >= 0)
+			break ;
+		if ((gnl.tmp = gnl_lecture(fd, &gnl, line)) <= 0)
+			return (gnl.tmp);
 	}
-	return (0);
-}
-
-int		free_all(char **str, char *buff, int crit)
-{
-	if (*str && (crit == -1 || crit == 0))
-	{
-		free(*str);
-		*str = NULL;
-	}
-	if (buff != NULL)
-		free(buff);
-	if (crit == -1)
-		return (-1);
-	else if (crit)
-		return (1);
-	return (0);
-}
-
-int		setup(char **buff, char **str, char **line, int fd)
-{
-	int ret;
-
-	if (!(*buff = (char*)ft_calloc(BUFFER_SIZE + 1, sizeof(char))))
-		return (-1);
-	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0)
-		return (-1);
-	if (!*str)
-		if (!(*str = (char*)ft_calloc(BUFFER_SIZE + 1, sizeof(char))))
-			return (-1);
-	if (*str)
-	{
-		ret = check_line(str, line);
-		if (ret == -1)
-			return (-1);
-		else if (ret)
-			return (1);
-	}
-	return (0);
-}
-
-int		get_next_line(int fd, char **line)
-{
-	char		*buff;
-	int			ret;
-	static char	*str;
-
-	if ((ret = setup(&buff, &str, line, fd)) == -1)
-		return (free_all(&str, buff, -1));
-	if (ret)
-		return (free_all(&str, buff, 1));
-	while ((ret = read(fd, buff, BUFFER_SIZE)) > 0)
-	{
-		buff[ret] = '\0';
-		str = ft_strjoin(str, buff);
-		free(buff);
-		buff = NULL;
-		if ((ret = check_line(&str, line)) == -1)
-			return (free_all(&str, buff, -1));
-		if (ret)
-			return (free_all(&str, buff, 1));
-		if (!(buff = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-			return (free_all(&str, buff, -1));
-	}
-	if (ret == -1 || ((*line) = ft_substr(str, 0, ft_strlen(str))) == NULL)
-		return (free_all(&str, buff, -1));
-	return (free_all(&str, buff, 0));
+	return (1);
 }

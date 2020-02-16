@@ -6,15 +6,15 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/02/16 16:00:50 by ybayart          ###   ########.fr        #
+#    Updated: 2020/02/16 17:07:34 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = clang
 
 FLAGS = -Wall -Wextra -Werror
 
-SAN = -fsanitize=address
+SAN = -fsanitize=address -g
 
 NAME = minishell 
 
