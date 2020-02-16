@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:54:07 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/10 13:20:56 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/16 15:58:28 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	run_echo(const char *bin, char **argv, char **env)
 	{
 		if (i != 1)
 			write(1, " ", 1);
-		write(1, argv[i + j], ft_strlen(argv[i + 1]));
+		write(1, argv[i + j], ft_strlen(argv[i + j]));
 	}
 	if (j == 0)
 		write(1, "\n", 1);
