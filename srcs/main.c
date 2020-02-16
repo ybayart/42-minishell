@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 17:58:20 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/16 19:14:12 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	init_env(char *const envp[])
 			return (0);
 		ft_lst_add_env(&(g_mini->env),
 			ft_lst_new_env(ft_strdup(tmp[0]), ft_strdup(tmp[1])));
-		printf("%p: |%s| %zu\n", tmp[0], tmp[0], ft_strlen(tmp[0]));
 		ft_free_tab((void**)tmp);
 	}
 	return (1);
@@ -67,12 +66,21 @@ void		raw_mode(void)
 
 int			main(int argc, char *const argv[], char *const envp[])
 {
+	pid_t	pid;
+
+	if ((pid = fork()) == -1)
+		exit(EXIT_FAILURE);
+	else if (pid != 0)
+	{
+		waitpid(0,NULL, 0);
+		exit(EXIT_SUCCESS);
+	}
 	if (init_struct(envp) == 0 || get_history() == 0)
-		return (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	raw_mode();
 	if (shell() == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	(void)argc;
 	(void)argv;
-	return (EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
