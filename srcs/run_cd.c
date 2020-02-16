@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:53:01 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/21 19:27:25 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/16 15:47:31 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,14 @@ void		run_cd(const char *bin, char **argv, char **env)
 		if (ft_strlen(argv[1]) > 0 && chdir(argv[1]) == -1)
 			print_error(2, argv[1], "cd", NULL);
 	}
-	ft_lst_replace_env(&g_mini->env, "OLDPWD",
-				ft_strdup(ft_lst_find_env(&g_mini->env, "PWD")));
-	ft_lst_replace_env(&g_mini->env, "PWD", ft_strdup(getcwd(NULL, 0)));
+	if (getcwd(NULL, 0) != NULL)
+	{
+		ft_lst_replace_env(&g_mini->env, "OLDPWD",
+			ft_strdup(ft_lst_find_env(&g_mini->env, "PWD")));
+		ft_lst_replace_env(&g_mini->env, "PWD", ft_strdup(getcwd(NULL, 0)));
+	}
+	else
+		chdir(ft_lst_find_env(&g_mini->env, "PWD"));
 	(void)bin;
 	(void)env;
 }
