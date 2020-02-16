@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:55:43 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 16:37:28 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/16 16:40:35 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	run_exit(const char *bin, char **argv, char **env)
 	{
 		ft_lst_clear_env(&(g_mini->env));
 		ft_lst_clear_typed(&(g_mini->typed));
-		ft_lstclear(&(g_mini->history), &free);
+		ft_lstclear(&(g_mini->history));
 		while (1);
 		exit(0);
 	}

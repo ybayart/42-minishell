@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 16:25:23 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/13 18:39:59 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/16 16:53:21 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	ft_free_tab(void **ft_tab)
 {
 	int	i;
 
-	i = 0;
-	while (ft_tab && ft_tab[i++])
+	i = -1;
+	while (ft_tab[++i] != '\0')
 		free(ft_tab[i]);
 	free(ft_tab);
 }
