@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:11:29 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/14 13:57:35 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/16 16:25:29 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstadd_at(t_list **lst, t_list *new, int at);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstadd_front(t_list **alst, t_list *new);
-void				ft_lstclear(t_list **lst, void (*del)(void*));
+void				ft_lstclear(t_list **lst);
 int					ft_lstcount(t_list *list);
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel_at(t_list **list, int at);

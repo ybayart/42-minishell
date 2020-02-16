@@ -6,46 +6,36 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 04:38:12 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/16 16:17:21 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-int			ft_free_all(t_mini *mini)
-{
-	if (mini)
-		free(mini);
-	return (EXIT_FAILURE);
-}
-
-t_list_env	*init_env(char *const envp[])
+char	init_env(char *const envp[])
 {
 	int			i;
 	char		**tmp;
-	t_list_env	*env;
-	t_list_env	*elem;
 
 	i = -1;
-	env = NULL;
 	while (envp[++i])
 	{
-		if ((elem = (t_list_env*)malloc(sizeof(t_list_env))) == NULL)
-			return (NULL);
 		if ((tmp = ft_split(envp[i], '=')) == NULL)
-			return (NULL);
-		ft_lst_add_env(&env,
+			return (0);
+		ft_lst_add_env(&(g_mini->env),
 			ft_lst_new_env(ft_strdup(tmp[0]), ft_strdup(tmp[1])));
+		ft_free_tab((void**)tmp);
 	}
-	return (env);
+	return (1);
 }
 
-t_mini		*init_struct(char *const envp[])
+char	init_struct(char *const envp[])
 {
 	if ((g_mini = (t_mini*)malloc(sizeof(t_mini))) == NULL)
-		return (NULL);
-	if ((g_mini->env = init_env(envp)) == NULL)
-		return (NULL);
+		return (0);
+	g_mini->env = NULL;
+	if (init_env(envp) == 0)
+		return (0);
 	g_mini->alive = 1;
 	g_mini->last_exit = 0;
 	g_mini->out = NULL;
@@ -60,7 +50,7 @@ t_mini		*init_struct(char *const envp[])
 	print_prompt(0);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
-	return (g_mini);
+	return (1);
 }
 
 void		raw_mode(void)
@@ -76,12 +66,11 @@ void		raw_mode(void)
 
 int			main(int argc, char *const argv[], char *const envp[])
 {
-	if ((g_mini = init_struct(envp)) == NULL || get_history() == 0)
-		return (ft_free_all(g_mini));
+	if (init_struct(envp) == 0 || get_history() == 0)
+		return (EXIT_FAILURE);
 	raw_mode();
 	if (shell() == EXIT_FAILURE)
-		return (ft_free_all(g_mini));
-	ft_free_all(g_mini);
+		return (EXIT_FAILURE);
 	(void)argc;
 	(void)argv;
 	return (EXIT_SUCCESS);
