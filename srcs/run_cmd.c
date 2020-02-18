@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:53:44 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/18 14:26:58 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/18 19:53:47 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,21 @@ void	shell_ex(const char *bin, char **argv, char **env)
 {
 	pid_t	id;
 
-	if ((id = fork()) == 0)
-		execve(bin, argv, env);
-	else
+	if (ft_strlen(bin) > 0)
 	{
-		waitpid(id, &g_mini->last_exit, 0);
-		g_mini->last_exit = WEXITSTATUS(g_mini->last_exit);
+		if ((id = fork()) == 0)
+			execve(bin, argv, env);
+		else
+		{
+			waitpid(id, &g_mini->last_exit, 0);
+			g_mini->last_exit = WEXITSTATUS(g_mini->last_exit);
+		}
 	}
 }
 
 int		check_builtins(char *tmp)
 {
+
 	if (!ft_strcmp(tmp, "cd") || !ft_strcmp(tmp, "echo") ||
 		!ft_strcmp(tmp, "pwd") || !ft_strcmp(tmp, "export") ||
 		!ft_strcmp(tmp, "unset") || !ft_strcmp(tmp, "env") ||
