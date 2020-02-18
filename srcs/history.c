@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 21:25:58 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/16 18:05:03 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 15:21:04 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,9 @@ char	get_history(void)
 		line = NULL;
 		while ((ret = get_next_line(fd, &line)) == 1)
 			ft_lstadd_front(&(g_mini->history), ft_lstnew(line));
-	}
-	else
-	{
-		free(file);
-		return (0);
+		close(fd);
 	}
 	free(file);
-	close(fd);
 	return (1);
 }
 
@@ -69,7 +64,7 @@ void	set_history(char c)
 	{
 		if (g_mini->history_pos <= 0)
 		{
-			line = ft_strdup("");
+			line = g_mini->current;
 			g_mini->history_pos = -1;
 		}
 		else

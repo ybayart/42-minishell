@@ -6,19 +6,16 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:56:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 15:15:10 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 15:23:33 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void	run_pwd(const char *bin, char **argv, char **env)
+void	run_pwd(void)
 {
 	char	*pwd;
 
-	(void)bin;
-	(void)argv;
-	(void)env;
 	pwd = ft_lst_find_env(&g_mini->env, PWD);
 	write(1, pwd, ft_strlen(pwd));
 	write(1, "\n", 1);

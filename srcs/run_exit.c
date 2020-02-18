@@ -6,13 +6,13 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:55:43 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 19:04:58 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/18 14:16:30 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void	run_exit(const char *bin, char **argv, char **env)
+void	run_exit(char **argv)
 {
 	write(1, "exit\n", 5);
 	if (argv[1] != 0)
@@ -29,6 +29,4 @@ void	run_exit(const char *bin, char **argv, char **env)
 	}
 	else
 		exit(0);
-	(void)bin;
-	(void)env;
 }

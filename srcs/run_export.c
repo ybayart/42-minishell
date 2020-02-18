@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:56:00 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/10 14:11:16 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/18 14:22:22 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,12 @@ void	change(t_list_env **env, char *name, char *value)
 	}
 }
 
-void	run_export(const char *bin, char **argv, char **env)
+void	run_export(char **argv)
 {
 	int		i;
 	char	**tmp;
 
 	i = 0;
-	(void)bin;
-	(void)argv;
-	(void)env;
 	while (argv[++i])
 	{
 		if ((tmp = ft_split(argv[i], '=')) == NULL)

@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/16 19:00:16 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 15:17:52 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ void		wildcard_do_getdir(t_list **search)
 	char	breaking;
 
 	g_nb = 0;
-	while (1)
+	while (1 && (breaking = 1))
 	{
-		breaking = 1;
 		tmp = (*search);
 		while (tmp != NULL)
 		{
@@ -52,8 +51,7 @@ void		wildcard_do_getdir(t_list **search)
 				path[0] = w_getrootdir(tmp->content);
 				path[1] = w_getchilddir(tmp->content);
 				path[2] = w_getpattern(tmp->content);
-				if (list_dir(&tmp, path) == 1)
-					breaking = 0;
+				breaking = (list_dir(&tmp, path) == 1) ? 0 : breaking;
 				free(path[0]);
 				free(path[1]);
 				free(path[2]);

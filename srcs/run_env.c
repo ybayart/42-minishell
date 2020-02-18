@@ -6,19 +6,16 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:54:22 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 15:14:42 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 14:16:14 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void	run_env(const char *bin, char **argv, char **env)
+void	run_env(void)
 {
 	t_list_env	*list;
 
-	(void)bin;
-	(void)argv;
-	(void)env;
 	list = g_mini->env;
 	while (list)
 	{

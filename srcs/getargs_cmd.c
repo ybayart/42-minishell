@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/16 18:47:08 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 15:25:39 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ void		getargs_cmd(char *line)
 	ft_lst_find_env(&g_mini->env, "HOME"), args[i[0]] + 1, args[i[0]])) == NULL)
 			return ;
 	cutargs(args);
-	ft_free_tab((void**)args);
 }
 
 /*

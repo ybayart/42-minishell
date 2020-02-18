@@ -6,13 +6,13 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:54:07 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 15:58:28 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 14:15:57 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void	run_echo(const char *bin, char **argv, char **env)
+void	run_echo(char **argv)
 {
 	int		i;
 	int		j;
@@ -30,6 +30,4 @@ void	run_echo(const char *bin, char **argv, char **env)
 	}
 	if (j == 0)
 		write(1, "\n", 1);
-	(void)bin;
-	(void)env;
 }

@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:53:44 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 18:07:04 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 14:26:58 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void	run_cmd(const char *bin, char **argv, char **env)
 		tmp = ft_split(bin, '/');
 		len = ft_get_len(tmp) - 1;
 	}
-	if (run_builtins(tmp[len], bin, argv, env) == 0)
+	if (run_builtins(tmp[len], argv) == 0)
 		shell_ex(bin, argv, env);
-	ft_free_tab((void**)tmp);
-	ft_free_tab((void**)env);
 }

@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:53:01 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 15:47:31 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 14:15:28 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@
 **}
 */
 
-void		run_cd(const char *bin, char **argv, char **env)
+void		run_cd(char **argv)
 {
 	if (argv[1] == 0)
 		chdir(ft_lst_find_env(&g_mini->env, "HOME"));
@@ -103,6 +103,4 @@ void		run_cd(const char *bin, char **argv, char **env)
 	}
 	else
 		chdir(ft_lst_find_env(&g_mini->env, "PWD"));
-	(void)bin;
-	(void)env;
 }

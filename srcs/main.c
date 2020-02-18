@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 19:14:12 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/18 15:26:40 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ char	init_struct(char *const envp[])
 	g_mini->typed = NULL;
 	g_mini->history_pos = -1;
 	g_mini->history = NULL;
+	g_mini->history = NULL;
 	print_prompt(0);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	return (1);
 }
 
-void		raw_mode(void)
+void	raw_mode(void)
 {
 	struct termios	raw;
 
@@ -64,16 +65,18 @@ void		raw_mode(void)
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
 
-int			main(int argc, char *const argv[], char *const envp[])
+int		main(int argc, char *const argv[], char *const envp[])
 {
 	pid_t	pid;
+	int		status;
 
+	status = 0;
 	if ((pid = fork()) == -1)
 		exit(EXIT_FAILURE);
 	else if (pid != 0)
 	{
-		waitpid(0,NULL, 0);
-		exit(EXIT_SUCCESS);
+		waitpid(pid, &status, 0);
+		exit(WEXITSTATUS(status));
 	}
 	if (init_struct(envp) == 0 || get_history() == 0)
 		exit(EXIT_FAILURE);

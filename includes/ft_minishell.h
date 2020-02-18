@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 04:56:07 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 14:38:27 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ char		*search_bin(const char *path, const char *env_path);
 int			ft_get_len(char **str);
 int			check_builtins(char *tmp);
 char		**replace_quote_path(char **cmd);
-int			run_builtins(char *cmd, const char *bin, char **argv, char **env);
+int			run_builtins(char *cmd, char **argv);
 void		run_cmd(const char *bin, char **argv, char **env);
-void		run_pwd(const char *bin, char **argv, char **env);
-void		run_exit(const char *bin, char **argv, char **env);
-void		run_env(const char *bin, char **argv, char **env);
-void		run_unset(const char *bin, char **argv, char **env);
-void		run_export(const char *bin, char **argv, char **env);
-void		run_pwd(const char *bin, char **argv, char **env);
-void		run_echo(const char *bin, char **argv, char **env);
-void		run_cd(const char *bin, char **argv, char **env);
+void		run_pwd();
+void		run_exit(char **argv);
+void		run_env();
+void		run_unset(char **argv);
+void		run_export(char **argv);
+void		run_pwd();
+void		run_echo(char **argv);
+void		run_cd(char **argv);
 void		run_touch(void);
 void		shell_ex(const char *bin, char **argv, char **env);
 char		wildcard(char ***args, int *pos, int initpos);

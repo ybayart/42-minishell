@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/16 03:52:46 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 15:25:55 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ void	ft_termcaps_printend(char c, int *state)
 		(*state) = 0;
 }
 
+void	change_value(void)
+{
+	if (g_mini->history_pos < 0)
+		g_mini->current = ft_lstconcat_typed(g_mini->typed);
+}
+
 char	ft_termcaps(char c)
 {
 	static int	state = 0;
@@ -100,6 +106,7 @@ char	ft_termcaps(char c)
 	else if (c != 4)
 		ft_lstadd_at_typed(&(g_mini->typed), ft_lstnew_typed(c),
 												(g_mini->typed_pos)++);
+	change_value();
 	ft_termcaps_printend(c, &state);
 	return (0);
 }

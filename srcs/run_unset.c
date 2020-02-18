@@ -6,19 +6,16 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:54:51 by racohen           #+#    #+#             */
-/*   Updated: 2020/01/16 15:15:19 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 14:27:24 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void	run_unset(const char *bin, char **argv, char **env)
+void	run_unset(char **argv)
 {
 	int		i;
 
-	(void)bin;
-	(void)argv;
-	(void)env;
 	i = 0;
 	while (argv[++i])
 		ft_lstdel_at_env(&g_mini->env, argv[i]);

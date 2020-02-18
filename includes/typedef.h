@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:08:06 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/16 05:16:16 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/18 14:40:00 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct	s_mini
 	char		ispipe;
 	t_list		*history;
 	int			history_pos;
+	char		*current;
 	char		exec;
 }				t_mini;
 
