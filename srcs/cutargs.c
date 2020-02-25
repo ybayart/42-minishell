@@ -84,7 +84,6 @@ static void	endcuts(t_cutargs data)
 		make_redir(1, data.j, data.len, data.fd);
 		data.isredir = 0;
 	}
-	free(data.cmd);
 }
 
 static int	do_if(t_cutargs *data, char **ar, char state)

@@ -60,6 +60,7 @@ void		space_cmd(char **cmd, int f_in, int f_out)
 	while (cmd[++i])
 		res[i] = cmd[i];
 	res = replace_quote_path(res);
+	ft_free_tab((void**)cmd);
 	if (check_builtins(cmd[0]))
 		run_builtins(path, res);
 	else
