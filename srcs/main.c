@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/18 19:14:27 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/25 07:35:32 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	init_env(char *const envp[])
 		if ((tmp = ft_split(envp[i], '=')) == NULL)
 			return (0);
 		ft_lst_add_env(&(g_mini->env),
-			ft_lst_new_env(ft_strdup(tmp[0]), ft_strdup(tmp[1] == 0 ? "" : tmp[1])));
+			ft_lst_new_env(ft_strdup(tmp[0]),
+				ft_strdup(tmp[1] == 0 ? "" : tmp[1])));
 		ft_free_tab((void**)tmp);
 	}
 	return (1);

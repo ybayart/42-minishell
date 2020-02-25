@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/18 15:50:16 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/25 08:25:05 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void		space_cmd(char **cmd, int f_in, int f_out)
 
 static char	shell_do(char **line)
 {
+	char	*tmp;
+
 	write(1, "\n", 1);
 	if (ft_strlen(((*line) = ft_strtrim((*line), " \t\n\v\f\r"))) != 0)
 	{
@@ -80,7 +82,13 @@ static char	shell_do(char **line)
 		{
 			add_history((*line));
 			g_mini->exec = 1;
-			getargs_cmd((*line));
+			if ((tmp = ft_strndup((*line), 1)) != NULL && istoken(tmp))
+			{
+				print_error(5, "syntax error near unexpected token", NULL, tmp);
+				free(tmp);
+			}
+			else
+				getargs_cmd((*line));
 		}
 	}
 	return (1);
