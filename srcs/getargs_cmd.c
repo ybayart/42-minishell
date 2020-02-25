@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/25 08:22:52 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/25 14:30:40 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char		**ft_addstr(char **ft_tab)
 		i = -1;
 		while (ft_tab[++i] != 0)
 			new[i] = ft_tab[i];
-		free(ft_tab);
+		printf("%p\n", ft_tab);
 	}
 	new[len] = ft_strdup("\0");
 	return (new);

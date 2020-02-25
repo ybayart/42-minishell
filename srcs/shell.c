@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/25 08:47:21 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/25 14:30:53 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,11 @@ void		space_cmd(char **cmd, int f_in, int f_out)
 	while (cmd[++i])
 		res[i] = ft_strdup(cmd[i]);
 	res = replace_quote_path(res);
-	ft_free_tab((void**)cmd);
 	if (check_builtins(cmd[0]))
+	{
+		ft_free_tab((void**)cmd);
 		run_builtins(path, res);
+	}
 	else
 		run_cmd(path, res, ft_list_to_tab_env(g_mini->env));
 	free(path);
