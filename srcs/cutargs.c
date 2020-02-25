@@ -132,9 +132,17 @@ void		cutargs(char **ar)
 		else if (do_if(&data, ar, 5) == 0)
 			return ;
 		else if (data.state++ == 0 &&
-ft_rep_free(&(data.cmd), &ar[data.i], ft_tablen((const char**)data.cmd) - 1) == 1)
+ft_rep_free(&(data.cmd), ar[data.i], ft_tablen((const char**)data.cmd) - 1) == 1)
+		{
+			int i;
+			for (i=0; data.cmd[i] != 0 ; i++)
+				printf("data.cmd[%d]: %p - |%s|\n", i, data.cmd[i], data.cmd[i]);
+			printf("data.cmd[%d]: %p - |%s|\n", i, data.cmd[i], data.cmd[i]);
 			if ((data.cmd = ft_addstr(data.cmd)) == NULL)
 				return ;
+		}
 	}
+	printf("toto\n");
+	ft_free_tab((void**)ar);
 	endcuts(data);
 }

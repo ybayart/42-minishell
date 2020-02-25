@@ -34,7 +34,7 @@ int					ft_termputs(int c);
 int					ft_atoi(const char *str);
 void				ft_free_tab(void **ft_tab);
 char				*ft_freeint(int *elem);
-char				ft_rep_free(char ***args, char **str, size_t i);
+char				ft_rep_free(char ***args, char *str, size_t i);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
 int					ft_isalnum(int c);
