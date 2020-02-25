@@ -6,11 +6,11 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/02/16 19:06:08 by racohen          ###   ########.fr        #
+#    Updated: 2020/02/25 08:43:39 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = clang
+CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
 
