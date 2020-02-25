@@ -40,7 +40,6 @@ void		run_exit(char **argv)
 	else
 	{
 		localend(argv);
-		while (1);
 		exit(0);
 	}
 }

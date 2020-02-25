@@ -62,7 +62,7 @@ char		**ft_addstr(char **ft_tab)
 		i = -1;
 		while (ft_tab[++i] != 0)
 			new[i] = ft_tab[i];
-		printf("%p\n", ft_tab);
+		free(ft_tab);
 	}
 	new[len] = ft_strdup("\0");
 	return (new);
