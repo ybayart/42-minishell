@@ -14,7 +14,7 @@ CC = clang
 
 FLAGS = -Wall -Wextra -Werror
 
-SAN = -fsanitize=address -g
+SAN = -fsanitize=address
 
 NAME = minishell 
 
@@ -75,7 +75,8 @@ SRCS_TYPED=	ft_lstadd_typed.c \
 
 SRCS =  $(addprefix $(SRCS_DIR), $(SRCS_LIST)) \
 		$(addprefix $(SRCS_DIR)env_list/, $(SRCS_ENV)) \
-		$(addprefix $(SRCS_DIR)typed_list/, $(SRCS_TYPED))
+		$(addprefix $(SRCS_DIR)typed_list/, $(SRCS_TYPED)) \
+
 
 OBJECT = $(patsubst %.c, %.o, $(SRCS))
 
@@ -88,7 +89,7 @@ all : $(NAME)
 
 $(NAME): $(OBJECT) $(INCS_DIR) libft $(INCS_DIR)
 	cd $(LIBFT_PATH) && make
-	$(CC) $(FLAGS) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
+	$(CC) $(FLAGS) $(SAN) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
 
 libft:
 	cd $(LIBFT_PATH) && make

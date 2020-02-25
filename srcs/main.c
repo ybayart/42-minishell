@@ -23,7 +23,7 @@ char	init_env(char *const envp[])
 		if ((tmp = ft_split(envp[i], '=')) == NULL)
 			return (0);
 		ft_lst_add_env(&(g_mini->env),
-			ft_lst_new_env(ft_strdup(tmp[0]), ft_strdup(tmp[1])));
+			ft_lst_new_env(ft_strdup(tmp[0]), ft_strdup(tmp[1] == 0 ? "" : tmp[1])));
 		ft_free_tab((void**)tmp);
 	}
 	return (1);
@@ -67,17 +67,17 @@ void	raw_mode(void)
 
 int		main(int argc, char *const argv[], char *const envp[])
 {
-	pid_t	pid;
-	int		status;
+//	pid_t	pid;
+//	int		status;
 
-	status = 0;
-	if ((pid = fork()) == -1)
-		exit(EXIT_FAILURE);
-	else if (pid != 0)
-	{
-		waitpid(pid, &status, 0);
-		exit(WEXITSTATUS(status));
-	}
+//	status = 0;
+//	if ((pid = fork()) == -1)
+//		exit(EXIT_FAILURE);
+//	else if (pid != 0)
+//	{
+//		waitpid(pid, &status, 0);
+//		exit(WEXITSTATUS(status));
+//	}
 	if (init_struct(envp) == 0 || get_history() == 0)
 		exit(EXIT_FAILURE);
 	raw_mode();
