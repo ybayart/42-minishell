@@ -12,7 +12,13 @@
 
 #include "ft_minishell.h"
 
-void	run_exit(char **argv)
+static void	localend(char **argv)
+{
+	ft_free_tab((void**)argv);
+	endofprog();
+}
+
+void		run_exit(char **argv)
 {
 	write(1, "exit\n", 5);
 	if (argv[1] != 0)
@@ -20,20 +26,20 @@ void	run_exit(char **argv)
 		if (ft_isstrint(argv[1]) == 0)
 		{
 			print_error(4, argv[1], "exit", "numeric argument required");
-			endofprog();
+			localend(argv);
 			exit(255);
 		}
 		else if (argv[2] != 0)
 			print_error(1, "too many argument", "exit", NULL);
 		else
 		{
-			endofprog();
+			localend(argv);
 			exit(ft_atoi(argv[1]));
 		}
 	}
 	else
 	{
-		endofprog();
+		localend(argv);
 		exit(0);
 	}
 }

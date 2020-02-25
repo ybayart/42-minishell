@@ -38,8 +38,6 @@ static char	init(t_cutargs *data, char **ar, char state)
 	(*data).cmd = NULL;
 	if (((*data).cmd = ft_addstr((*data).cmd)) == NULL)
 		return (0);
-	printf("00 - %p |%s|\n", (*data).cmd[0], (*data).cmd[0]);
-	printf("01 - %p |%s|\n", (*data).cmd[1], (*data).cmd[1]);
 	(*data).f_in = 0;
 	(*data).f_out = 1;
 	return (1);

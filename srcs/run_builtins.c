@@ -27,7 +27,10 @@ int	run_builtins(char *cmd, char **argv)
 	else if (ft_strcmp(cmd, "env") == 0)
 		run_env();
 	else if (ft_strcmp(cmd, "exit") == 0)
+	{
+		free(cmd);
 		run_exit(argv);
+	}
 	else
 		return (0);
 	return (1);

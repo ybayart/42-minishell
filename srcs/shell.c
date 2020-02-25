@@ -58,7 +58,7 @@ void		space_cmd(char **cmd, int f_in, int f_out)
 	res[i] = 0;
 	i = -1;
 	while (cmd[++i])
-		res[i] = cmd[i];
+		res[i] = ft_strdup(cmd[i]);
 	res = replace_quote_path(res);
 	ft_free_tab((void**)cmd);
 	if (check_builtins(cmd[0]))
@@ -66,7 +66,7 @@ void		space_cmd(char **cmd, int f_in, int f_out)
 	else
 		run_cmd(path, res, ft_list_to_tab_env(g_mini->env));
 	free(path);
-	free(res);
+	ft_free_tab((void**)res);
 	setfd(f_in, f_out, 1);
 }
 

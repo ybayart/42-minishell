@@ -46,7 +46,7 @@ char		**ft_addstr(char **ft_tab)
 	size_t	len;
 	char	**new;
 
-	if (ft_tab == 0)
+	if (ft_tab == NULL)
 	{
 		if ((new = malloc(sizeof(char*) * 2)) == NULL)
 			return (NULL);
@@ -62,6 +62,7 @@ char		**ft_addstr(char **ft_tab)
 		i = -1;
 		while (ft_tab[++i] != 0)
 			new[i] = ft_tab[i];
+		free(ft_tab);
 	}
 	new[len] = ft_strdup("\0");
 	return (new);
