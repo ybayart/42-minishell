@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/18 14:38:27 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/25 09:08:13 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 t_mini		*g_mini;
 
+void		init_mode(void);
 void		sig_handler(int signo);
 int			shell(void);
 void		print_prompt(char clear);

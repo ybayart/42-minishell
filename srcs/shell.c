@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/25 08:25:05 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/25 08:47:21 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,19 +100,18 @@ int			shell(void)
 	char	c;
 	char	*line;
 
-	line = ft_strdup("");
 	while (read(0, &c, 1) == 1)
 		if ((ret = ft_termcaps(c)) == -1)
 			return (EXIT_FAILURE);
 		else if (ret == 1)
 		{
+			line = ft_strdup("");
 			if (!(line = ft_strfdjoin(line, ft_lstconcat_typed(g_mini->typed)))
 			|| ft_strreplace(&line, "$?", ft_itoa(g_mini->last_exit)) == NULL)
 				return (EXIT_FAILURE);
 			if (shell_do(&line) == 0)
 				continue ;
 			free(line);
-			line = ft_strdup("");
 			if (g_mini->signal == 0)
 				print_prompt(1);
 			g_mini->signal = 0;

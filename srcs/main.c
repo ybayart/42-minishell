@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/25 07:35:32 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/25 09:11:20 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,18 @@ void	raw_mode(void)
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
 
+void	init_mode(void)
+{
+	struct termios	raw;
+
+	tcgetattr(STDIN_FILENO, &raw);
+	raw.c_lflag |= (ICANON | ECHO);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+}
+
 int		main(int argc, char *const argv[], char *const envp[])
 {
+	int		ret;
 //	pid_t	pid;
 //	int		status;
 
@@ -82,9 +92,11 @@ int		main(int argc, char *const argv[], char *const envp[])
 	if (init_struct(envp) == 0 || get_history() == 0)
 		exit(EXIT_FAILURE);
 	raw_mode();
+	ret = EXIT_SUCCESS;
 	if (shell() == EXIT_FAILURE)
-		exit(EXIT_FAILURE);
+		ret = EXIT_FAILURE;
+	init_mode();
 	(void)argc;
 	(void)argv;
-	exit(EXIT_SUCCESS);
+	exit(ret);
 }
