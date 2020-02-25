@@ -17,7 +17,7 @@ void	ft_free_tab(void **ft_tab)
 	int	i;
 
 	i = -1;
-	while (ft_tab[++i] != '\0')
+	while (ft_tab[++i] != 0)
 		free(ft_tab[i]);
 	free(ft_tab);
 }
