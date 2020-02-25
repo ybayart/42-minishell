@@ -31,7 +31,7 @@ int		ft_get_len(char **str)
 	return (i);
 }
 
-void	shell_ex(const char *bin, char **argv, char **env)
+void	run_cmd(const char *bin, char **argv, char **env)
 {
 	pid_t	id;
 
@@ -41,6 +41,7 @@ void	shell_ex(const char *bin, char **argv, char **env)
 	{
 		waitpid(id, &g_mini->last_exit, 0);
 		g_mini->last_exit = WEXITSTATUS(g_mini->last_exit);
+		ft_free_tab((void**)env);
 	}
 }
 
@@ -52,25 +53,4 @@ int		check_builtins(char *tmp)
 		!ft_strcmp(tmp, "exit"))
 		return (1);
 	return (0);
-}
-
-void	run_cmd(const char *bin, char **argv, char **env)
-{
-	int		len;
-	char	**tmp;
-
-	if (check_builtins((char*)bin))
-	{
-		len = 0;
-		tmp = malloc(sizeof(char*) * 2);
-		tmp[1] = 0;
-		tmp[0] = (char*)bin;
-	}
-	else
-	{
-		tmp = ft_split(bin, '/');
-		len = ft_get_len(tmp) - 1;
-	}
-	if (run_builtins(tmp[len], argv) == 0)
-		shell_ex(bin, argv, env);
 }

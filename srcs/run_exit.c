@@ -20,20 +20,20 @@ void	run_exit(char **argv)
 		if (ft_isstrint(argv[1]) == 0)
 		{
 			print_error(4, argv[1], "exit", "numeric argument required");
-			init_mode();
+			endofprog();
 			exit(255);
 		}
 		else if (argv[2] != 0)
 			print_error(1, "too many argument", "exit", NULL);
 		else
 		{
-			init_mode();
+			endofprog();
 			exit(ft_atoi(argv[1]));
 		}
 	}
 	else
 	{
-		init_mode();
+		endofprog();
 		exit(0);
 	}
 }

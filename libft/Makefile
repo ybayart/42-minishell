@@ -89,6 +89,7 @@ SRCS = ft_memset.c\
 		write_x.c\
 		ft_atoi_size.c\
 		ft_freeall.c\
+		ft_rep_free.c\
 		ft_itoa_u.c\
 		ft_setup_form.c\
 		ft_strjoinfree.c\

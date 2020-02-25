@@ -48,7 +48,7 @@ char	init_struct(char *const envp[])
 	g_mini->typed = NULL;
 	g_mini->history_pos = -1;
 	g_mini->history = NULL;
-	g_mini->history = NULL;
+	g_mini->current = ft_strdup("");
 	print_prompt(0);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
@@ -95,7 +95,7 @@ int		main(int argc, char *const argv[], char *const envp[])
 	ret = EXIT_SUCCESS;
 	if (shell() == EXIT_FAILURE)
 		ret = EXIT_FAILURE;
-	init_mode();
+	endofprog();
 	(void)argc;
 	(void)argv;
 	exit(ret);

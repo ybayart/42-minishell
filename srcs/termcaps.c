@@ -79,7 +79,10 @@ void	ft_termcaps_printend(char c, int *state)
 void	change_value(void)
 {
 	if (g_mini->history_pos < 0)
+	{
+		free(g_mini->current);
 		g_mini->current = ft_lstconcat_typed(g_mini->typed);
+	}
 }
 
 char	ft_termcaps(char c)

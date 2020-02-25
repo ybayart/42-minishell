@@ -50,3 +50,19 @@ void		sig_handler(int signo)
 		print_prompt(1);
 	}
 }
+
+void	endofprog(void)
+{
+	printf("here\n");
+	init_mode();
+	ft_lst_clear_env(&(g_mini->env));
+}
+
+void	check_empty_end(char ***args, size_t i)
+{
+	if ((*args)[i] != 0 && (*args)[i][0] == '\0')
+	{
+		(*args)[i] = 0;
+		free((*args)[i + 1]);
+	}
+}

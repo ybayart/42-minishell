@@ -14,7 +14,7 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
 
-SAN = -fsanitize=address
+SAN = -fsanitize=leak
 
 NAME = minishell 
 
@@ -76,7 +76,7 @@ SRCS_TYPED=	ft_lstadd_typed.c \
 SRCS =  $(addprefix $(SRCS_DIR), $(SRCS_LIST)) \
 		$(addprefix $(SRCS_DIR)env_list/, $(SRCS_ENV)) \
 		$(addprefix $(SRCS_DIR)typed_list/, $(SRCS_TYPED)) \
-
+		libft/*.c
 
 OBJECT = $(patsubst %.c, %.o, $(SRCS))
 

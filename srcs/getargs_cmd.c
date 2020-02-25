@@ -133,8 +133,7 @@ void		getargs_cmd(char *line)
 			return ;
 	if (qt[2] == 1 && wildcard(&args, &i[1], i[1]) == 0)
 		return ;
-	if (args[i[1]] != 0 && args[i[1]][0] == '\0')
-		args[i[1]] = 0;
+	check_empty_end(&args, (size_t)i[1]);
 	i[0] = -1;
 	while (args[++i[0]] != 0)
 		if (args[i[0]][0] == '~' && (args[i[0]] = ft_strfrjoin(

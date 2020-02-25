@@ -38,6 +38,8 @@ static char	init(t_cutargs *data, char **ar, char state)
 	(*data).cmd = NULL;
 	if (((*data).cmd = ft_addstr((*data).cmd)) == NULL)
 		return (0);
+	printf("00 - %p |%s|\n", (*data).cmd[0], (*data).cmd[0]);
+	printf("01 - %p |%s|\n", (*data).cmd[1], (*data).cmd[1]);
 	(*data).f_in = 0;
 	(*data).f_out = 1;
 	return (1);
@@ -45,8 +47,7 @@ static char	init(t_cutargs *data, char **ar, char state)
 
 static char	launch_cmd(t_cutargs *data, char **ar, char state)
 {
-	if ((*data).cmd[ft_tablen((const char**)(*data).cmd) - 1][0] == '\0')
-		(*data).cmd[ft_tablen((const char**)(*data).cmd) - 1] = 0;
+	check_empty_end(&((*data).cmd), ft_tablen((const char**)(*data).cmd) - 1);
 	if (state == 0)
 	{
 		(*data).j++;
@@ -70,8 +71,7 @@ static char	launch_cmd(t_cutargs *data, char **ar, char state)
 
 static void	endcuts(t_cutargs data)
 {
-	if (data.cmd[ft_tablen((const char**)data.cmd) - 1][0] == '\0')
-		data.cmd[ft_tablen((const char**)data.cmd) - 1] = 0;
+	check_empty_end(&(data.cmd), ft_tablen((const char**)data.cmd) - 1);
 	if (data.isredir == 1)
 	{
 		data.j++;
@@ -84,6 +84,7 @@ static void	endcuts(t_cutargs data)
 		make_redir(1, data.j, data.len, data.fd);
 		data.isredir = 0;
 	}
+	free(data.cmd);
 }
 
 static int	do_if(t_cutargs *data, char **ar, char state)
@@ -134,7 +135,7 @@ void		cutargs(char **ar)
 		else if (do_if(&data, ar, 5) == 0)
 			return ;
 		else if (data.state++ == 0 &&
-(data.cmd[ft_tablen((const char**)data.cmd) - 1] = ar[data.i]) == ar[data.i])
+ft_rep_free(&(data.cmd), &ar[data.i], ft_tablen((const char**)data.cmd) - 1) == 1)
 			if ((data.cmd = ft_addstr(data.cmd)) == NULL)
 				return ;
 	}

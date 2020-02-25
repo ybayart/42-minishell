@@ -20,6 +20,7 @@
 
 t_mini		*g_mini;
 
+void		endofprog(void);
 void		init_mode(void);
 void		sig_handler(int signo);
 int			shell(void);
@@ -51,7 +52,7 @@ void		run_pwd();
 void		run_echo(char **argv);
 void		run_cd(char **argv);
 void		run_touch(void);
-void		shell_ex(const char *bin, char **argv, char **env);
+void		check_empty_end(char ***args, size_t i);
 char		wildcard(char ***args, int *pos, int initpos);
 char		*w_getrootdir(char *str);
 char		*w_getchilddir(char *str);
