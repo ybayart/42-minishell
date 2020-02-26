@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 23:17:12 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 13:18:34 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 14:25:08 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	list_dir(t_list **search, char *path[3])
 	ft_lstlast(newlst)->next = (*search)->next;
 	(*search)->content = newlst->content;
 	(*search)->next = newlst->next;
+	free(newlst);
 	return (1);
 }
 
