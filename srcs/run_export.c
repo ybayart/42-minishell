@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:56:00 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 15:33:05 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 23:05:54 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	run_export(char **argv)
 	{
 		if ((tmp = ft_split(argv[i], '=')) == NULL)
 			return ;
+		if (tmp[0] == 0)
+			return (print_error(4, "`='", "export", "not a valid identifier"));
 		if (check_quote_err(tmp[0]))
 		{
 			ft_free_tab((void**)tmp);
