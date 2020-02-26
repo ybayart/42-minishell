@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 13:18:34 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 16:32:27 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,18 +129,8 @@ char		wildcard(char ***args, int *pos, int initpos)
 	t_list	*search;
 	int		i;
 
-	if ((search = ft_lstnew((*args)[initpos])) == NULL)
+	if (init_wildcard(&search, args, initpos, &replace) == 0)
 		return (0);
-	if ((*args)[initpos][0] == '~' && !(search->content = ft_strfrjoin(
-ft_lst_find_env(&g_mini->env, "HOME"), search->content + 1, search->content)))
-	{
-		ft_lstclear(&search);
-		return (0);
-	}
-	replace = 0;
-	if (ft_strncmp(search->content, "/", 1) != 0 && ft_strncmp(search->content,
-					"./", 2) != 0 && ft_strncmp(search->content, "../", 3) != 0)
-		replace = 1;
 	wildcard_do_getdir(&search);
 	if (g_nb != 0)
 	{

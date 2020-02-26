@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:08:06 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/25 09:02:23 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:25:21 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "libft.h"
 
-typedef struct	termios t_tm;
+typedef struct termios	t_tm;
 
 typedef struct	s_list_env
 {
@@ -47,7 +47,7 @@ typedef struct	s_mini
 	int			history_pos;
 	char		*current;
 	char		exec;
-	t_tm			*tm_init;
+	t_tm		*tm_init;
 }				t_mini;
 
 typedef struct	s_cutargs

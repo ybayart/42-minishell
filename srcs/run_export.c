@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:56:00 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/18 14:22:22 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:33:05 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,18 @@ void	run_export(char **argv)
 		if ((tmp = ft_split(argv[i], '=')) == NULL)
 			return ;
 		if (check_quote_err(tmp[0]))
-			return (print_error(4, argv[i], "export", "not valid identifier"));
-		if (ft_lst_find_env(&g_mini->env, tmp[0]) != NULL)
 		{
-			if (tmp[1] == 0)
-				change(&g_mini->env, tmp[0], "");
-			else
-				change(&g_mini->env, tmp[0], tmp[1]);
+			ft_free_tab((void**)tmp);
+			return (print_error(4, argv[i], "export", "not valid identifier"));
 		}
+		if (ft_lst_find_env(&g_mini->env, tmp[0]) != NULL)
+			change(&g_mini->env, tmp[0], (tmp[1] == 0 ? "" : tmp[1]));
 		else if (tmp[1] == 0)
-			ft_lst_add_env(&g_mini->env, ft_lst_new_env(tmp[0], ""));
+			ft_lst_add_env(&g_mini->env, ft_lst_new_env(ft_strdup(tmp[0]),
+							ft_strdup("")));
 		else
-			ft_lst_add_env(&g_mini->env, ft_lst_new_env(tmp[0], tmp[1]));
+			ft_lst_add_env(&g_mini->env, ft_lst_new_env(ft_strdup(tmp[0]),
+							ft_strdup(tmp[1])));
+		ft_free_tab((void**)tmp);
 	}
 }

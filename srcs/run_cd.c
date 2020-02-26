@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:53:01 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 12:46:20 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:30:27 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,23 @@
 **}
 */
 
-void		run_cd(char **argv)
+static void	set_pwd(void)
 {
 	char	*tmp;
 
+	if ((tmp = getcwd(NULL, 0)) != NULL)
+	{
+		free(tmp);
+		ft_lst_replace_env(&g_mini->env, "OLDPWD",
+			ft_strdup(ft_lst_find_env(&g_mini->env, "PWD")));
+		ft_lst_replace_env(&g_mini->env, "PWD", getcwd(NULL, 0));
+	}
+	else
+		chdir(ft_lst_find_env(&g_mini->env, "PWD"));
+}
+
+void		run_cd(char **argv)
+{
 	if (argv[1] == 0)
 		chdir(ft_lst_find_env(&g_mini->env, "HOME"));
 	else
@@ -97,13 +110,5 @@ void		run_cd(char **argv)
 		if (ft_strlen(argv[1]) > 0 && chdir(argv[1]) == -1)
 			print_error(2, argv[1], "cd", NULL);
 	}
-	if ((tmp = getcwd(NULL, 0)) != NULL)
-	{
-		free(tmp);
-		ft_lst_replace_env(&g_mini->env, "OLDPWD",
-			ft_strdup(ft_lst_find_env(&g_mini->env, "PWD")));
-		ft_lst_replace_env(&g_mini->env, "PWD", getcwd(NULL, 0));
-	}
-	else
-		chdir(ft_lst_find_env(&g_mini->env, "PWD"));
+	set_pwd();
 }

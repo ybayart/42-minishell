@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 04:41:43 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 12:06:21 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:33:21 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		sig_handler(int signo)
 	}
 }
 
-void	endofprog(void)
+void		endofprog(void)
 {
 	init_mode();
 	ft_lst_clear_env(&(g_mini->env));
@@ -61,7 +61,7 @@ void	endofprog(void)
 	free(g_mini);
 }
 
-void	check_empty_end(char ***args, size_t i)
+void		check_empty_end(char ***args, size_t i)
 {
 	if ((*args)[i] != 0 && (*args)[i][0] == '\0')
 	{

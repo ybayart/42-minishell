@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 14:47:16 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:24:12 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,7 @@ void	init_mode(void)
 int		main(int argc, char *const argv[], char *const envp[])
 {
 	int		ret;
-//	pid_t	pid;
-//	int		status;
 
-//	status = 0;
-//	if ((pid = fork()) == -1)
-//		exit(EXIT_FAILURE);
-//	else if (pid != 0)
-//	{
-//		waitpid(pid, &status, 0);
-//		exit(WEXITSTATUS(status));
-//	}
 	if (init_struct(envp) == 0 || get_history() == 0)
 		exit(EXIT_FAILURE);
 	raw_mode();

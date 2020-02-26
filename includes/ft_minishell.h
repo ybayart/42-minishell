@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/25 17:07:48 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 16:32:23 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void		endofprog(void);
 void		init_mode(void);
 void		sig_handler(int signo);
 int			shell(void);
+void		utils_shell_do(char **line);
 void		print_prompt(char clear);
 void		print_term(char *cap, char prompt);
 void		print_term_goto(char *cap, char prompt, int x, int y);
@@ -35,7 +36,9 @@ void		cutargs(char **args);
 char		istoken(char *token);
 int			openfile(int *fd, char *file, int init, int mode);
 void		make_redir(char state, int i, size_t len, int fd[2][2]);
+void		setfd(int f_in, int f_out, char state);
 void		space_cmd(char ***cmd, int f_in, int f_out);
+void		utils_space_cmd(char ***cmd, size_t i, char *path);
 int			is_convert_red(char *str);
 char		*search_bin(const char *path, const char *env_path);
 int			ft_get_len(char **str);
@@ -54,6 +57,8 @@ void		run_cd(char **argv);
 void		run_touch(void);
 void		check_empty_end(char ***args, size_t i);
 char		wildcard(char ***args, int *pos, int initpos);
+char		init_wildcard(t_list **sch, char ***args, int initpos,
+													char *replace);
 char		*w_getrootdir(char *str);
 char		*w_getchilddir(char *str);
 char		*w_getpattern(char *str);

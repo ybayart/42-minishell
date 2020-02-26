@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 23:02:56 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 10:18:05 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:26:21 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void		cutargs(char **ar)
 		else if (do_if(&data, ar, 5) == 0)
 			return ;
 		else if (data.state++ == 0 &&
-ft_rep_free(&(data.cmd), ar[data.i], ft_tablen((const char**)data.cmd) - 1) == 1)
+ft_rep_free(&(data.cmd), ar[data.i], ft_tablen((const char**)data.cmd) - 1))
 			if ((data.cmd = ft_addstr(data.cmd)) == NULL)
 				return ;
 	}

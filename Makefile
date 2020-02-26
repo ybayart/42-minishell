@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/02/26 12:03:55 by ybayart          ###   ########.fr        #
+#    Updated: 2020/02/26 16:29:59 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ INCS_DIR = includes/
 SRCS_LIST = main.c \
 			utils.c \
 			shell.c \
+			utils_shell.c \
 			getargs_cmd.c \
 			cutargs.c \
 			utils_redir.c \
@@ -49,6 +50,7 @@ SRCS_LIST = main.c \
 			print_error.c \
 			wildcard.c \
 			utils_wildcard.c \
+			utils_wildcard_2.c \
 			termcaps.c \
 			utils_termcaps.c \
 			history.c

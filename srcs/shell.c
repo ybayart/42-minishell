@@ -6,44 +6,15 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 12:59:18 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 15:52:53 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-static void	setfd(int f_in, int f_out, char state)
-{
-	static int	fd[2];
-
-	if (state == 0)
-	{
-		if (f_out != 1)
-			fd[0] = dup(1);
-		if (f_out != 1)
-			dup2(f_out, 1);
-		if (f_in != 0)
-			fd[1] = dup(0);
-		if (f_in != 0)
-			dup2(f_in, 0);
-	}
-	else if (state == 1)
-	{
-		if (f_out != 1)
-			dup2(fd[0], 1);
-		if (f_out != 1)
-			close(f_out);
-		if (f_in != 0)
-			dup2(fd[1], 0);
-		if (f_in != 0)
-			close(f_in);
-	}
-}
-
 void		space_cmd(char ***cmd, int f_in, int f_out)
 {
 	char	*path;
-	char	**res;
 	size_t	i;
 
 	i = ft_tablen((const char**)(*cmd));
@@ -56,20 +27,7 @@ void		space_cmd(char ***cmd, int f_in, int f_out)
 		print_error(1, "command not found", (*cmd)[0], NULL);
 		return (ft_free_tab((void**)(*cmd)));
 	}
-	if ((res = (char**)malloc(sizeof(char*) * (i + 1))) == NULL)
-		return ;
-	res[i] = 0;
-	i = -1;
-	while ((*cmd)[++i])
-		res[i] = ft_strdup((*cmd)[i]);
-	res = replace_quote_path(res);
-	ft_free_tab((void**)(*cmd));
-	if (check_builtins(path))
-		run_builtins(path, res);
-	else
-		run_cmd(path, res, ft_list_to_tab_env(g_mini->env));
-	free(path);
-	ft_free_tab((void**)res);
+	utils_space_cmd(cmd, i, path);
 	setfd(f_in, f_out, 1);
 }
 
@@ -88,21 +46,7 @@ static char	shell_do(char **line)
 			return (0);
 		}
 		else if ((g_mini->ispipe = 0) == 0)
-		{
-			add_history((*line));
-			g_mini->exec = 1;
-			if ((tmp = ft_strndup((*line), 1)) != NULL && istoken(tmp))
-				print_error(5, "syntax error near unexpected token", NULL, tmp);
-			else
-			{
-				if (tmp != NULL)
-					free(tmp);
-				tmp = NULL;
-				getargs_cmd((*line));
-			}
-			if (tmp != NULL)
-				free(tmp);
-		}
+			utils_shell_do(line);
 	}
 	return (1);
 }
@@ -122,7 +66,7 @@ int			shell(void)
 			if (line == NULL)
 				line = ft_strdup("");
 			if (!(line = ft_strfdjoin(line, ft_lstconcat_typed(g_mini->typed)))
-	|| ft_strreplace(&line, ft_strdup("$?"), ft_itoa(g_mini->last_exit)) == NULL)
+		|| !ft_strreplace(&line, ft_strdup("$?"), ft_itoa(g_mini->last_exit)))
 				return (EXIT_FAILURE);
 			if (shell_do(&line) == 0)
 				continue ;
