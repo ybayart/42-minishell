@@ -60,11 +60,9 @@ void		space_cmd(char ***cmd, int f_in, int f_out)
 	while ((*cmd)[++i])
 		res[i] = ft_strdup((*cmd)[i]);
 	res = replace_quote_path(res);
+	ft_free_tab((void**)(*cmd));
 	if (check_builtins((*cmd)[0]))
-	{
-		ft_free_tab((void**)(*cmd));
 		run_builtins(path, res);
-	}
 	else
 		run_cmd(path, res, ft_list_to_tab_env(g_mini->env));
 	free(path);
@@ -112,24 +110,25 @@ int			shell(void)
 	char	c;
 	char	*line;
 
-	line = ft_strdup("");
+	line = NULL;
 	while (read(0, &c, 1) == 1)
 		if ((ret = ft_termcaps(c)) == -1)
 			return (EXIT_FAILURE);
 		else if (ret == 1)
 		{
+			if (line == NULL)
+				line = ft_strdup("");
 			if (!(line = ft_strfdjoin(line, ft_lstconcat_typed(g_mini->typed)))
-			|| ft_strreplace(&line, "$?", ft_itoa(g_mini->last_exit)) == NULL)
+	|| ft_strreplace(&line, ft_strdup("$?"), ft_itoa(g_mini->last_exit)) == NULL)
 				return (EXIT_FAILURE);
 			if (shell_do(&line) == 0)
 				continue ;
 			free(line);
+			line = NULL;
 			if (g_mini->signal == 0)
 				print_prompt(1);
 			g_mini->signal = 0;
-			line = ft_strdup("");
 		}
-	free(line);
 	return (EXIT_SUCCESS);
 }
 

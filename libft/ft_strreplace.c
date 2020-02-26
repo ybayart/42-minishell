@@ -69,6 +69,14 @@ static int		*getindex(char *str, char *search)
 	return (index);
 }
 
+static void		clearall(char **str, char *search, char *replace, int *index)
+{
+	free(*str);
+	free(search);
+	free(replace);
+	free(index);
+}
+
 char			*ft_strreplace(char **str, char *search, char *replace)
 {
 	int		i[4];
@@ -92,8 +100,7 @@ char			*ft_strreplace(char **str, char *search, char *replace)
 		else
 			tmp[i[1]++] = (*str)[i[0]];
 	tmp[i[1]] = '\0';
-	free(*str);
-	free(index);
+	clearall(str, search, replace, index);
 	*str = tmp;
 	return (*str);
 }

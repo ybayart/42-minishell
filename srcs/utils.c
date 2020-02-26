@@ -58,6 +58,7 @@ void	endofprog(void)
 	ft_lst_clear_typed(&(g_mini->typed));
 	free(g_mini->current);
 	ft_lstclear(&(g_mini->history));
+	free(g_mini);
 }
 
 void	check_empty_end(char ***args, size_t i)

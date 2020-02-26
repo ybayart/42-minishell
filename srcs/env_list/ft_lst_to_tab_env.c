@@ -15,7 +15,6 @@
 char	**ft_list_to_tab_env(t_list_env *list)
 {
 	char	**res;
-	char	*tmp;
 	int		size;
 
 	size = ft_lst_size_env(list);
@@ -23,16 +22,9 @@ char	**ft_list_to_tab_env(t_list_env *list)
 		return (NULL);
 	res[size] = 0;
 	size = -1;
-	while (list)
+	while (list != NULL)
 	{
-		if ((res[++size] = ft_calloc(
-			(ft_strlen(list->name) + ft_strlen(list->value) + 2),
-													sizeof(char))) == NULL)
-			return (NULL);
-		res[size] = ft_strjoin(list->name, "=");
-		tmp = res[size];
-		res[size] = ft_strjoin(res[size], list->value);
-		free(tmp);
+		res[++size] = ft_strjoin_third(list->name, "=", list->value);
 		list = list->next;
 	}
 	return (res);
