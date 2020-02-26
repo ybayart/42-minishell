@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:12:55 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/25 15:49:05 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:07:48 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ char	*ft_strfjoin(char *s1, char *s2)
 	new_str = ft_strjoin(s1, s2);
 	if (s1 != NULL)
 		free(s1);
+	return (new_str);
+}
+
+char	*ft_strffjoin(char *s1, char *s2)
+{
+	char *new_str;
+
+	new_str = ft_strjoin(s1, s2);
+	if (s2 != NULL)
+		free(s2);
 	return (new_str);
 }
 

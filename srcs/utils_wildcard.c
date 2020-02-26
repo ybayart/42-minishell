@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 23:17:12 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/16 18:45:43 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:18:34 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*w_getrootdir(char *str)
 		if (ft_strncmp(str, "/", 1) != 0 && ft_strncmp(str, "./", 2) != 0
 										&& ft_strncmp(str, "../", 3) != 0)
 		{
-			return (ft_strjoin("./", ft_strndup(str,
+			return (ft_strffjoin("./", ft_strndup(str,
 				ft_strnlastpos(str, '/', j) + 1)));
 		}
 		return (ft_strndup(str, ft_strnlastpos(str, '/', j) + 1));

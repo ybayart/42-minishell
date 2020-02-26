@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/18 15:17:52 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/26 13:18:34 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		test_dir(struct dirent *dir, char *path[3], t_list **newlst, int *i)
 			stat((file = ft_strjoin(path[0], dir->d_name)), &buf);
 			if (path[1][0] == '\0' || S_ISDIR(buf.st_mode))
 			{
-				file = ft_strjoin(file, path[1]);
+				file = ft_strfjoin(file, path[1]);
 				ft_lstadd_back(newlst, ft_lstnew(file));
 				g_nb++;
 				(*i)++;
@@ -131,7 +131,10 @@ char		wildcard(char ***args, int *pos, int initpos)
 		return (0);
 	if ((*args)[initpos][0] == '~' && !(search->content = ft_strfrjoin(
 ft_lst_find_env(&g_mini->env, "HOME"), search->content + 1, search->content)))
+	{
+		ft_lstclear(&search);
 		return (0);
+	}
 	replace = 0;
 	if (ft_strncmp(search->content, "/", 1) != 0 && ft_strncmp(search->content,
 					"./", 2) != 0 && ft_strncmp(search->content, "../", 3) != 0)
@@ -141,7 +144,10 @@ ft_lst_find_env(&g_mini->env, "HOME"), search->content + 1, search->content)))
 	{
 		wildcard_do_format(&search, replace);
 		if ((i = wildcard_do_concat(&search, pos, args)) == -1)
+		{
+			ft_lstclear(&search);
 			return (0);
+		}
 		(*args)[i - 1] = 0;
 		(*pos) = i - 2;
 	}

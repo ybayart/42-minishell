@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 04:41:43 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/25 15:45:57 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 12:06:21 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	check_empty_end(char ***args, size_t i)
 {
 	if ((*args)[i] != 0 && (*args)[i][0] == '\0')
 	{
-		(*args)[i] = 0;
 		free((*args)[i + 1]);
+		free((*args)[i]);
+		(*args)[i] = 0;
 	}
 }

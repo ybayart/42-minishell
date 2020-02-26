@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 10:19:01 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 12:59:18 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void		space_cmd(char ***cmd, int f_in, int f_out)
 		path = ft_strdup((*cmd)[0]);
 	else if ((path = search_bin((char*)(*cmd)[0],
 			ft_lst_find_env(&g_mini->env, PATH))) == NULL)
-		return (print_error(1, "command not found", (*cmd)[0], NULL));
+	{
+		print_error(1, "command not found", (*cmd)[0], NULL);
+		return (ft_free_tab((void**)(*cmd)));
+	}
 	if ((res = (char**)malloc(sizeof(char*) * (i + 1))) == NULL)
 		return ;
 	res[i] = 0;
@@ -61,7 +64,7 @@ void		space_cmd(char ***cmd, int f_in, int f_out)
 		res[i] = ft_strdup((*cmd)[i]);
 	res = replace_quote_path(res);
 	ft_free_tab((void**)(*cmd));
-	if (check_builtins((*cmd)[0]))
+	if (check_builtins(path))
 		run_builtins(path, res);
 	else
 		run_cmd(path, res, ft_list_to_tab_env(g_mini->env));

@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/02/25 15:37:05 by ybayart          ###   ########.fr        #
+#    Updated: 2020/02/26 12:03:55 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ SRCS_TYPED=	ft_lstadd_typed.c \
 SRCS =  $(addprefix $(SRCS_DIR), $(SRCS_LIST)) \
 		$(addprefix $(SRCS_DIR)env_list/, $(SRCS_ENV)) \
 		$(addprefix $(SRCS_DIR)typed_list/, $(SRCS_TYPED)) \
-		libft/*.c
+
 
 OBJECT = $(patsubst %.c, %.o, $(SRCS))
 
@@ -89,7 +89,7 @@ all : $(NAME)
 
 $(NAME): $(OBJECT) $(INCS_DIR) libft $(INCS_DIR)
 	cd $(LIBFT_PATH) && make
-	$(CC) $(FLAGS) $(SAN) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
+	$(CC) $(FLAGS) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
 
 libft:
 	cd $(LIBFT_PATH) && make
