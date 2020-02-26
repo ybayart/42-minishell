@@ -31,6 +31,8 @@ void		test_dir(struct dirent *dir, char *path[3], t_list **newlst, int *i)
 				g_nb++;
 				(*i)++;
 			}
+			else
+				free(file);
 		}
 }
 
