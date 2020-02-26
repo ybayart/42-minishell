@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/02/26 16:29:59 by ybayart          ###   ########.fr        #
+#    Updated: 2020/02/26 19:12:23 by ybayart          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
 
-SAN = -fsanitize=leak
+SAN = -fsanitize=address
 
 NAME = minishell 
 
@@ -75,6 +75,11 @@ SRCS_TYPED=	ft_lstadd_typed.c \
 			ft_lst_push_str_typed.c \
 			ft_lst_push_back_typed.c
 
+INCS=	define.h \
+		ft_minishell.h \
+		libinc.h \
+		typedef.h
+
 SRCS =  $(addprefix $(SRCS_DIR), $(SRCS_LIST)) \
 		$(addprefix $(SRCS_DIR)env_list/, $(SRCS_ENV)) \
 		$(addprefix $(SRCS_DIR)typed_list/, $(SRCS_TYPED)) \
@@ -89,12 +94,13 @@ all : $(NAME)
 .c.o: 
 	${CC} $(FLAGS) -c -I $(INCS_DIR) -I $(LIBFT_PATH) $< -o ${<:.c=.o}
 
-$(NAME): $(OBJECT) $(INCS_DIR) libft $(INCS_DIR)
-	cd $(LIBFT_PATH) && make
-	$(CC) $(FLAGS) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
+$(NAME): $(OBJECT) libft $(addprefix $(INCS_DIR), $(INCS))
+	$(CC) $(FLAGS) $(SAN) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
 
-libft:
-	cd $(LIBFT_PATH) && make
+libft: break_implicit_rule
+	@make -C $(LIBFT_PATH)
+
+break_implicit_rule:
 
 clean:
 	@rm -rf $(OBJECT)

@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:55:43 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 14:23:09 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 19:21:19 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	localend(char **argv)
 
 void		run_exit(char **argv)
 {
+	int		tmp;
+
 	write(1, "exit\n", 5);
 	if (argv[1] != 0)
 	{
@@ -33,8 +35,9 @@ void		run_exit(char **argv)
 			print_error(1, "too many argument", "exit", NULL);
 		else
 		{
+			tmp = ft_atoi(argv[1]);
 			localend(argv);
-			exit(ft_atoi(argv[1]));
+			exit(tmp);
 		}
 	}
 	else
