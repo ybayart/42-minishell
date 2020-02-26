@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 18:18:10 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:49:07 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void		raw_mode(void);
 void		init_mode(void);
 void		sig_handler(int signo);
 int			shell(void);
+void		utils_shell(char **line);
 void		utils_shell_do(char **line);
 void		print_prompt(char clear);
 void		print_term(char *cap, char prompt);

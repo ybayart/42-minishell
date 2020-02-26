@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:08:06 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 15:25:21 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:38:49 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct	s_mini
 	int			history_pos;
 	char		*current;
 	char		exec;
+	pid_t		fork;
 	t_tm		*tm_init;
 }				t_mini;
 

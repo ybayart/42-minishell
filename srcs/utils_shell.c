@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 15:39:20 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 19:18:48 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:49:09 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,16 @@ void	utils_shell_do(char **line)
 	}
 	if (tmp != NULL)
 		free(tmp);
+}
+
+void	utils_shell(char **line)
+{
+	if (g_mini->signal == 1)
+	{
+		free((*line));
+		(*line) = NULL;
+		g_mini->signal = 0;
+	}
+	if ((*line) == NULL)
+		(*line) = ft_strdup("");
 }

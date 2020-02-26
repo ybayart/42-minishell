@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 04:41:43 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 15:33:21 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:35:16 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,19 @@ void		sig_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
+		kill(g_mini->fork, signo);
 		g_mini->signal = 1;
+		g_mini->ispipe = 0;
 		signal(signo, SIG_IGN);
 		signal(SIGINT, sig_handler);
+		run_touch();
 		write(1, "\n", 1);
 		print_prompt(1);
 	}
 	else if (signo == SIGQUIT && g_mini->exec == 1)
 	{
+		g_mini->ispipe = 0;
+		kill(g_mini->fork, signo);
 		g_mini->signal = 1;
 		signal(signo, SIG_IGN);
 		signal(SIGQUIT, sig_handler);
