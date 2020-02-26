@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 04:41:43 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/16 05:24:29 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/25 15:45:57 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,11 @@ void		sig_handler(int signo)
 
 void	endofprog(void)
 {
-	printf("here\n");
 	init_mode();
 	ft_lst_clear_env(&(g_mini->env));
+	ft_lst_clear_typed(&(g_mini->typed));
+	free(g_mini->current);
+	ft_lstclear(&(g_mini->history));
 }
 
 void	check_empty_end(char ***args, size_t i)

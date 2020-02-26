@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:36:59 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/18 14:17:12 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/25 17:03:20 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,5 @@ void	run_touch(void)
 	cmd[0] = ft_strdup("touch");
 	cmd[1] = ft_strdup("/tmp/minishell");
 	cmd[2] = 0;
-	space_cmd(cmd, 0, 1);
-	free(cmd[0]);
-	free(cmd[1]);
-	free(cmd);
+	space_cmd(&cmd, 0, 1);
 }

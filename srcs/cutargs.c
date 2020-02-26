@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 23:02:56 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/25 13:37:08 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 10:18:05 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ static char	launch_cmd(t_cutargs *data, char **ar, char state)
 		if ((*data).f_out != 1)
 			run_touch();
 		else
-			space_cmd((*data).cmd, (*data).f_in, (*data).f_out);
+			space_cmd(&((*data).cmd), (*data).f_in, (*data).f_out);
 		make_redir(1, (*data).j, (*data).len, (*data).fd);
 		if ((*data).f_out != 1)
-			space_cmd((*data).cmd, (*data).f_in, (*data).f_out);
+			space_cmd(&((*data).cmd), (*data).f_in, (*data).f_out);
 		(*data).isredir = 1;
 	}
 	else
-		space_cmd((*data).cmd, (*data).f_in, (*data).f_out);
+		space_cmd(&((*data).cmd), (*data).f_in, (*data).f_out);
 	if (init(data, ar, 1) == 0)
 		return (0);
 	return (1);
@@ -76,7 +76,7 @@ static void	endcuts(t_cutargs data)
 		pipe(data.fd[data.j % 2]);
 		make_redir(0, data.j, data.len, data.fd);
 	}
-	space_cmd(data.cmd, data.f_in, data.f_out);
+	space_cmd(&(data.cmd), data.f_in, data.f_out);
 	if (data.isredir == 1)
 	{
 		make_redir(1, data.j, data.len, data.fd);
@@ -133,16 +133,9 @@ void		cutargs(char **ar)
 			return ;
 		else if (data.state++ == 0 &&
 ft_rep_free(&(data.cmd), ar[data.i], ft_tablen((const char**)data.cmd) - 1) == 1)
-		{
-			int i;
-			for (i=0; data.cmd[i] != 0 ; i++)
-				printf("data.cmd[%d]: %p - |%s|\n", i, data.cmd[i], data.cmd[i]);
-			printf("data.cmd[%d]: %p - |%s|\n", i, data.cmd[i], data.cmd[i]);
 			if ((data.cmd = ft_addstr(data.cmd)) == NULL)
 				return ;
-		}
 	}
-	printf("toto\n");
 	ft_free_tab((void**)ar);
 	endcuts(data);
 }

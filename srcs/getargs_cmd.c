@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:51:53 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/25 14:30:40 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 10:18:26 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char		*ft_addc(char *str, char c)
 	size_t	len;
 	char	*new;
 
-	if (str == 0)
+	if (str == NULL)
 	{
 		if ((new = malloc(sizeof(char) * 2)) == NULL)
 			return (NULL);
@@ -61,10 +61,10 @@ char		**ft_addstr(char **ft_tab)
 		new[len + 1] = 0;
 		i = -1;
 		while (ft_tab[++i] != 0)
-			new[i] = ft_tab[i];
-		free(ft_tab);
+			new[i] = ft_strdup(ft_tab[i]);
+		ft_free_tab((void**)ft_tab);
 	}
-	new[len] = ft_strdup("\0");
+	new[len] = ft_strdup("");
 	return (new);
 }
 
