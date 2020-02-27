@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:29:43 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/27 02:17:36 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:59:16 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ char		*search_bin(const char *path, const char *env_path)
 		return (NULL);
 	while (tmp[++i])
 	{
-		if (stat((bin = ft_strjoin_third(tmp[i], "/", path)), &buf) == 0 && buf.st_mode & S_IXUSR)
+		if (stat((bin = ft_strjoin_third(tmp[i], "/", path)), &buf) == 0
+									&& buf.st_mode & S_IXUSR)
 			break ;
 		free(bin);
 		bin = NULL;

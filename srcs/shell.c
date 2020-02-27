@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 15:49:11 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/27 12:15:53 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/27 16:25:58 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			shell(void)
 		else if (ret == 1)
 		{
 			utils_shell(&line);
-			if (!(line = ft_strfdjoin(line, ft_lstconcat_typed(g_mini->typed)))
+			if (!(line = ft_strfdjoin(line, ft_lstconcat_typed(g_mini->tp)))
 		|| !ft_strreplace(&line, ft_strdup("$?"), ft_itoa(g_mini->last_exit)))
 				return (EXIT_FAILURE);
 			if (shell_do(&line) == 0)

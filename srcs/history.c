@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 21:25:58 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 22:06:59 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/27 16:25:38 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	set_history(char c)
 			line = ft_lstget_at(g_mini->history,
 					--(g_mini->history_pos))->content;
 	}
-	g_mini->typed_pos = (int)ft_strlen(line);
-	ft_lst_clear_typed(&(g_mini->typed));
-	ft_lst_push_str_typed(&(g_mini->typed), line);
+	g_mini->tp_pos = (int)ft_strlen(line);
+	ft_lst_clear_typed(&(g_mini->tp));
+	ft_lst_push_str_typed(&(g_mini->tp), line);
 	write(1, "\r", 1);
 	print_term("ce", 1);
 }

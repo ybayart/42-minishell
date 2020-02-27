@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 15:24:12 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/27 16:25:49 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ char	init_struct(char *const envp[])
 	g_mini->signal = 0;
 	g_mini->redir = 0;
 	g_mini->ispipe = 0;
-	g_mini->typed_pos = 0;
-	g_mini->typed = NULL;
+	g_mini->tp_pos = 0;
+	g_mini->tp = NULL;
 	g_mini->history_pos = -1;
 	g_mini->history = NULL;
 	g_mini->current = ft_strdup("");

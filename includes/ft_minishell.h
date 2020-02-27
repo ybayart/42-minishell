@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 20:49:07 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/27 15:23:44 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		print_prompt(char clear);
 void		print_term(char *cap, char prompt);
 void		print_term_goto(char *cap, char prompt, int x, int y);
 char		ft_termcaps(char c);
+void		ft_termcaps_change_value(char c, int *state);
 void		getargs_cmd(char *line);
 char		*ft_addc(char *str, char c);
 char		**ft_addstr(char **ft_tab);
@@ -92,5 +93,6 @@ char		*ft_lstconcat_typed(t_typed *lst);
 void		ft_lst_clear_typed(t_typed **lst);
 void		ft_lst_push_str_typed(t_typed **lst, char *str);
 void		ft_lst_push_back_typed(t_typed **lst, char c);
+t_typed		*ft_lst_get_at_typed(t_typed *lst, int at);
 
 #endif

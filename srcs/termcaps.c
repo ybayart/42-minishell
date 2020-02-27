@@ -6,39 +6,68 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/18 15:25:55 by racohen          ###   ########.fr       */
+/*   Updated: 2020/02/27 16:29:11 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void	ft_termcaps_arrow(char c, int *state)
+static void	ft_termcaps_arrow(char c, int *state)
 {
 	(*state) = 0;
 	if (c == 65 || c == 66)
 	{
 		set_history(c);
 	}
-	else if (c == 68 && g_mini->typed_pos > 0)
+	else if (c == 68 && g_mini->tp_pos > 0)
 	{
 		print_term("le", 0);
-		g_mini->typed_pos--;
+		g_mini->tp_pos--;
 	}
-	else if (c == 67 && g_mini->typed_pos < ft_lstsize_typed(g_mini->typed))
+	else if (c == 67 && g_mini->tp_pos < ft_lstsize_typed(g_mini->tp))
 	{
 		print_term("nd", 0);
-		g_mini->typed_pos++;
+		g_mini->tp_pos++;
 	}
 	else if (c == 70 || c == 72)
 	{
-		g_mini->typed_pos = (c == 70 ? ft_lstsize_typed(g_mini->typed) : 0);
-		print_term_goto("ch", 0, 0, g_mini->prompt_size + g_mini->typed_pos);
+		g_mini->tp_pos = (c == 70 ? ft_lstsize_typed(g_mini->tp) : 0);
+		print_term_goto("ch", 0, 0, g_mini->prompt_size + g_mini->tp_pos);
 	}
 	else
 		(*state) = 3;
 }
 
-char	ft_termcaps_keys(char c, char key)
+static void	ft_termcaps_jump(char c, int *state)
+{
+	char	jump;
+
+	(*state) = 0;
+	if ((jump = 0) == 0 && c == 68)
+	{
+		while (g_mini->tp_pos > 0 &&
+			ft_lst_get_at_typed(g_mini->tp, g_mini->tp_pos - 1)->c == ' ')
+			g_mini->tp_pos--;
+		while (g_mini->tp_pos > 0)
+			if (ft_lst_get_at_typed(g_mini->tp, --g_mini->tp_pos)->c == ' ')
+				break ;
+		if (ft_lst_get_at_typed(g_mini->tp, g_mini->tp_pos)->c == ' ')
+			g_mini->tp_pos++;
+	}
+	else if (c == 67)
+	{
+		while (ft_lstsize_typed(g_mini->tp) - 1 > g_mini->tp_pos &&
+			ft_lst_get_at_typed(g_mini->tp, g_mini->tp_pos)->c == ' ')
+			g_mini->tp_pos++;
+		while (ft_lstsize_typed(g_mini->tp) - 1 > g_mini->tp_pos)
+			if (ft_lst_get_at_typed(g_mini->tp, ++g_mini->tp_pos)->c == ' ')
+				break ;
+		if (g_mini->tp_pos + 1 == ft_lstsize_typed(g_mini->tp))
+			g_mini->tp_pos++;
+	}
+}
+
+static char	ft_termcaps_keys(char c, char key)
 {
 	if (key == 3)
 	{
@@ -46,7 +75,7 @@ char	ft_termcaps_keys(char c, char key)
 		{
 			write(1, "\r", 1);
 			print_term("ce", 0);
-			ft_lstdel_at_typed(&(g_mini->typed), g_mini->typed_pos);
+			ft_lstdel_at_typed(&(g_mini->tp), g_mini->tp_pos);
 		}
 	}
 	else if (c == 4)
@@ -54,48 +83,27 @@ char	ft_termcaps_keys(char c, char key)
 		write(1, "exit\n", 5);
 		return (-1);
 	}
-	else if (c == 127 && g_mini->typed_pos > 0)
+	else if (c == 127 && g_mini->tp_pos > 0)
 	{
 		write(1, "\r", 1);
 		print_term("ce", 0);
-		ft_lstdel_at_typed(&(g_mini->typed), --(g_mini->typed_pos));
+		ft_lstdel_at_typed(&(g_mini->tp), --(g_mini->tp_pos));
 	}
 	return (0);
 }
 
-void	ft_termcaps_printend(char c, int *state)
-{
-	if ((*state) == 0)
-	{
-		write(1, "\r", 1);
-		print_prompt(0);
-		ft_lst_print_typed(g_mini->typed);
-		print_term_goto("ch", 0, 0, g_mini->prompt_size + g_mini->typed_pos);
-	}
-	else if ((*state) == 3 && c != 51)
-		(*state) = 0;
-}
-
-void	change_value(void)
-{
-	if (g_mini->history_pos < 0)
-	{
-		free(g_mini->current);
-		g_mini->current = ft_lstconcat_typed(g_mini->typed);
-	}
-}
-
-char	ft_termcaps(char c)
+char		ft_termcaps(char c)
 {
 	static int	state = 0;
 
-	if ((c == 27 && state == 0) || (c == 91 && state == 1))
+	if ((c == 27 && state == 0) || (c == 91 && state == 1) ||
+(c == 49 && state == 2) || (c == 59 && state == 3) || (c == 50 && state == 4))
 		state++;
-	else if (state == 2)
-		ft_termcaps_arrow(c, &state);
+	else if (state == 2 || state == 5)
+		state == 2 ? ft_termcaps_arrow(c, &state) : ft_termcaps_jump(c, &state);
 	else if (state == 3 && (state = 0) == 0)
 		ft_termcaps_keys(c, 3);
-	else if (c == 4 && ft_lstsize_typed(g_mini->typed) == 0)
+	else if (c == 4 && ft_lstsize_typed(g_mini->tp) == 0)
 	{
 		if (ft_termcaps_keys(c, 4) == -1)
 			return (-1);
@@ -107,9 +115,8 @@ char	ft_termcaps(char c)
 	else if (c == 127)
 		ft_termcaps_keys(c, 4);
 	else if (c != 4)
-		ft_lstadd_at_typed(&(g_mini->typed), ft_lstnew_typed(c),
-												(g_mini->typed_pos)++);
-	change_value();
-	ft_termcaps_printend(c, &state);
+		ft_lstadd_at_typed(&(g_mini->tp), ft_lstnew_typed(c),
+												(g_mini->tp_pos)++);
+	ft_termcaps_change_value(c, &state);
 	return (0);
 }

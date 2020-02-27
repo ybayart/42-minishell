@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:08:06 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 20:38:49 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/27 16:27:33 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct	s_mini
 	int			last_exit;
 	int			signal;
 	int			redir;
-	t_typed		*typed;
-	int			typed_pos;
+	t_typed		*tp;
+	int			tp_pos;
 	int			prompt_size;
 	char		ispipe;
 	t_list		*history;

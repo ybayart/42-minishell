@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/02/26 19:12:23 by ybayart          ###   ########.fr        #
+#    Updated: 2020/02/27 15:31:07 by yanyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,8 @@ SRCS_TYPED=	ft_lstadd_typed.c \
 			ft_lstconcat_typed.c \
 			ft_lst_clear_typed.c \
 			ft_lst_push_str_typed.c \
-			ft_lst_push_back_typed.c
+			ft_lst_push_back_typed.c \
+			ft_lst_get_at_typed.c
 
 INCS=	define.h \
 		ft_minishell.h \

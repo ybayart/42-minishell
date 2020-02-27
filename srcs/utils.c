@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 04:41:43 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 20:35:16 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/27 16:28:10 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void		print_prompt(char clear)
 
 	if (clear == 1)
 	{
-		ft_lst_clear_typed(&(g_mini->typed));
-		g_mini->typed_pos = 0;
+		ft_lst_clear_typed(&(g_mini->tp));
+		g_mini->tp_pos = 0;
 	}
 	g_mini->prompt_size = 0;
 	if (g_mini->ispipe == 0)
@@ -60,7 +60,7 @@ void		endofprog(void)
 {
 	init_mode();
 	ft_lst_clear_env(&(g_mini->env));
-	ft_lst_clear_typed(&(g_mini->typed));
+	ft_lst_clear_typed(&(g_mini->tp));
 	free(g_mini->current);
 	ft_lstclear(&(g_mini->history));
 	free(g_mini);
