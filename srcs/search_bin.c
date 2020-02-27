@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:29:43 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/16 18:23:37 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/27 02:17:36 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,32 @@ int			search_bin_do(char **tmp, const char *path, char **bin, int i)
 
 char		*search_bin(const char *path, const char *env_path)
 {
-	int		i;
-	int		ret;
-	char	*bin;
-	char	**tmp;
+	int			i;
+	char		*bin;
+	char		**tmp;
+	struct stat	buf;
 
 	i = -1;
 	bin = NULL;
+	if (path[0] == '.' || path[0] == '/')
+	{
+		if (stat((bin = ft_strdup(path)), &buf) == 0 && buf.st_mode & S_IXUSR)
+			return (bin);
+		else
+		{
+			free(bin);
+			return (NULL);
+		}
+	}
 	if ((tmp = ft_split(env_path, ':')) == NULL)
 		return (NULL);
 	while (tmp[++i])
-		if ((ret = search_bin_do(tmp, path, &bin, i)) == -1)
-			return (NULL);
-		else if (ret == 0)
+	{
+		if (stat((bin = ft_strjoin_third(tmp[i], "/", path)), &buf) == 0 && buf.st_mode & S_IXUSR)
 			break ;
+		free(bin);
+		bin = NULL;
+	}
 	ft_free_tab((void**)tmp);
 	return (bin);
 }
