@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 15:39:20 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 23:16:57 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/27 12:47:19 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	utils_shell_do(char **line)
 	size_t	len;
 
 	add_history((*line));
-	g_mini->exec = 1;
 	if ((tmp = ft_strndup((*line), 1)) != NULL && istoken(tmp))
 		print_error(5, "syntax error near unexpected token", NULL, tmp);
 	else
@@ -50,6 +49,12 @@ void	utils_shell_do(char **line)
 				&& len > 0 && (*line)[len - 1] != ';')
 			(*line)[len] = '\0';
 		getargs_cmd((*line));
+		while (g_mini->exec > 0)
+		{
+			waitpid(-1, &g_mini->last_exit, 0);
+			g_mini->last_exit = WEXITSTATUS(g_mini->last_exit);
+			g_mini->exec--;
+		}
 	}
 	if (tmp != NULL)
 		free(tmp);

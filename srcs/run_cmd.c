@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:53:44 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/27 01:46:19 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/27 12:47:55 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,14 @@ void	run_cmd(const char *bin, char **argv, char **env)
 		execve(bin, argv, env);
 	else
 	{
+		g_mini->exec++;
 		g_mini->fork = id;
 		if (g_mini->redir == 0)
+		{
 			waitpid(id, &g_mini->last_exit, 0);
-		g_mini->last_exit = WEXITSTATUS(g_mini->last_exit);
+			g_mini->last_exit = WEXITSTATUS(g_mini->last_exit);
+			g_mini->exec--;
+		}
 		ft_free_tab((void**)env);
 	}
 }
