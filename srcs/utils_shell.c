@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 15:39:20 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 20:49:09 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/26 23:16:57 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ void	utils_space_cmd(char ***cmd, size_t i, char *path)
 		res[i] = ft_strdup((*cmd)[i]);
 	res = replace_quote_path(res);
 	ft_free_tab((void**)(*cmd));
-	init_mode();
 	if (check_builtins(path))
 		run_builtins(path, res);
 	else
 		run_cmd(path, res, ft_list_to_tab_env(g_mini->env));
 	free(path);
 	ft_free_tab((void**)res);
-	raw_mode();
 }
 
 void	utils_shell_do(char **line)
