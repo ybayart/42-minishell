@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 23:02:56 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 15:26:21 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/27 00:07:16 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static char	launch_cmd(t_cutargs *data, char **ar, char state)
 static void	endcuts(t_cutargs data)
 {
 	check_empty_end(&(data.cmd), ft_tablen((const char**)data.cmd) - 1);
+	init_mode();
 	if (data.isredir == 1)
 	{
 		data.j++;
@@ -82,6 +83,7 @@ static void	endcuts(t_cutargs data)
 		make_redir(1, data.j, data.len, data.fd);
 		data.isredir = 0;
 	}
+	raw_mode();
 }
 
 static int	do_if(t_cutargs *data, char **ar, char state)

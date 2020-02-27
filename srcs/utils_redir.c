@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 18:08:24 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 15:38:00 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/02/27 01:43:08 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ void	make_redir(char state, int i, size_t len, int fd[2][2])
 {
 	static int	fd_bak[2][2];
 
-	i++;
-	if (state == 0 && len > 1)
+	if (++i != 0 && (g_mini->redir = 0) == 0 && state == 0 && len > 1)
 	{
 		if ((size_t)i < len && (fd_bak[1 - (i % 2)][1] = dup(1)) != -1)
+		{
+			g_mini->redir = 1;
 			dup2(fd[1 - (i % 2)][1], 1);
+		}
 		if ((size_t)i <= len && i >= 2 && (fd_bak[i % 2][0] = dup(0)) != -1)
 			dup2(fd[i % 2][0], 0);
 	}
