@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/27 16:29:11 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/28 19:27:56 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,11 @@ static void	ft_termcaps_arrow(char c, int *state)
 		set_history(c);
 	}
 	else if (c == 68 && g_mini->tp_pos > 0)
-	{
-		print_term("le", 0);
 		g_mini->tp_pos--;
-	}
 	else if (c == 67 && g_mini->tp_pos < ft_lstsize_typed(g_mini->tp))
-	{
-		print_term("nd", 0);
 		g_mini->tp_pos++;
-	}
 	else if (c == 70 || c == 72)
-	{
 		g_mini->tp_pos = (c == 70 ? ft_lstsize_typed(g_mini->tp) : 0);
-		print_term_goto("ch", 0, 0, g_mini->prompt_size + g_mini->tp_pos);
-	}
 	else
 		(*state) = 3;
 }
