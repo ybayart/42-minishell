@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/27 15:23:44 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/28 17:20:31 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		setfd(int f_in, int f_out, char state);
 void		space_cmd(char ***cmd, int f_in, int f_out);
 void		utils_space_cmd(char ***cmd, size_t i, char *path);
 int			is_convert_red(char *str);
-char		*search_bin(const char *path, const char *env_path);
+char		*search_bin(char *path, const char *env_path);
 int			ft_get_len(char **str);
 int			check_builtins(char *tmp);
 char		**replace_quote_path(char **cmd);
