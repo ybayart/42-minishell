@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 04:41:43 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/27 16:28:10 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/01 17:11:42 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void		print_prompt(char clear)
 {
 	char	*pwd;
+	char	*color;
 
+	color = tgetstr("AF", NULL);
+	tputs(tparm(color, COLOR_GREEN), 1, ft_termputs);
 	if (clear == 1)
 	{
 		ft_lst_clear_typed(&(g_mini->tp));
@@ -29,6 +32,7 @@ void		print_prompt(char clear)
 	}
 	g_mini->prompt_size += write(1, "> ", 2);
 	g_mini->exec = 0;
+	print_term("me", 0);
 }
 
 void		sig_handler(int signo)

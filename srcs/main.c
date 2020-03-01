@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:40:14 by racohen           #+#    #+#             */
-/*   Updated: 2020/03/01 16:36:38 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/01 17:35:41 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	init_struct(char *const envp[])
 	g_mini->history_pos = -1;
 	g_mini->history = NULL;
 	g_mini->current = ft_strdup("");
-	print_prompt(0);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	return (1);
@@ -59,7 +58,6 @@ void	raw_mode(void)
 {
 	struct termios	raw;
 
-	tgetent(NULL, getenv("TERM"));
 	tcgetattr(STDIN_FILENO, &raw);
 	raw.c_lflag &= ~(ICANON);
 	raw.c_lflag &= ~(ECHO);
@@ -81,7 +79,14 @@ int		main(int argc, char *const argv[], char *const envp[])
 
 	if (init_struct(envp) == 0 || get_history() == 0)
 		exit(EXIT_FAILURE);
+	if (tgetent(NULL, ft_lst_find_env(&(g_mini->env), "TERM")) != 1)
+	{
+		print_error(5, "Could't initialize with TERM", NULL,
+			ft_lst_find_env(&(g_mini->env), "TERM"));
+		exit(EXIT_FAILURE);
+	}
 	raw_mode();
+	print_prompt(0);
 	ret = EXIT_SUCCESS;
 	if (shell() == EXIT_FAILURE)
 		ret = EXIT_FAILURE;
