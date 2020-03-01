@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:29:43 by racohen           #+#    #+#             */
-/*   Updated: 2020/03/01 16:57:06 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/01 17:54:08 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ static void	search_multi(char *path, char **bin, char **tmp)
 		(*bin) = NULL;
 		if (ret == 3)
 		{
-			ft_free_tab((void**)tmp);
 			(*bin) = NULL;
 			return ;
 		}
