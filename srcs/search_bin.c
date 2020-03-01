@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:29:43 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/28 17:34:27 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/02/28 23:13:35 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,27 @@ char		test_bin(char *bin)
 	struct stat	buf;
 
 	stat(bin, &buf);
-	if (S_ISREG(buf.st_mode) != 1)
-		return (1);
-	else if ((buf.st_mode & S_IXUSR) != 1)
-		return (2);
-	else
+	if (buf.st_mode & S_IXUSR)
 		return (0);
-	return (3);
+	if (S_ISDIR(buf.st_mode) == 1)
+		return (1);
+	if (S_ISREG(buf.st_mode) != 1)
+		return (2);
+	else if (buf.st_mode & S_IXUSR)
+		return (3);
+	return (4);
 }
 
 static void	print_error_bin(char err, char *bin)
 {
 	if (err == 1)
-		print_error(1, "command not found", bin, NULL);
+		print_error(1, "is a directory", bin, NULL);
 	else if (err == 2)
 		print_error(1, "No such file or directory", bin, NULL);
 	else if (err == 3)
 		print_error(1, "Permission denied", bin, NULL);
+	else if (err == 4)
+		print_error(1, "command not found", bin, NULL);
 }
 
 char		*search_bin(char *path, const char *env_path)
@@ -100,18 +104,20 @@ char		*search_bin(char *path, const char *env_path)
 	if (path[0] == '.' || path[0] == '/')
 	{
 		print_error_bin((ret = test_bin(path)), path);
-		if (ret == 0)
+		if (ret != 0)
 			return (NULL);
-		return (path);
+		printf("tasoeur\n");
+		return (ft_strdup(path));
 	}
 	if ((tmp = ft_split(env_path, ':')) == NULL)
 		return (NULL);
 	while (tmp[++i])
 	{
 		bin = ft_strjoin_third(tmp[i], "/", path);
+		printf("%d: %s\n", ret, bin);
 		if ((ret = test_bin(bin)) == 0)
 			break ;
-		if (ret >= 2)
+		if (ret == 3)
 		{
 			print_error_bin(ret, bin);
 			free(bin);
@@ -120,8 +126,8 @@ char		*search_bin(char *path, const char *env_path)
 		free(bin);
 		bin = NULL;
 	}
-	if (ret != 1)
-		print_error_bin(0, path);
+	if (ret != 0)
+		print_error_bin(4, path);
 	ft_free_tab((void**)tmp);
 	return (bin);
 }
