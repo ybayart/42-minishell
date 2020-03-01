@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:11:29 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 13:08:00 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/01 20:13:04 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct		s_list
 
 void				ft_putchar(char c);
 int					ft_termputs(int c);
+int					ft_termputs_err(int c);
 int					ft_atoi(const char *str);
 void				ft_free_tab(void **ft_tab);
 char				*ft_freeint(int *elem);

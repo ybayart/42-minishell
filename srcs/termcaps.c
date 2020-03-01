@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/28 19:27:56 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/01 22:31:03 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	ft_termcaps_arrow(char c, int *state)
 		g_mini->tp_pos = (c == 70 ? ft_lstsize_typed(g_mini->tp) : 0);
 	else
 		(*state) = 3;
+	if ((g_mini->prompt_size + g_mini->tp_pos) % tgetnum("co") == 0 && (c == 67 || c == 68))
+		print_term_goto((c == 67 ? "DO" : "UP"), 0, 0, 1);
 }
 
 static void	ft_termcaps_jump(char c, int *state)

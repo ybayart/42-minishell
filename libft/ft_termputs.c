@@ -6,7 +6,7 @@
 /*   By: yanyan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 13:57:05 by yanyan            #+#    #+#             */
-/*   Updated: 2020/02/14 13:57:17 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/01 20:12:53 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,9 @@
 int		ft_termputs(int c)
 {
 	return (write(1, &c, 1));
+}
+
+int		ft_termputs_err(int c)
+{
+	return (write(2, &c, 1));
 }
