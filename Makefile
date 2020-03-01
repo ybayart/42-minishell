@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/02/27 15:31:07 by yanyan           ###   ########.fr        #
+#    Updated: 2020/03/01 16:36:56 by yanyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,7 @@ all : $(NAME)
 	${CC} $(FLAGS) -c -I $(INCS_DIR) -I $(LIBFT_PATH) $< -o ${<:.c=.o}
 
 $(NAME): $(OBJECT) libft $(addprefix $(INCS_DIR), $(INCS))
-	$(CC) $(FLAGS) $(SAN) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
+	$(CC) $(SAN) $(FLAGS) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
 
 libft: break_implicit_rule
 	@make -C $(LIBFT_PATH)

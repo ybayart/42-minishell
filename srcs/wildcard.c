@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/26 16:32:27 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/01 16:35:46 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int			wildcard_do_concat(t_list **search, int *pos, char ***args)
 	while ((*args)[(size_t)++i - (len + 1)] != 0 &&
 			(*args)[(size_t)i - len] != 0)
 		newstr[i] = (*args)[(size_t)i - len];
-	free(*args);
+	free((*args));
 	(*args) = newstr;
 	return (i);
 }
@@ -134,6 +134,7 @@ char		wildcard(char ***args, int *pos, int initpos)
 	wildcard_do_getdir(&search);
 	if (g_nb != 0)
 	{
+		free((*args)[initpos]);
 		wildcard_do_format(&search, replace);
 		if ((i = wildcard_do_concat(&search, pos, args)) == -1)
 		{
