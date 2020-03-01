@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 13:55:56 by ybayart           #+#    #+#             */
-/*   Updated: 2020/02/28 16:16:07 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/01 17:42:47 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,34 @@
 
 static void	run_forked(char *cmd, char **argv)
 {
-	if (ft_strcmp(cmd, "cd") == 0)
-		run_cd(argv);
-	else if (ft_strcmp(cmd, "echo") == 0)
+	if (ft_strcmp(cmd, "echo") == 0)
 		run_echo(argv);
+	else if (ft_strcmp(cmd, "env") == 0)
+		run_env();
+}
+
+static void	run_non_forked(char *cmd, char **argv)
+{
+	if (ft_strcmp(cmd, "exit") == 0)
+	{
+		free(cmd);
+		run_exit(argv);
+	}
+	else if (ft_strcmp(cmd, "cd") == 0)
+		run_cd(argv);
 	else if (ft_strcmp(cmd, "pwd") == 0)
 		run_pwd();
 	else if (ft_strcmp(cmd, "export") == 0)
 		run_export(argv);
 	else if (ft_strcmp(cmd, "unset") == 0)
 		run_unset(argv);
-	else if (ft_strcmp(cmd, "env") == 0)
-		run_env();
 }
 
 int			run_builtins(char *cmd, char **argv)
 {
 	pid_t	id;
 
-	if (ft_strcmp(cmd, "exit") == 0)
-	{
-		free(cmd);
-		run_exit(argv);
-	}
+	run_non_forked(cmd, argv);
 	if ((id = fork()) == 0)
 	{
 		run_forked(cmd, argv);
