@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:08:06 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/01 19:03:28 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/02 17:56:54 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct	s_mini
 	int			redir;
 	t_typed		*tp;
 	int			tp_pos;
+	char		print_all;
 	int			prompt_size;
 	char		ispipe;
 	t_list		*history;

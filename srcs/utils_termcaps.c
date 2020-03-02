@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 19:54:12 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/02 16:26:29 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/02 18:04:19 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,42 @@ void	print_term_goto(char *cap, char prompt, int x, int y)
 void	ft_termcaps_printend(char c, int *state)
 {
 	int		size;
+	int		pos;
+	int		start;
 
-	size = g_mini->prompt_size + (g_mini->tp_pos < 1 ? 1 : g_mini->tp_pos);
+	pos = (g_mini->tp_pos < 1 ? 1 : g_mini->tp_pos);
+	size = g_mini->prompt_size + pos;
+	start = (size / tgetnum("co") * tgetnum("co") - g_mini->prompt_size);
+	start = (start < 0 ? 0 : start);
 	if ((*state) == 0)
 	{
-		print_term_goto("ch", 0, 0, size - 1);
+		if (size % tgetnum("co") == 0 && c != 127 && g_mini->print_all == 0)
+		{
+			write(1, &c, 1);
+			write(1, "\n", 1);
+		}
+		else if (size % (tgetnum("co") - 1) == 0 && c == 127)
+		{
+			print_term_goto("UP", 0, 0, 1);
+			write(1, "\r", 1);
+		}
+		else
+			write(1, "\r", 1);
 		print_term("cd", 0);
-		ft_lst_print_typed(ft_lst_get_at_typed(g_mini->tp, g_mini->tp_pos));
-		if (g_mini->tp_pos > 0)
-			print_term_goto("ch", 0, 0, size);
+		if (g_mini->print_all == 1)
+		{
+			print_prompt(0);
+			ft_lst_print_typed(g_mini->tp);
+		}
+		else
+		{
+			if (size < tgetnum("co"))
+				print_prompt(0);
+			ft_lst_print_typed(ft_lst_get_at_typed(g_mini->tp, start));
+		}
+		size = g_mini->prompt_size + g_mini->tp_pos;
+		if (ft_lstsize_typed(g_mini->tp) != g_mini->tp_pos)
+			print_term_goto("ch", 0, 0, size - tgetnum("co") * (size / tgetnum("co")));
 	}
 	else if ((*state) == 3 && c != 51 && c != 49)
 		(*state) = 0;
