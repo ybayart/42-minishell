@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/01 22:31:03 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/02 16:12:30 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static void	ft_termcaps_arrow(char c, int *state)
 		g_mini->tp_pos = (c == 70 ? ft_lstsize_typed(g_mini->tp) : 0);
 	else
 		(*state) = 3;
-	if ((g_mini->prompt_size + g_mini->tp_pos) % tgetnum("co") == 0 && (c == 67 || c == 68))
-		print_term_goto((c == 67 ? "DO" : "UP"), 0, 0, 1);
+//	if ((g_mini->prompt_size + g_mini->tp_pos) % (tgetnum("co")) == 0 && (c == 67 || c == 68))
+//		print_term_goto((c == 67 ? "DO" : "UP"), 0, 0, 1);
 }
 
 static void	ft_termcaps_jump(char c, int *state)
@@ -66,8 +66,8 @@ static char	ft_termcaps_keys(char c, char key)
 	{
 		if (c == 126)
 		{
-			write(1, "\r", 1);
-			print_term("ce", 0);
+//			write(1, "\r", 1);
+//			print_term("ce", 0);
 			ft_lstdel_at_typed(&(g_mini->tp), g_mini->tp_pos);
 		}
 	}
@@ -78,8 +78,8 @@ static char	ft_termcaps_keys(char c, char key)
 	}
 	else if (c == 127 && g_mini->tp_pos > 0)
 	{
-		write(1, "\r", 1);
-		print_term("ce", 0);
+//		write(1, "\r", 1);
+//		print_term("ce", 0);
 		ft_lstdel_at_typed(&(g_mini->tp), --(g_mini->tp_pos));
 	}
 	return (0);
