@@ -54,9 +54,7 @@ static void	print_error_message(char state, char *str, char *comp)
 
 void		print_error(int state, char *str, char *bin, char *comp)
 {
-	tputs(tparm(tgetstr("AF", NULL), COLOR_RED), 1, ft_termputs_err);
 	print_error_init(state, bin);
 	print_error_message(state, str, comp);
 	g_mini->last_exit = 1;
-	tputs(tgetstr("me", NULL), 1, ft_termputs_err);
 }

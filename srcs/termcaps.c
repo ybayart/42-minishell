@@ -44,7 +44,6 @@ static void	ft_termcaps_arrow(char c, int *state)
 			g_mini->print_all = -1;
 			print_term_goto((c == 67 ? "DO" : "UP"), 0, 0, 1);
 		}
-//			print_term_goto((c == 67 ? "DO" : "UP"), 0, 0, 2);
 	}
 }
 
@@ -86,6 +85,13 @@ static char	ft_termcaps_keys(char c, char key)
 //			write(1, "\r", 1);
 //			print_term("ce", 0);
 			ft_lstdel_at_typed(&(g_mini->tp), g_mini->tp_pos);
+			if (ft_lstsize_typed(g_mini->tp) != g_mini->tp_pos)
+			{
+				if (g_mini->prompt_size + g_mini->tp_pos > tgetnum("co"))
+					print_term_goto("UP", 0, 0, (g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co"));
+				print_term("cd", 0);
+				g_mini->print_all = 2;
+			}
 		}
 	}
 	else if (c == 4)
@@ -98,6 +104,13 @@ static char	ft_termcaps_keys(char c, char key)
 //		write(1, "\r", 1);
 //		print_term("ce", 0);
 		ft_lstdel_at_typed(&(g_mini->tp), --(g_mini->tp_pos));
+		if (ft_lstsize_typed(g_mini->tp) != g_mini->tp_pos)
+		{
+			if (g_mini->prompt_size + g_mini->tp_pos > tgetnum("co"))
+				print_term_goto("UP", 0, 0, (g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co"));
+			print_term("cd", 0);
+			g_mini->print_all = 2;
+		}
 	}
 	return (0);
 }
@@ -129,8 +142,17 @@ char		ft_termcaps(char c)
 	else if (c == 127)
 		ft_termcaps_keys(c, 4);
 	else if (c != 4)
+	{
 		ft_lstadd_at_typed(&(g_mini->tp), ft_lstnew_typed(c),
 												(g_mini->tp_pos)++);
+		if (ft_lstsize_typed(g_mini->tp) != g_mini->tp_pos)
+		{
+			if (g_mini->prompt_size + g_mini->tp_pos > tgetnum("co"))
+				print_term_goto("UP", 0, 0, (g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co"));
+			print_term("cd", 0);
+			g_mini->print_all = 2;
+		}
+	}
 	ft_termcaps_change_value(c, &state);
 	return (0);
 }

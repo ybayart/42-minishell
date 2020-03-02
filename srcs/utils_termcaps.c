@@ -110,7 +110,7 @@ void	ft_termcaps_printend(char c, int *state)
 			write(1, "\r", 1);
 		if (g_mini->print_all != -1)
 			print_term("ce", 0);
-		if (g_mini->print_all == 1)
+		if (g_mini->print_all >= 1)
 		{
 			print_prompt(0);
 			ft_lst_print_typed(g_mini->tp, -1);
@@ -127,7 +127,14 @@ void	ft_termcaps_printend(char c, int *state)
 		}
 		size = g_mini->prompt_size + g_mini->tp_pos;
 		if (ft_lstsize_typed(g_mini->tp) != g_mini->tp_pos)
+		{
+			if (g_mini->print_all == 2)
+			{
+				if ((g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co") != (g_mini->prompt_size + ft_lstsize_typed(g_mini->tp)) / tgetnum("co"))
+					print_term_goto("UP", 0, 0, ((g_mini->prompt_size + ft_lstsize_typed(g_mini->tp)) / tgetnum("co")) - ((g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co")));
+			}
 			print_term_goto("ch", 0, 0, size - tgetnum("co") * (size / tgetnum("co")));
+		}
 	}
 	else if ((*state) == 3 && c != 51 && c != 49)
 		(*state) = 0;
