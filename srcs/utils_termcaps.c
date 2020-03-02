@@ -108,17 +108,22 @@ void	ft_termcaps_printend(char c, int *state)
 		}
 		else
 			write(1, "\r", 1);
-		print_term("cd", 0);
+		if (g_mini->print_all != -1)
+			print_term("ce", 0);
 		if (g_mini->print_all == 1)
 		{
 			print_prompt(0);
-			ft_lst_print_typed(g_mini->tp);
+			ft_lst_print_typed(g_mini->tp, -1);
 		}
 		else
 		{
 			if (size < tgetnum("co"))
+			{
 				print_prompt(0);
-			ft_lst_print_typed(ft_lst_get_at_typed(g_mini->tp, start));
+				ft_lst_print_typed(ft_lst_get_at_typed(g_mini->tp, start), tgetnum("co") - g_mini->prompt_size);
+			}
+			else
+				ft_lst_print_typed(ft_lst_get_at_typed(g_mini->tp, start), tgetnum("co"));
 		}
 		size = g_mini->prompt_size + g_mini->tp_pos;
 		if (ft_lstsize_typed(g_mini->tp) != g_mini->tp_pos)

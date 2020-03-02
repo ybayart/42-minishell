@@ -45,6 +45,8 @@ static char	shell_do(char **line)
 		else if ((g_mini->ispipe = 0) == 0)
 			utils_shell_do(line);
 	}
+	else
+		free(tmp);
 	return (1);
 }
 

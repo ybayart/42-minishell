@@ -17,7 +17,8 @@ static void	ft_termcaps_arrow(char c, int *state)
 	(*state) = 0;
 	if (c == 65 || c == 66)
 	{
-		print_term_goto("UP", 0, 0, (g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co") - 1);
+		if (g_mini->prompt_size + g_mini->tp_pos > tgetnum("co"))
+			print_term_goto("UP", 0, 0, (g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co"));
 		print_term("cd", 0);
 		set_history(c);
 		g_mini->print_all = 1;
@@ -30,14 +31,18 @@ static void	ft_termcaps_arrow(char c, int *state)
 		g_mini->tp_pos = (c == 70 ? ft_lstsize_typed(g_mini->tp) : 0);
 	else
 		(*state) = 3;
-	
-	if ((g_mini->prompt_size + g_mini->tp_pos) % (tgetnum("co") - 1) == 0)
+	if ((g_mini->prompt_size + g_mini->tp_pos) % tgetnum("co") == 0)
+		if (c == 67 || c == 68)
+			g_mini->print_all = -1;
+	if (((g_mini->prompt_size + g_mini->tp_pos) + 1) % tgetnum("co") == 0)
 	{
 		if (c == 67 || c == 68)
 		{
-			print_term_goto("UP", 0, 0, 1);
-			print_term("cd", 0);
-			g_mini->print_all = 1;
+//			if (g_mini->prompt_size + g_mini->tp_pos > tgetnum("co"))
+//				print_term_goto("UP", 0, 0, (g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co"));
+//			print_term("cd", 0);
+			g_mini->print_all = -1;
+			print_term_goto((c == 67 ? "DO" : "UP"), 0, 0, 1);
 		}
 //			print_term_goto((c == 67 ? "DO" : "UP"), 0, 0, 2);
 	}

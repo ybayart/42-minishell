@@ -12,10 +12,16 @@
 
 #include "ft_minishell.h"
 
-void	ft_lst_print_typed(t_typed *lst)
+void	ft_lst_print_typed(t_typed *lst, int max)
 {
+	int		i;
+
+	i = -1;
 	while (lst != NULL)
 	{
+		i++;
+		if (max != -1 && i >= max)
+			break ;
 		write(1, &(lst->c), 1);
 		lst = lst->next;
 	}

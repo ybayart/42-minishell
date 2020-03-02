@@ -86,7 +86,7 @@ void		print_error(int state, char *str, char *bin, char *comp);
 t_typed		*ft_lstnew_typed(char c);
 void		ft_lstadd_typed(t_typed **alst, t_typed *new);
 void		ft_lstadd_at_typed(t_typed **lst, t_typed *new, int at);
-void		ft_lst_print_typed(t_typed *lst);
+void		ft_lst_print_typed(t_typed *lst, int max);
 void		ft_lstdel_at_typed(t_typed **list, int at);
 int			ft_lstsize_typed(t_typed *lst);
 char		*ft_lstconcat_typed(t_typed *lst);
