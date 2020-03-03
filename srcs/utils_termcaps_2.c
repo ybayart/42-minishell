@@ -6,13 +6,13 @@
 /*   By: yanyan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 16:05:50 by yanyan            #+#    #+#             */
-/*   Updated: 2020/03/03 17:49:26 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/03 18:43:55 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void		ft_termcaps_update_pos(int oldpos)
+void	ft_termcaps_update_pos(int oldpos)
 {
 	int		oldline;
 	int		actline;
@@ -29,14 +29,14 @@ void		ft_termcaps_update_pos(int oldpos)
 	}
 }
 
-void		ft_termcaps_start(void)
+void	ft_termcaps_start(void)
 {
 	if (g_mini->prompt_size + g_mini->tp_pos > tgetnum("co"))
 		print_term_goto("UP", 0, 0, (g_mini->prompt_size + g_mini->tp_pos)
 									/ tgetnum("co"));
 }
 
-void		ft_termcaps_clean_all(void)
+void	ft_termcaps_clean_all(void)
 {
 	if (ft_lstsize_typed(g_mini->tp) != g_mini->tp_pos)
 	{
@@ -44,4 +44,28 @@ void		ft_termcaps_clean_all(void)
 		print_term("cd", 0);
 		g_mini->print_all = 2;
 	}
+}
+
+char	ft_termcaps_do(char c)
+{
+	if (c == 10)
+	{
+		if ((g_mini->prompt_size + ft_lstsize_typed(g_mini->tp)) / tgetnum("co")
+					!= (g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co"))
+			print_term_goto("DO", 0, 0, ((g_mini->prompt_size +
+					ft_lstsize_typed(g_mini->tp)) / tgetnum("co")) -
+					((g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co")));
+	}
+	else if (c == 12)
+	{
+		print_term("cl", 0);
+		g_mini->print_all = 1;
+	}
+	else if (c != 4)
+	{
+		ft_lstadd_at_typed(&(g_mini->tp), ft_lstnew_typed(c),
+			(g_mini->tp_pos)++);
+		ft_termcaps_clean_all();
+	}
+	return (1);
 }

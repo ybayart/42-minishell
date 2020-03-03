@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/03 17:49:07 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/03 18:44:01 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,28 +108,12 @@ char		ft_termcaps(char c)
 		if (ft_termcaps_keys(c, 4) == -1)
 			return (-1);
 	}
-	else if (c == 10)
-	{
-		if ((g_mini->prompt_size + ft_lstsize_typed(g_mini->tp)) / tgetnum("co")
-			!= (g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co"))
-			print_term_goto("DO", 0, 0, ((g_mini->prompt_size +
-			ft_lstsize_typed(g_mini->tp)) / tgetnum("co")) -
-			((g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co")));
+	else if (c == 10 && ft_termcaps_do(c) == 1)
 		return (1);
-	}
-	else if (c == 12)
-	{
-		print_term("cl", 0);
-		g_mini->print_all = 1;
-	}
 	else if (c == 127)
 		ft_termcaps_keys(c, 4);
 	else if (c != 4)
-	{
-		ft_lstadd_at_typed(&(g_mini->tp), ft_lstnew_typed(c),
-												(g_mini->tp_pos)++);
-		ft_termcaps_clean_all();
-	}
+		ft_termcaps_do(c);
 	ft_termcaps_change_value(c, &state);
 	return (0);
 }
