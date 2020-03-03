@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:53:01 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/26 15:30:27 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/04 00:36:30 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,25 @@ static void	set_pwd(void)
 
 void		run_cd(char **argv)
 {
-	if (argv[1] == 0)
+	if (argv[1] == 0 && ft_lst_find_env(&g_mini->env, "HOME") == NULL)
+		print_error(1, "HOME not set", "cd", NULL);
+	else if (argv[1] == 0)
 		chdir(ft_lst_find_env(&g_mini->env, "HOME"));
 	else
 	{
 		if (strncmp(argv[1], "~/", 2) == 0 ||
 			(ft_strlen(argv[1]) == 1 && argv[1][0] == '~'))
 		{
-			chdir(ft_lst_find_env(&g_mini->env, "HOME"));
-			if (strncmp(argv[1], "~/", 2) == 0)
-				argv[1] += 2;
+			if (ft_lst_find_env(&g_mini->env, "HOME") == NULL)
+				print_error(1, "HOME not set", "cd", NULL);
 			else
-				argv[1]++;
+			{
+				chdir(ft_lst_find_env(&g_mini->env, "HOME"));
+				if (strncmp(argv[1], "~/", 2) == 0)
+					argv[1] += 2;
+				else
+					argv[1]++;
+				}
 		}
 		if (ft_strlen(argv[1]) > 0 && chdir(argv[1]) == -1)
 			print_error(2, argv[1], "cd", NULL);
