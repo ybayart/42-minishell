@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 19:54:12 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/03 17:48:28 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:32:51 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	ft_termcaps_printend(char c, int *state)
 						ft_lstsize_typed(g_mini->tp)) / tgetnum("co")) -
 					((g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co")));
 			}
-			print_term_goto("ch", 0, 0, size - tgetnum("co") *
-							(size / tgetnum("co")));
 		}
+		print_term_goto("ch", 0, 0, size - tgetnum("co") *
+							(size / tgetnum("co")));
 	}
 	else if ((*state) == 3 && c != 51 && c != 49)
 		(*state) = 0;

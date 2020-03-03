@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/03 18:44:01 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:37:18 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	ft_termcaps_arrow(char c, int *state)
 	else if (c == 67 && g_mini->tp_pos < ft_lstsize_typed(g_mini->tp))
 		g_mini->tp_pos++;
 	else if (c == 70 || c == 72)
-		g_mini->tp_pos = (c == 70 ? ft_lstsize_typed(g_mini->tp) - 1 : 0);
+		g_mini->tp_pos = (c == 70 ? ft_lstsize_typed(g_mini->tp) : 0);
 	else
 		(*state) = 3;
 	if ((*state) == 0 && c != 65 && c != 66)
@@ -63,6 +63,9 @@ static void	ft_termcaps_jump(char c, int *state)
 		while (ft_lstsize_typed(g_mini->tp) - 1 > g_mini->tp_pos)
 			if (ft_lst_get_at_typed(g_mini->tp, ++g_mini->tp_pos)->c == ' ')
 				break ;
+		if (g_mini->tp_pos + 1 == ft_lstsize_typed(g_mini->tp))
+			g_mini->tp_pos++;
+
 	}
 	g_mini->print_all = -2;
 	ft_termcaps_update_pos(pos);
