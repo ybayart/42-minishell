@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:56:00 by racohen           #+#    #+#             */
-/*   Updated: 2020/03/03 20:49:00 by racohen          ###   ########.fr       */
+/*   Updated: 2020/03/03 21:00:02 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,23 @@ void	exe(char **tmp)
 			ft_strdup(tmp[1])));
 }
 
+void	run_env_export(void)
+{
+	t_list_env	*list;
+
+	list = g_mini->env;
+	while (list)
+	{
+		write(1, "declare -x ", 11);
+		write(1, list->name, ft_strlen(list->name));
+		write(1, "=", 1);
+		write(1, list->value, ft_strlen(list->value));
+		write(1, "\n", 1);
+		list = list->next;
+	}
+	return ;
+}
+
 void	run_export(char **argv)
 {
 	int		i;
@@ -57,7 +74,7 @@ void	run_export(char **argv)
 	if (argv[i + 1] == 0)
 	{
 		ft_list_sort_env(&(g_mini->env));
-		run_env();
+		run_env_export();
 	}
 	while (argv[++i])
 	{
