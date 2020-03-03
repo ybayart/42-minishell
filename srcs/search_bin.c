@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:29:43 by racohen           #+#    #+#             */
-/*   Updated: 2020/03/01 17:54:08 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/04 00:15:14 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,12 @@ char		*search_bin(char *path, const char *env_path)
 	}
 	if (search_single(path, &bin) == 1)
 		return (bin);
-	if ((tmp = ft_split(env_path, ':')) == NULL)
-		return (NULL);
-	search_multi(path, &bin, tmp);
-	ft_free_tab((void**)tmp);
+	if (env_path != NULL)
+	{
+		if ((tmp = ft_split(env_path, ':')) == NULL)
+			return (NULL);
+		search_multi(path, &bin, tmp);
+		ft_free_tab((void**)tmp);
+	}
 	return (bin);
 }

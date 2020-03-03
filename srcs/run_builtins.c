@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 13:55:56 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/01 18:39:15 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/04 00:12:04 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static void	run_non_forked(char *cmd, char **argv)
 {
 	if (ft_strcmp(cmd, "exit") == 0)
 	{
-		free(cmd);
-		run_exit(argv);
+		run_exit(argv, cmd);
 	}
 	else if (ft_strcmp(cmd, "cd") == 0)
 		run_cd(argv);

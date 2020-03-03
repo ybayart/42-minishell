@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/03/03 20:47:57 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/04 00:12:48 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char		**replace_quote_path(char **cmd);
 int			run_builtins(char *cmd, char **argv);
 void		run_cmd(const char *bin, char **argv, char **env);
 void		run_pwd();
-void		run_exit(char **argv);
+void		run_exit(char **argv, char *cmd);
 void		run_env();
 void		run_unset(char **argv);
 void		run_export(char **argv);
