@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/03/03 16:10:33 by yanyan           ###   ########.fr        #
+#    Updated: 2020/03/03 20:26:40 by racohen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRCS_ENV =	ft_lst_add_env.c \
 			ft_lst_find_env.c \
 			ft_lst_size_env.c \
 			ft_lst_to_tab_env.c \
+			ft_lst_sort_env.c \
 			ft_lst_new_env.c \
 			ft_lst_replace_env.c
 

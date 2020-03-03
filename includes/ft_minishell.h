@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/03/03 18:42:43 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/03 20:25:21 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		add_history(char *line);
 char		get_history(void);
 void		set_history(char c);
 
+void		ft_list_sort_env(t_list_env **begin_list);
 t_list_env	*ft_lst_new_env(char *name, char *value);
 void		ft_lstdel_at_env(t_list_env **list, char *at);
 char		*ft_lst_find_env(t_list_env **list, char *name);
