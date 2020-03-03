@@ -6,11 +6,27 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 04:41:43 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/01 17:11:42 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/03 17:15:09 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
+
+static void	print_prompt_clean(void)
+{
+	int		l[2];
+
+	l[0] = (g_mini->prompt_size + ft_lstsize_typed(g_mini->tp)) / tgetnum("co");
+	l[1] = (g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co");
+	if (l[0] != l[1])
+	{
+		print_term_goto("DO", 0, 0, l[0] - l[1]);
+		print_term_goto("ch", 0, 0, tgetnum("co") - 1);
+		write(1, "\n", 1);
+	}
+	ft_lst_clear_typed(&(g_mini->tp));
+	g_mini->tp_pos = 0;
+}
 
 void		print_prompt(char clear)
 {
@@ -20,10 +36,7 @@ void		print_prompt(char clear)
 	color = tgetstr("AF", NULL);
 	tputs(tparm(color, COLOR_GREEN), 1, ft_termputs);
 	if (clear == 1)
-	{
-		ft_lst_clear_typed(&(g_mini->tp));
-		g_mini->tp_pos = 0;
-	}
+		print_prompt_clean();
 	g_mini->prompt_size = 0;
 	if (g_mini->ispipe == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 13:26:26 by racohen           #+#    #+#             */
-/*   Updated: 2020/02/28 17:20:31 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/03 17:19:00 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ void		print_term(char *cap, char prompt);
 void		print_term_goto(char *cap, char prompt, int x, int y);
 char		ft_termcaps(char c);
 void		ft_termcaps_change_value(char c, int *state);
+void		ft_termcaps_update_pos(int oldpos);
+void		ft_termcaps_start(void);
+void		ft_termcaps_clean_all(void);
 void		getargs_cmd(char *line);
 char		*ft_addc(char *str, char c);
 char		**ft_addstr(char **ft_tab);

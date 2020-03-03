@@ -6,7 +6,7 @@
 #    By: racohen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 23:55:41 by racohen           #+#    #+#              #
-#    Updated: 2020/03/01 16:36:56 by yanyan           ###   ########.fr        #
+#    Updated: 2020/03/03 16:10:33 by yanyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRCS_LIST = main.c \
 			utils_wildcard_2.c \
 			termcaps.c \
 			utils_termcaps.c \
+			utils_termcaps_2.c \
 			history.c
 
 SRCS_ENV =	ft_lst_add_env.c \

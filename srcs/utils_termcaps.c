@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 19:54:12 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/02 18:04:19 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/03 17:48:28 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,62 +27,6 @@ void	print_term_goto(char *cap, char prompt, int x, int y)
 	if (prompt == 1)
 		print_prompt(0);
 }
-
-/*
-**void	ft_termcaps_printend(char c, int *state)
-**{
-**	int		size;
-**
-**	size = g_mini->prompt_size + g_mini->tp_pos;
-**	if ((*state) == 0)
-**	{
-**		if (size % tgetnum("co") == 0)
-**			write(1, "\n", 1);
-**		write(1, "\r", 1);
-**		if (tgetnum("co") > size)
-**			print_prompt(0);
-**		if (tgetnum("co") <= size)
-**		{
-**			ft_lst_print_typed(ft_lst_get_at_typed(g_mini->tp, (tgetnum("co") * (size / tgetnum("co")) - 1) - g_mini->prompt_size));
-**			print_term_goto("ch", 0, 0, size - (tgetnum("co") * (size / tgetnum("co"))) + 1);
-**		}
-**		else
-**		{
-**			ft_lst_print_typed(g_mini->tp);
-**			print_term_goto("ch", 0, 0, size);
-**		}
-**	}
-**	else if ((*state) == 3 && c != 51 && c != 49)
-**		(*state) = 0;
-**}
-*/
-
-/*
-**void	ft_termcaps_printend(char c, int *state)
-**{
-**	int		size;
-**
-**	size = g_mini->prompt_size + ft_lstsize_typed(g_mini->tp);
-**	if ((*state) == 0)
-**	{
-**		if (size % (tgetnum("co")) == 0 && c != 127)
-**			write(1, "\n", 1);
-**		print_term_goto("UP", 0, 0, (size / tgetnum("co") - 1));
-**		print_term("cd", 0);
-**		if (size % (tgetnum("co") - 1) == 0 && c == 127)
-**			print_term_goto("UP", 0, 0, 1);
-**		write(1, "\r", 1);
-**		print_prompt(0);
-**		ft_lst_print_typed(g_mini->tp);
-**		size = g_mini->prompt_size + g_mini->tp_pos;
-**		if (size % tgetnum("co") == 0)
-**			print_term_goto("DO", 0, 0, size / tgetnum("co"));
-**		print_term_goto("ch", 0, 0, size - tgetnum("co") * (size / (tgetnum("co"))));
-**	}
-**	else if ((*state) == 3 && c != 51 && c != 49)
-**		(*state) = 0;
-**}
-*/
 
 void	ft_termcaps_printend(char c, int *state)
 {
@@ -108,38 +52,43 @@ void	ft_termcaps_printend(char c, int *state)
 		}
 		else
 			write(1, "\r", 1);
-		if (g_mini->print_all != -1)
+		if (g_mini->print_all >= 0)
 			print_term("ce", 0);
 		if (g_mini->print_all >= 1)
 		{
 			print_prompt(0);
 			ft_lst_print_typed(g_mini->tp, -1);
 		}
-		else
+		else if (g_mini->print_all != -2)
 		{
 			if (size < tgetnum("co"))
 			{
 				print_prompt(0);
-				ft_lst_print_typed(ft_lst_get_at_typed(g_mini->tp, start), tgetnum("co") - g_mini->prompt_size);
+				ft_lst_print_typed(ft_lst_get_at_typed(g_mini->tp, start),
+					tgetnum("co") - g_mini->prompt_size);
 			}
 			else
-				ft_lst_print_typed(ft_lst_get_at_typed(g_mini->tp, start), tgetnum("co"));
+				ft_lst_print_typed(ft_lst_get_at_typed(g_mini->tp, start),
+								tgetnum("co"));
 		}
 		size = g_mini->prompt_size + g_mini->tp_pos;
 		if (ft_lstsize_typed(g_mini->tp) != g_mini->tp_pos)
 		{
 			if (g_mini->print_all == 2)
 			{
-				if ((g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co") != (g_mini->prompt_size + ft_lstsize_typed(g_mini->tp)) / tgetnum("co"))
-					print_term_goto("UP", 0, 0, ((g_mini->prompt_size + ft_lstsize_typed(g_mini->tp)) / tgetnum("co")) - ((g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co")));
+				if ((g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co")
+	!= (g_mini->prompt_size + ft_lstsize_typed(g_mini->tp)) / tgetnum("co"))
+					print_term_goto("UP", 0, 0, ((g_mini->prompt_size +
+						ft_lstsize_typed(g_mini->tp)) / tgetnum("co")) -
+					((g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co")));
 			}
-			print_term_goto("ch", 0, 0, size - tgetnum("co") * (size / tgetnum("co")));
+			print_term_goto("ch", 0, 0, size - tgetnum("co") *
+							(size / tgetnum("co")));
 		}
 	}
 	else if ((*state) == 3 && c != 51 && c != 49)
 		(*state) = 0;
 }
-
 
 void	ft_termcaps_change_value(char c, int *state)
 {
