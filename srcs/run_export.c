@@ -57,9 +57,9 @@ void	run_env_export(void)
 	{
 		write(1, "declare -x ", 11);
 		write(1, list->name, ft_strlen(list->name));
-		write(1, "=", 1);
+		write(1, "=\"", 2);
 		write(1, list->value, ft_strlen(list->value));
-		write(1, "\n", 1);
+		write(1, "\"\n", 2);
 		list = list->next;
 	}
 	return ;
@@ -79,9 +79,15 @@ void	run_export(char **argv)
 	while (argv[++i])
 	{
 		if (!(tmp = ft_split(argv[i], '=')) || !ft_strchr(argv[i], '='))
+		{
+			ft_free_tab((void**)tmp);
 			return ;
+		}
 		if (tmp[0] == 0)
+		{
+			ft_free_tab((void**)tmp);
 			return (print_error(4, "`='", "export", "not a valid identifier"));
+		}
 		if (check_quote_err(tmp[0]))
 		{
 			ft_free_tab((void**)tmp);

@@ -14,7 +14,7 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
 
-SAN = -fsanitize=address
+SAN = -fsanitize=leak
 
 NAME = minishell 
 
