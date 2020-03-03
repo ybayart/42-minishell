@@ -63,6 +63,7 @@ SRCS_ENV =	ft_lst_add_env.c \
 			ft_lst_find_env.c \
 			ft_lst_size_env.c \
 			ft_lst_to_tab_env.c \
+			ft_lst_sort_env.c \
 			ft_lst_new_env.c \
 			ft_lst_replace_env.c
 

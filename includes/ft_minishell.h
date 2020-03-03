@@ -79,6 +79,7 @@ void		add_history(char *line);
 char		get_history(void);
 void		set_history(char c);
 
+void		ft_list_sort_env(t_list_env **begin_list);
 t_list_env	*ft_lst_new_env(char *name, char *value);
 void		ft_lstdel_at_env(t_list_env **list, char *at);
 char		*ft_lst_find_env(t_list_env **list, char *name);
