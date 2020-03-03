@@ -6,17 +6,18 @@
 /*   By: yanyan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 16:05:50 by yanyan            #+#    #+#             */
-/*   Updated: 2020/03/03 19:20:33 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/03 22:27:47 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-void	ft_termcaps_update_pos(int oldpos)
+void	ft_termcaps_update_pos(int oldpos, int state)
 {
 	int		oldline;
 	int		actline;
 
+	g_mini->print_all = state;
 	oldline = (g_mini->prompt_size + oldpos) / tgetnum("co");
 	actline = (g_mini->prompt_size + g_mini->tp_pos) / tgetnum("co");
 	if (oldpos < g_mini->tp_pos && oldline != actline)
@@ -40,10 +41,10 @@ void	ft_termcaps_clean_all(void)
 {
 	if (ft_lstsize_typed(g_mini->tp) != g_mini->tp_pos)
 	{
-		ft_termcaps_start();
-		print_term("cd", 0);
 		g_mini->print_all = 2;
+		ft_termcaps_start();
 	}
+	print_term("cd", 0);
 }
 
 char	ft_termcaps_do(char c)
@@ -58,8 +59,9 @@ char	ft_termcaps_do(char c)
 	}
 	else if (c == 12)
 	{
+		ft_termcaps_clean_all();
 		print_term("cl", 0);
-		g_mini->print_all = 1;
+		g_mini->print_all = 2;
 	}
 	else if (c != 4)
 	{

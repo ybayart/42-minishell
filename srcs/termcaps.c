@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 18:45:48 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/03 19:37:18 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/03 20:27:47 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,16 @@ static void	ft_termcaps_arrow(char c, int *state)
 	else
 		(*state) = 3;
 	if ((*state) == 0 && c != 65 && c != 66)
-	{
-		g_mini->print_all = -2;
-		ft_termcaps_update_pos(pos);
-	}
+		ft_termcaps_update_pos(pos, -2);
 }
 
 static void	ft_termcaps_jump(char c, int *state)
 {
 	int		pos;
 
-	(*state) = 0;
 	if ((pos = g_mini->tp_pos) == g_mini->tp_pos && c == 68)
 	{
-		while (g_mini->tp_pos > 0 &&
+		while (((*state) = 0) == 0 && g_mini->tp_pos > 0 &&
 			ft_lst_get_at_typed(g_mini->tp, g_mini->tp_pos - 1)->c == ' ')
 			g_mini->tp_pos--;
 		while (g_mini->tp_pos > 0)
@@ -55,7 +51,7 @@ static void	ft_termcaps_jump(char c, int *state)
 		if (ft_lst_get_at_typed(g_mini->tp, g_mini->tp_pos)->c == ' ')
 			g_mini->tp_pos++;
 	}
-	else if (c == 67)
+	else if (((*state) = 0) == 0 && c == 67)
 	{
 		while (ft_lstsize_typed(g_mini->tp) - 1 > g_mini->tp_pos &&
 			ft_lst_get_at_typed(g_mini->tp, g_mini->tp_pos)->c == ' ')
@@ -65,10 +61,8 @@ static void	ft_termcaps_jump(char c, int *state)
 				break ;
 		if (g_mini->tp_pos + 1 == ft_lstsize_typed(g_mini->tp))
 			g_mini->tp_pos++;
-
 	}
-	g_mini->print_all = -2;
-	ft_termcaps_update_pos(pos);
+	ft_termcaps_update_pos(pos, -2);
 }
 
 static char	ft_termcaps_keys(char c, char key)
