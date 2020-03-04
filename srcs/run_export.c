@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:56:00 by racohen           #+#    #+#             */
-/*   Updated: 2020/03/04 15:26:41 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/04 18:54:40 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ static char	exe(char **tmp, char *argv)
 		print_error(4, "`='", "export", "not a valid identifier");
 		return (0);
 	}
-	if (check_quote_err(tmp[0]))
+	if (check_quote_err(tmp[0]) || argv[0] == '=')
 	{
 		ft_free_tab((void**)tmp);
-		print_error(4, argv, "export", "not valid identifier");
+		print_error(6, argv, "export", "not a valid identifier");
 		return (0);
 	}
 	if (ft_lst_find_env(&g_mini->env, tmp[0]) != NULL)

@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 23:53:18 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/01 20:13:31 by ybayart          ###   ########.fr       */
+/*   Updated: 2020/03/04 18:56:45 by racohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 **	3: "minishell: str: strerror(errno)"
 **	4: "minishell: bin: str: comp"
 **	5: "minishell: str `comp'"
+**	6: "minishell: bin: 'str': comp"
 */
 
 static void	print_error_init(char state, char *bin)
 {
 	write(2, "minishell", 9);
-	if (state == 1 || state == 2 || state == 4)
+	if (state == 1 || state == 2 || state == 4 || state == 6)
 	{
 		write(2, ": ", 2);
 		write(2, bin, ft_strlen(bin));
@@ -33,15 +34,19 @@ static void	print_error_init(char state, char *bin)
 static void	print_error_message(char state, char *str, char *comp)
 {
 	write(2, ": ", 2);
+	if (state == 6)
+		write(2, "`", 1);
 	write(2, str, ft_strlen(str));
+	if (state == 6)
+		write(2, "'", 1);
 	if (state == 2 || state == 3)
 	{
 		write(2, ": ", 2);
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
 	}
-	else if (state == 4 || state == 5)
+	else if (state == 4 || state == 5 || state == 6)
 	{
-		write(2, (state == 4 ? ": " : " `"), 2);
+		write(2, (state == 4 || state == 6 ? ": " : " `"), 2);
 		if (state == 5 && (comp == 0 || comp[0] == '\0'))
 			write(2, "newline", 7);
 		else
