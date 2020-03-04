@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/04 00:53:54 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/04 01:12:42 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,7 @@ char		wildcard(char ***args, int *pos, int initpos)
 			ft_lstclear(&search);
 			return (0);
 		}
-		if (ft_lstsize(search) == 0)
-			(*args)[initpos] = arg;
-		else
-			free(arg);
+		(ft_lstsize(search) == 0 ? (*args)[initpos] = arg : free(arg));
 		(*args)[i - 1] = 0;
 		(*pos) = i - 2;
 	}

@@ -6,13 +6,13 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:56:00 by racohen           #+#    #+#             */
-/*   Updated: 2020/03/03 21:00:02 by racohen          ###   ########.fr       */
+/*   Updated: 2020/03/04 01:07:34 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minishell.h"
 
-int		check_quote_err(char *name)
+int			check_quote_err(char *name)
 {
 	while (*name != '\'')
 		if (*name++ == '\0')
@@ -20,7 +20,7 @@ int		check_quote_err(char *name)
 	return (1);
 }
 
-void	change(t_list_env **env, char *name, char *value)
+void		change(t_list_env **env, char *name, char *value)
 {
 	t_list_env	*tmp;
 
@@ -36,8 +36,20 @@ void	change(t_list_env **env, char *name, char *value)
 	}
 }
 
-void	exe(char **tmp)
+static char	exe(char **tmp, char *argv)
 {
+	if (tmp[0] == 0)
+	{
+		ft_free_tab((void**)tmp);
+		print_error(4, "`='", "export", "not a valid identifier");
+		return (0);
+	}
+	if (check_quote_err(tmp[0]))
+	{
+		ft_free_tab((void**)tmp);
+		print_error(4, argv, "export", "not valid identifier");
+		return (0);
+	}
 	if (ft_lst_find_env(&g_mini->env, tmp[0]) != NULL)
 		change(&g_mini->env, tmp[0], (tmp[1] == 0 ? "" : tmp[1]));
 	else if (tmp[1] == 0)
@@ -46,9 +58,10 @@ void	exe(char **tmp)
 	else
 		ft_lst_add_env(&g_mini->env, ft_lst_new_env(ft_strdup(tmp[0]),
 			ft_strdup(tmp[1])));
+	return (1);
 }
 
-void	run_env_export(void)
+void		run_env_export(void)
 {
 	t_list_env	*list;
 
@@ -65,13 +78,13 @@ void	run_env_export(void)
 	return ;
 }
 
-void	run_export(char **argv)
+void		run_export(char **argv)
 {
 	int		i;
 	char	**tmp;
 
 	i = 0;
-	if (argv[i + 1] == 0)
+	if (argv[1] == 0)
 	{
 		ft_list_sort_env(&(g_mini->env));
 		run_env_export();
@@ -83,17 +96,8 @@ void	run_export(char **argv)
 			ft_free_tab((void**)tmp);
 			return ;
 		}
-		if (tmp[0] == 0)
-		{
-			ft_free_tab((void**)tmp);
-			return (print_error(4, "`='", "export", "not a valid identifier"));
-		}
-		if (check_quote_err(tmp[0]))
-		{
-			ft_free_tab((void**)tmp);
-			return (print_error(4, argv[i], "export", "not valid identifier"));
-		}
-		exe(tmp);
+		if (exe(tmp, argv[i]) == 0)
+			return ;
 		ft_free_tab((void**)tmp);
 	}
 }

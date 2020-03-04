@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:53:01 by racohen           #+#    #+#             */
-/*   Updated: 2020/03/04 00:36:30 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/04 01:11:19 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void		run_cd(char **argv)
 					argv[1] += 2;
 				else
 					argv[1]++;
-				}
+			}
 		}
 		if (ft_strlen(argv[1]) > 0 && chdir(argv[1]) == -1)
 			print_error(2, argv[1], "cd", NULL);
