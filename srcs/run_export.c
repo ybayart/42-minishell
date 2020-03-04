@@ -6,7 +6,7 @@
 /*   By: racohen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:56:00 by racohen           #+#    #+#             */
-/*   Updated: 2020/03/04 01:07:34 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/04 15:26:41 by yanyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		run_export(char **argv)
 		if (!(tmp = ft_split(argv[i], '=')) || !ft_strchr(argv[i], '='))
 		{
 			ft_free_tab((void**)tmp);
-			return ;
+			continue ;
 		}
 		if (exe(tmp, argv[i]) == 0)
 			return ;
