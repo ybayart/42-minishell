@@ -41,6 +41,13 @@ void		print_prompt(char clear)
 	if (g_mini->ispipe == 0)
 	{
 		pwd = ft_lst_find_env(&(g_mini->env), PWD);
+		if (pwd == NULL)
+		{
+			print_term("me", 0);
+			print_error(1, "PWD not set", "env", NULL);
+			endofprog();
+			exit(1);
+		}
 		g_mini->prompt_size = write(1, pwd, ft_strlen(pwd));
 	}
 	g_mini->prompt_size += write(1, "> ", 2);

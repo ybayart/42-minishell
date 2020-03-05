@@ -17,6 +17,8 @@ void	add_history(char *line)
 	int		fd;
 	char	*file;
 
+	if (ft_lst_find_env(&g_mini->env, "HOME") == NULL)
+		return ;
 	file = ft_strjoin(ft_lst_find_env(&g_mini->env, "HOME"),
 											"/.minishell_history");
 	if ((fd = open(file, O_RDWR | O_CREAT | O_APPEND, 0600)) != -1)
@@ -37,6 +39,8 @@ char	get_history(void)
 	char	*file;
 	char	*line;
 
+	if (ft_lst_find_env(&g_mini->env, "HOME") == NULL)
+		return (0);
 	file = ft_strjoin(ft_lst_find_env(&g_mini->env, "HOME"),
 											"/.minishell_history");
 	if ((fd = open(file, 0, 0600)) != -1)

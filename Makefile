@@ -87,7 +87,7 @@ INCS=	define.h \
 SRCS =  $(addprefix $(SRCS_DIR), $(SRCS_LIST)) \
 		$(addprefix $(SRCS_DIR)env_list/, $(SRCS_ENV)) \
 		$(addprefix $(SRCS_DIR)typed_list/, $(SRCS_TYPED)) \
-
+		libft/*.c
 
 OBJECT = $(patsubst %.c, %.o, $(SRCS))
 

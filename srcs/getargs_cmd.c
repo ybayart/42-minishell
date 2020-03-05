@@ -137,7 +137,8 @@ void		getargs_cmd(char *line)
 	check_empty_end(&args, (size_t)i[1]);
 	i[0] = -1;
 	while (args[++i[0]] != 0)
-		if (args[i[0]][0] == '~' && (args[i[0]] = ft_strfrjoin(
+		if (args[i[0]][0] == '~' && ft_lst_find_env(&(g_mini->env), "HOME") !=
+			NULL && (args[i[0]] = ft_strfrjoin(
 	ft_lst_find_env(&g_mini->env, "HOME"), args[i[0]] + 1, args[i[0]])) == NULL)
 			return ;
 	cutargs(args);
