@@ -148,6 +148,8 @@ char		wildcard(char ***args, int *pos, int initpos)
 		(*args)[i - 1] = 0;
 		(*pos) = i - 2;
 	}
+	else
+		free(arg);
 	ft_lstclear(&search);
 	return (1);
 }
