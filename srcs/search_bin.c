@@ -74,9 +74,9 @@ char		test_bin(char *bin)
 		return (1);
 	if (S_ISREG(buf.st_mode) != 1)
 		return (2);
-	else if (!(buf.st_mode & S_IXUSR))
-		return (3);
-	return (0);
+	if (buf.st_mode & S_IXUSR)
+		return (0);
+	return (3);
 }
 
 static void	print_error_bin(char err, char *bin)
