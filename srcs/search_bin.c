@@ -69,7 +69,8 @@ char		test_bin(char *bin)
 {
 	struct stat	buf;
 
-	stat(bin, &buf);
+	if (stat(bin, &buf) != 0)
+		return (2);
 	if (S_ISDIR(buf.st_mode) == 1)
 		return (1);
 	if (S_ISREG(buf.st_mode) != 1)
@@ -122,10 +123,7 @@ static void	search_multi(char *path, char **bin, char **tmp)
 		free((*bin));
 		(*bin) = NULL;
 		if (ret == 3)
-		{
-			(*bin) = NULL;
 			return ;
-		}
 	}
 	if (ret != 0)
 		print_error_bin(4, path);
