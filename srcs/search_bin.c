@@ -29,7 +29,7 @@
 **	while ((dir = readdir(dir_fd)) != NULL)
 **	{
 **		if (ft_strlen(path) == ft_strlen((char*)dir->d_name) &&
-**			!strncmp(dir->d_name, path, ft_strlen(dir->d_name)))
+**			!ft_strncmp(dir->d_name, path, ft_strlen(dir->d_name)))
 **		{
 **			closedir(dir_fd);
 **			return (1);

@@ -15,7 +15,7 @@
 int		is_convert_red(char *str)
 {
 	if (*str == '|' || *str == '<' || *str == '>' ||
-		strncmp("<<", str, 3) == 0 || strncmp(">>", str, 3) == 0)
+		ft_strncmp("<<", str, 3) == 0 || ft_strncmp(">>", str, 3) == 0)
 		return (1);
 	return (0);
 }

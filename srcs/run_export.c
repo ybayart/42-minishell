@@ -27,7 +27,7 @@ void		change(t_list_env **env, char *name, char *value)
 	tmp = *env;
 	while (tmp)
 	{
-		if (strcmp(tmp->name, name) == 0)
+		if (ft_strcmp(tmp->name, name) == 0)
 		{
 			free(tmp->value);
 			tmp->value = ft_strdup(value);

@@ -100,7 +100,7 @@ void		run_cd(char **argv)
 		chdir(ft_lst_find_env(&g_mini->env, "HOME"));
 	else
 	{
-		if (strncmp(argv[1], "~/", 2) == 0 ||
+		if (ft_strncmp(argv[1], "~/", 2) == 0 ||
 			(ft_strlen(argv[1]) == 1 && argv[1][0] == '~'))
 		{
 			if (ft_lst_find_env(&g_mini->env, "HOME") == NULL)
@@ -108,7 +108,7 @@ void		run_cd(char **argv)
 			else
 			{
 				chdir(ft_lst_find_env(&g_mini->env, "HOME"));
-				if (strncmp(argv[1], "~/", 2) == 0)
+				if (ft_strncmp(argv[1], "~/", 2) == 0)
 					argv[1] += 2;
 				else
 					argv[1]++;

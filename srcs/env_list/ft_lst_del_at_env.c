@@ -21,12 +21,12 @@ void	ft_lstdel_at_env(t_list_env **list, char *at)
 		return ;
 	tmp = *list;
 	prev = NULL;
-	while (strcmp(at, tmp->name) != 0 && tmp->next != NULL)
+	while (ft_strcmp(at, tmp->name) != 0 && tmp->next != NULL)
 	{
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	if (strcmp(at, tmp->name) == 0)
+	if (ft_strcmp(at, tmp->name) == 0)
 	{
 		if (prev)
 			prev->next = tmp->next;

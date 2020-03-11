@@ -20,7 +20,7 @@ void	run_echo(char **argv)
 	i = 0;
 	j = 0;
 	if (argv[j + 1] != 0)
-		while (strcmp(argv[j + 1], "-n") == 0)
+		while (ft_strcmp(argv[j + 1], "-n") == 0)
 			j++;
 	while (argv[++i + j] != 0)
 	{
