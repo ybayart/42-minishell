@@ -98,8 +98,8 @@ all : $(NAME)
 .c.o: 
 	${CC} $(FLAGS) -c -I $(INCS_DIR) -I $(LIBFT_PATH) $< -o ${<:.c=.o}
 
-$(NAME): $(OBJECT) libft $(addprefix $(INCS_DIR), $(INCS))
-	$(CC) $(SAN) $(FLAGS) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
+$(NAME): $(OBJECT) libft $(addprefix $(INCS_DIR), $(INCS)) Makefile
+	$(CC) $(FLAGS) $(COMPIL_LIB) $(OBJECT) -o $(NAME)
 
 libft: break_implicit_rule
 	@make -C $(LIBFT_PATH)
