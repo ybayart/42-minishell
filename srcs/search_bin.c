@@ -135,11 +135,6 @@ char		*search_bin(char *path, const char *env_path)
 	char		**tmp;
 
 	bin = NULL;
-	if (ft_strlen(path) > 100)
-	{
-		print_error_bin(4, path);
-		return (NULL);
-	}
 	if (search_single(path, &bin) == 1)
 		return (bin);
 	if (env_path != NULL)

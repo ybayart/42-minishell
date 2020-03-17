@@ -42,6 +42,7 @@ void	utils_shell_do(char **line)
 		print_error(5, "syntax error near unexpected token", NULL, tmp);
 	else
 	{
+		ft_strreplace(line, ft_strdup("$?"), ft_itoa(g_mini->last_exit));
 		if (tmp != NULL)
 			free(tmp);
 		tmp = NULL;
