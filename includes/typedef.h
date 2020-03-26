@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:08:06 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/03 20:23:34 by racohen          ###   ########.fr       */
+/*   Updated: 2020/03/26 17:33:32 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define TYPEDEF_H
 
 # include "libft.h"
+
+typedef struct	s_wildcard
+{
+	char	replace;
+	char	*arg;
+	t_list	*search;
+	int		i;
+}				t_wildcard;
 
 typedef struct termios	t_tm;
 

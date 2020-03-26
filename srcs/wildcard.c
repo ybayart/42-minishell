@@ -6,7 +6,7 @@
 /*   By: ybayart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:01:00 by ybayart           #+#    #+#             */
-/*   Updated: 2020/03/04 01:12:42 by yanyan           ###   ########.fr       */
+/*   Updated: 2020/03/26 17:52:54 by ybayart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,31 +125,28 @@ int			wildcard_do_concat(t_list **search, int *pos, char ***args)
 
 char		wildcard(char ***args, int *pos, int initpos)
 {
-	char	replace;
-	char	*arg;
-	t_list	*search;
-	int		i;
+	t_wildcard	d;
 
-	arg = ft_strdup((*args)[initpos]);
-	if (init_wildcard(&search, args, initpos, &replace) == 0)
+	d.arg = ft_strdup((*args)[initpos]);
+	if (init_wildcard(&(d.search), args, initpos, &(d.replace)) == 0)
 		return (0);
-	wildcard_do_getdir(&search);
+	wildcard_do_getdir(&(d.search));
 	if (g_nb != 0)
 	{
 		free((*args)[initpos]);
-		wildcard_do_format(&search, replace);
-		if ((i = wildcard_do_concat(&search, pos, args)) == -1)
+		wildcard_do_format(&(d.search), d.replace);
+		if ((d.i = wildcard_do_concat(&(d.search), pos, args)) == -1)
 		{
-			free(arg);
-			ft_lstclear(&search);
+			free(d.arg);
+			ft_lstclear(&(d.search));
 			return (0);
 		}
-		(ft_lstsize(search) == 0 ? (*args)[initpos] = arg : free(arg));
-		(*args)[i - 1] = 0;
-		(*pos) = i - 2;
+		(ft_lstsize(d.search) == 0 ? (*args)[initpos] = d.arg : free(d.arg));
+		(*args)[d.i - 1] = 0;
+		(*pos) = d.i - 2;
 	}
 	else
-		free(arg);
-	ft_lstclear(&search);
+		free(d.arg);
+	ft_lstclear(&(d.search));
 	return (1);
 }
