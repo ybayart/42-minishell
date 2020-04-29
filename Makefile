@@ -14,7 +14,7 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
 
-SAN = -fsanitize=address
+SAN = -fsanitize=leak
 
 NAME = minishell 
 
@@ -99,7 +99,7 @@ all : $(NAME)
 	${CC} $(FLAGS) -c -I $(INCS_DIR) -I $(LIBFT_PATH) $< -o ${<:.c=.o}
 
 $(NAME): $(OBJECT) libft $(addprefix $(INCS_DIR), $(INCS)) Makefile
-	$(CC) $(FLAGS) $(OBJECT) -o $(NAME) $(COMPIL_LIB)
+	$(CC) -o $(NAME) $(OBJECT) $(COMPIL_LIB) $(FLAGS) 
 
 libft: break_implicit_rule
 	@make -C $(LIBFT_PATH)
